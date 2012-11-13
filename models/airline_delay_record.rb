@@ -3,7 +3,7 @@ class AirlineDelayRecord < ActiveRecord::Base
 	belongs_to :airline
 	belongs_to :airport
 
-	delegate :name, :to=>:airport, :prefix=>true
+	delegate :name, :to=>:airport, :prefix=>true, :allow_nil=>true
 	delegate :name, :to=>:airline, :prefix=>true
 	before_save :hook_into_airport_airline
 

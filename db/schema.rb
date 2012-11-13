@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 3) do
     t.integer "month"
     t.integer "enplanements"
     t.string "airport_code"
+    t.integer "airport_id"
   end
 
   add_index :airports, :slug, unique: true
