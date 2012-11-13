@@ -1,0 +1,17 @@
+<h2><%=@airline.name%></h2>
+
+
+<table>
+<% @delay_records.each do |delay_record| %>
+
+<tr>
+	<td><%=delay_record.year%></td>
+	<td><%=delay_record.month%></td>
+
+	<td><%=delay_record.airport_name%></td>
+
+
+</tr>
+
+<% end %>
+</table>
