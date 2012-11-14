@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 3) do
   create_table "airline_delay_records", :force => true do |t|
     t.integer  "airline_id"
     t.integer  "airport_id"
+    t.string   "airport_full_name"
     t.integer  "year"
     t.integer  "month"
     t.string   "airline_code"

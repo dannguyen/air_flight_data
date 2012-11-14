@@ -2,16 +2,16 @@
 
 
 <table>
-<% @delay_records.each do |delay_record| %>
+<% @airports_by_arrivals_sum.each do |arr| %>
+	<% airport, arrivals_count = arr%>
 
-<tr>
-	<td><%=delay_record.year%></td>
-	<td><%=delay_record.month%></td>
+	<tr>
+		<td><%=link_to airport.name, url_for(:airline_delays, :by_airport, :airport=>airport)%></td>
+		<td><%=number_with_delimiter arrivals_count%></td>
+		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
+		<td><%#=arrivals_count/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
+	</tr>
 
-	<td><%=delay_record.airport_name if delay_record.airport %></td>
-
-
-</tr>
 
 <% end %>
 </table>

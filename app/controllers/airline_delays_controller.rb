@@ -28,7 +28,7 @@ SkiftAir.controllers :airline_delays do
 
   get :by_airline, :map=>"/airline_delays/airline/:airline" do 
     @airline = Airline.find(params[:airline])
-    @delay_records = @airline.airline_delay_records
+    @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
 
     render "airline_delays/by_airline"
   end

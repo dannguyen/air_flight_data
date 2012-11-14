@@ -75,6 +75,14 @@ namespace :bs do
         
 		end
 	end
+	
+	
+	task :clean_orphans do 
+	  ar = AirlineDelayRecord.where(:airport_id => nil)
+	  puts ar.count
+
+    ar.delete_all
+  end
 end
 
 
