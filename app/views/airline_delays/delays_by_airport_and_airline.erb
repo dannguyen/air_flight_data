@@ -1,5 +1,6 @@
 <h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
 
+<section class="container fold">
 <table class="table">
 	<thead><tr>
 		<% head_fields = [:year, :month, :arr_flights, :arr_del15, :carrier_ct] %>
@@ -16,6 +17,7 @@
 			<% end %>			
 		</tr>
 		<% end %>
+		
 	</tbody>
-<% end %>
 </table>
+</section>

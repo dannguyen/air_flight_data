@@ -1,20 +1,24 @@
 <h2><%=@airport.name%></h2>
-
-<% @airlines.each do |airline| %>
-<tr>
-	<td><%=link_to airline, url_for(:airline_delays, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
-	
-	<% @all_years.each do |year| %>
-		<% hmr_record = airline.airline_delay_records.where(:year=>year, :month=>@month) %>
+<table class="table">
+	<% @airlines.each do |airline| %>
+		<% @all_years.each do |year| %>
+			<% hmr_record = airline.airline_delay_records.where(:year=>year).first %>
 		
-	<td>
-		<%=number_with_delimiter hmr_record.arr_flights%>
-	</td>	
-	<td>
-		<%=number_with_delimiter hmr_record.arr_del15%>
-	</td>	
-	<td>
-		<%=number_with_delimiter hmr_record.carrier_ct%>
-	</td>	
-</tr>	
-<% end %>	
+			<tr>
+				<td><%=link_to airline.name, url_for(:airline_delays, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
+
+
+			<td>
+				<%=number_with_delimiter hmr_record.arr_flights%>
+			</td>	
+			<td>
+				<%=number_with_delimiter hmr_record.arr_del15%>
+			</td>	
+			<td>
+				<%=number_with_delimiter hmr_record.carrier_ct%>
+			</td>	
+		</tr>	
+	<% end %>	
+	<% end %>
+</table>	
+	
