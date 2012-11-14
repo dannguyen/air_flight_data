@@ -5,7 +5,7 @@
 			<% hmr_record = airline.ontime_records.where(:year=>year).first %>
 		
 			<tr>
-				<td><%=link_to airline.name, url_for(:ontimes, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
+				<td><%=link_to airline.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
 
 
 			<td>

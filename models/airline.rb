@@ -10,9 +10,6 @@ class Airline < ActiveRecord::Base
    scope :similar_to, lambda{|r, num|  where('id != ?', r.id).limit(num) } # TK
 
 
-   def normalize_friendly_id(string)
-     super.upcase
-   end
 
    def similar_airlines(num)
      self.class.similar_to(self, num)

@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="span6">
 		
-			<%=partial "ontimes/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>
+			<%=partial "ontime/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>
 		
 		</div>	
 	</div>
@@ -21,7 +21,7 @@
 	<% airport, arrivals_count = arr%>
 
 	<tr>
-		<td><%=link_to airport.name, url_for(:ontimes, :delays_by_airport, :airport=>airport)%></td>
+		<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport, :airport=>airport)%></td>
 		<td><%=number_with_delimiter arrivals_count%></td>
 		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
 		<td><%#=arrivals_count/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
