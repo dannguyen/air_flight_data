@@ -8,7 +8,7 @@ class AirlineDelayRecord < ActiveRecord::Base
 
 	delegate :name, :to=>:airport, :prefix=>true, :allow_nil=>true
 	delegate :name, :to=>:airline, :prefix=>true
-	before_save :hook_into_airport_airline
+	before_validation :hook_into_airport_airline
 
   scope :top, where("arr_flights > ?", 100)
   scope :christmas, where(:month=>12)
@@ -17,6 +17,8 @@ class AirlineDelayRecord < ActiveRecord::Base
     c = (cd.is_a?Airport) ? cd.code : cd 
     includes(:airport).where('airports.code'=>c)}
 
+  validates_presence_of :airport_id
+  validates_presence_of :airline_id
 
 	
 	def self.arrivals_sum

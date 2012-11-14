@@ -68,11 +68,11 @@ ActiveRecord::Schema.define(:version => 3) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "airport_datum", :force=> true do |t|
+  create_table "airport_datums", :force=> true do |t|
     t.integer "year"
     t.integer "month"
     t.integer "enplanements"
-    t.string "airport_code"
+    t.string  "airport_code"
     t.integer "airport_id"
   end
 

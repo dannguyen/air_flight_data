@@ -1,4 +1,9 @@
 require 'csv'
+require 'logger'
+logger.level = Logger::WARN
+
+
+
 namespace :bs do
 	
 	# define irregular column names here
@@ -10,13 +15,15 @@ namespace :bs do
 				'LocationID'=>'code',
 				'FacilityName'=>'name'
 			},
-			:canonical_key=>'code'
+			:canonical_key=>'code',
+			:canonical_list=>true
+			
 		},
 
 		:airlines => {
-			:headers=>{
-			},
-			:canonical_key=>'iata_code'
+			:headers=>{},
+			:canonical_key=>'iata_code',
+			:canonical_list=>true
 		},
 
 		:airline_delay_records => {
@@ -24,15 +31,18 @@ namespace :bs do
 				'carrier'=>'airline_code',
 				'airport'=>'airport_code',
 				'airport_name'=>'airport_full_name'	
-	
 			}
-		}
+		}#,
+		
+#		:airport_datums=>{
+#		  :headers=>{}
+#		}
 
 	}
 
 
 	task :test => :environment do 
-
+      puts Padrino.env
 			puts Airport.count
 			Airport.all.each do |a| 
 				a.name = a.code
@@ -51,11 +61,12 @@ namespace :bs do
 			header_mappings = hsh[:headers]
 
 			canon_key = hsh[:canonical_key]
-			canon_list = !canon_key.nil? ? open("canon_#{table_name}.csv").read.split("\n") : false
+			canon_list =  open("canon_#{table_name}.csv").read.split("\n") if hsh[:canonical_list]
 
 			fname = "#{table_name}.csv"
 			puts "Reading from #{fname}"
 
+      count = 0
 			 CSV.foreach(fname,  {:headers=>true,
 			 							 :header_converters=>lambda{ |hdr_name| 
 			 								header_mappings[hdr_name] || hdr_name.underscore
@@ -66,12 +77,18 @@ namespace :bs do
 
 					if canon_list
 						klass.create(record) if canon_list.index(record[canon_key])
-					else
-	   	        	klass.create(record)
-	   	      end 	
-          end
+				
+	   	    else 
+	   	      klass.create(record)
+	   	      
+	   	    end 	
+      
+        count +=1
+        puts "Count at #{count}" if count % 1000 == 1
+      
+      end
 
-          puts "#{klass.count} #{table_name} created"
+      puts "#{klass.count} #{table_name} created"
         
 		end
 	end
@@ -88,27 +105,34 @@ end
 
 namespace :prep do
 	desc "read from delays.csv and get starter list of airports and airlines"
-	task :create_canon_lists do 
+	task :canon_lists do 
 
-		require 'set'
 
-		facets = {'airports'=>'airport', 'airlines'=>'carrier'}		
-		sets = facets.keys.inject({}){|h, key| h[key] = Set.new; h}
+		facets = {'airports'=>{facet:'airport', count:15}, 'airlines'=>{facet:'carrier', count: 6}}		
+		
+		sets = facets.keys.inject({}){|h, key| h[key] = Hash.new(0); h}
 
 		fname = File.join(DATA_DIR, "airline_delay_records.csv")
 
-
+    # get all airlines and all airports
+		count_field = 'arr_flights'
+		
 		CSV.foreach(fname, {:headers=>true, :header_converters=>lambda{|h| h.underscore}}) do |row|
-			facets.each_pair do |key, val|
-				sets[key] << row[val]
+			facets.each_pair do |table, key_hsh|
+			  facet_name = key_hsh[:facet]
+			  facet = row[facet_name]
+				sets[table][facet] += row[count_field].to_i
 			end
 		end
 
-
 		sets.each_pair do |table_name, set|
+		  keyhsh = facets[table_name]
+
+		  sorted_set = set.sort_by{|k,v| v }.reverse
+		  
 			cname = File.join(DATA_DIR, "canon_#{table_name}.csv")
 			open(cname, 'w') do |f| 
-				f.puts set.to_a
+				f.puts sorted_set[0..(keyhsh[:count]-1)].map{|s| s[0]} # retain only the name of the thing, not the arr_flights
 			end
 		end
 
