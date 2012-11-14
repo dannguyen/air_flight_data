@@ -52,8 +52,8 @@ class AirlineDelayRecord < ActiveRecord::Base
 
 
 	def hook_into_airport_airline
-		self.airline = Airline.find_by_iata_code(self.airline_code)
-		self.airport = Airport.find_by_code(self.airport_code)
+		self.airline = Airline.find_by_iata_code(self.airline_code) unless self.airline_code.blank?
+		self.airport = Airport.find_by_code(self.airport_code) unless self.airport_code.blank?
 	end
 
 end

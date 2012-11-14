@@ -13,11 +13,7 @@ FactoryGirl.define do
     "#{arr[i%26]}#{arr[(i+9)%26]}#{arr[(i+20)%26]}"
   end
 
-  sequence :integer do |i|
-    i
-  end
-
-
+ 
   factory :airport do 
     code { next(:codes) }
     name {|a| next(:airport_names)}
@@ -29,6 +25,15 @@ FactoryGirl.define do
     name {|a| next(:airline_names)}
   end
 
+  factory :airline_delay_record do |u|
+    airport
+    airline
+    arr_flights{  100 + rand(10000) }
+    arr_del15{ arr_flights - rand(arr_flights * 0.2)}
+    carrier_ct{  arr_del15 * rand}
+    year{ 2005 + rand(7)}
+    month{ rand(12) + 1}
+  end
 
 
 end

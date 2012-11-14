@@ -15,6 +15,7 @@ GEM
     arel (3.0.2)
     builder (3.0.4)
     daemons (1.1.9)
+    database_cleaner (0.9.1)
     erubis (2.7.0)
     eventmachine (1.0.0)
     factory_girl (4.1.0)
@@ -91,6 +92,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  database_cleaner
   erubis (~> 2.7.0)
   factory_girl
   friendly_id
