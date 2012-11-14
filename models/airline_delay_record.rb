@@ -9,7 +9,15 @@ class AirlineDelayRecord < ActiveRecord::Base
 
   scope :top, where("arr_flights > ?", 100)
   scope :christmas, where(:month=>12)
-  scope :year, lambda{|yr| where(:year=>yr)}
+  scope :by_year, lambda{|yr| where(:year=>yr)}
+  scope :by_month, lambda{|m| where(:month=>m)}
+  
+
+  scope :by_airline, lambda{ |cd| 
+    c = (cd.is_a?Airline) ? cd.iata_code : cd 
+    includes(:airline).where('airlines.iata_code'=>c)}
+
+  
   scope :by_airport, lambda{ |cd| 
     c = (cd.is_a?Airport) ? cd.code : cd 
     includes(:airport).where('airports.code'=>c)}

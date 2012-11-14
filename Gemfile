@@ -22,6 +22,7 @@ gem 'rack-test', :require => "rack/test", :group => "test"
 gem 'padrino', '0.10.7'
 gem 'friendly_id'
 gem 'thin', :group=>'development'
+gem 'geocoder'
 
 gem 'factory_girl', :group=>'test'
 gem 'database_cleaner', :group=>'test'

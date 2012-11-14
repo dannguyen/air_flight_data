@@ -1,5 +1,9 @@
 class Airport < ActiveRecord::Base
 	extend FriendlyId
+	extend Geocoder::Model::ActiveRecord
+  reverse_geocoded_by :latitude, :longitude
+  
+	
 	validates_uniqueness_of :code
    friendly_id :code, use: :slugged
 

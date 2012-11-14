@@ -64,6 +64,9 @@ ActiveRecord::Schema.define(:version => 3) do
     t.string "city"
     t.string "slug"
     t.string "site_number", :length=>5
+    t.float  "latitude"
+    t.float  "longitude"
+    
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

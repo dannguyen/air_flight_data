@@ -3,6 +3,19 @@ require 'logger'
 logger.level = Logger::WARN
 
 
+def geo_degrees_to_decimal(str, opts={})
+  #example = 149-59-53.5000W
+  #   66-54-50.2000N
+  
+  puts str
+  delimiter = opts[:delimiter] || '-'
+  str = str.sub(/[a-z]/i, '')
+  dir = $~.to_s.upcase
+  
+  angle, mins, secs = str.split(delimiter)
+  
+  return "#{dir=~/W|S/ ? '-' : ''}#{angle}.#{( (mins.to_f/60 + secs.to_f/3600) * 10000 ).to_i}".to_f
+end
 
 namespace :bs do
 	
@@ -13,10 +26,17 @@ namespace :bs do
 		:airports => {
 			:headers=>{
 				'LocationID'=>'code',
-				'FacilityName'=>'name'
+				'FacilityName'=>'name',
+				'ARPLatitude'=>'latitude',
+			  'ARPLongitude'=>'longitude'				
 			},
 			:canonical_key=>'code',
-			:canonical_list=>true
+			:canonical_list=>true,
+			
+			:field_conversions=>{
+			  'latitude'=>lambda{|f| geo_degrees_to_decimal(f) }, 
+			  'longitude'=>lambda{|f| geo_degrees_to_decimal(f)}
+			}
 			
 		},
 
@@ -59,6 +79,7 @@ namespace :bs do
 			klass = table_name.to_s.classify.constantize
 
 			header_mappings = hsh[:headers]
+			field_conversions = hsh[:field_conversions]
 
 			canon_key = hsh[:canonical_key]
 			canon_list =  open("canon_#{table_name}.csv").read.split("\n") if hsh[:canonical_list]
@@ -73,20 +94,25 @@ namespace :bs do
 			 							}
 			 				 }) do |row|
    	
-   	        	record = row.to_hash.slice(*klass.column_names) 
+   	              if field_conversions
+   	                field_conversions.each_pair do |key, lam|
+   	                    row[key] = lam.call(row[key])
+ 	                  end
+ 	                end
+   	      
+   	
+   	        	    record = row.to_hash.slice(*klass.column_names) 
 
-					if canon_list
-						klass.create(record) if canon_list.index(record[canon_key])
-				
-	   	    else 
-	   	      klass.create(record)
-	   	      
-	   	    end 	
+            					if canon_list
+            						klass.create(record) if canon_list.index(record[canon_key])
+            	   	    else 
+            	   	      klass.create(record)	   	      
+	   	                end 	
       
-        count +=1
-        puts "Count at #{count}" if count % 1000 == 1
+                  count +=1
+                  puts "Count at #{count}" if count % 1000 == 1
       
-      end
+                end
 
       puts "#{klass.count} #{table_name} created"
         

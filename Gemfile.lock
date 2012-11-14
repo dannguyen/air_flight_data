@@ -21,6 +21,7 @@ GEM
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
     friendly_id (4.0.9)
+    geocoder (1.1.4)
     http_router (0.10.2)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
@@ -96,6 +97,7 @@ DEPENDENCIES
   erubis (~> 2.7.0)
   factory_girl
   friendly_id
+  geocoder
   minitest (~> 2.6.0)
   padrino (= 0.10.7)
   rack-test
