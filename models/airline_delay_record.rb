@@ -2,9 +2,6 @@ class AirlineDelayRecord < ActiveRecord::Base
 
 	belongs_to :airline
 	belongs_to :airport
-	
-
-  
 
 	delegate :name, :to=>:airport, :prefix=>true, :allow_nil=>true
 	delegate :name, :to=>:airline, :prefix=>true
@@ -21,9 +18,25 @@ class AirlineDelayRecord < ActiveRecord::Base
   validates_presence_of :airline_id
 
 	
-	def self.arrivals_sum
+	
+	def self.arrivals_count
 	  self.sum(:arr_flights)
   end
+  
+  def self.delayed_arrivals_count
+    self.sum(:arr_del15)
+  end
+  
+  def self.delayed_arrivals_rate
+    self.delayed_arrivals_count.to_f / self.arrivals_count 
+  end
+  
+  
+  
+  
+  
+  
+  
   
   def self.all_delayed_arrivals_sum
     self.sum(:arr_del15)
