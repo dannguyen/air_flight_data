@@ -1,5 +1,20 @@
-<h2><%=@airline.name%></h2>
+<section class="container fold">
 
+	<h2><%=@airline.name%></h2>
+
+	<div class="row">
+		<div class="span6">
+		
+			<%=partial "airline_delays/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>
+		
+		</div>	
+	</div>
+
+</section> <!-- container fold-->
+
+
+
+<div class="">
 
 <table>
 <% @airports_by_arrivals_sum.each do |arr| %>

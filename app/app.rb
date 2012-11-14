@@ -8,6 +8,13 @@ class SkiftAir < Padrino::Application
 
   enable :sessions
 
+  
+  module Settings
+    THIS_YEAR = 2012
+    THIS_MONTH = 6
+  end
+  
+  
   ##
   # Caching support
   #

@@ -1,0 +1,34 @@
+<style type="text/css" media="screen">
+	.delayed-statbox th, .delayed-statbox td{
+		text-align: center;
+	}
+	
+</style>
+
+	<table class="table delayed-statbox">
+		<tr>
+			<th colspan="2"><%=month%></th>				
+		</tr>
+		
+		<tr>
+			<th><%=years[0]%></th>
+			<th><%=years[1]%></th>
+		</tr>
+		<tbody>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+		</tbody>
+	</table>
