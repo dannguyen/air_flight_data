@@ -26,16 +26,27 @@ SkiftAir.controllers :airline_delays do
     render "airline_delays/index"
   end
 
-  get :by_airline, :map=>"/airline_delays/airline/:airline" do 
+  get :delays_by_airline, :map=>"/airline_delays/airline/:airline" do 
     @airline = Airline.find(params[:airline])
     @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
 
-    render "airline_delays/by_airline"
+    render "airline_delays/delays_by_airline"
   end
 
-  get :by_airport, :map=>"/airline_delays/airport/:airport" do 
-    @airport = Airport.find(params[:airport], :include=>:airline_delay_records)
-    @delay_records = @airport.airline_delay_records
+
+
+  get :delays_by_airport, :map=>"/airline_delays/airport/:airport" do 
+    @airport = Airport.find(params[:airport], :include=>{:airline_delay_records=>:airline})
+
+    @delay_records = @airport.airline_delay_records.top
+    
+    @christmas_delay_records = @delay_records.christmas
+    
+    @all_years = @christmas_delay_records.map{|c| c.year}.uniq.sort
+    
+    @airlines = @christmas_delay_records.map{|r| r.airline}.uniq
+    
+  
     render "airline_delays/by_airport"
   end
 

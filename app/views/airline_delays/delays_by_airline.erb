@@ -6,7 +6,7 @@
 	<% airport, arrivals_count = arr%>
 
 	<tr>
-		<td><%=link_to airport.name, url_for(:airline_delays, :by_airport, :airport=>airport)%></td>
+		<td><%=link_to airport.name, url_for(:airline_delays, :delays_by_airport, :airport=>airport)%></td>
 		<td><%=number_with_delimiter arrivals_count%></td>
 		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
 		<td><%#=arrivals_count/@airline.delayed_arrivals_at_airport(airport).to_f%></td>

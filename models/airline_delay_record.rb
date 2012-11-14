@@ -10,6 +10,8 @@ class AirlineDelayRecord < ActiveRecord::Base
 	delegate :name, :to=>:airline, :prefix=>true
 	before_save :hook_into_airport_airline
 
+  scope :top, where("arr_flights > ?", 100)
+  scope :christmas, where(:month=>12)
   scope :year, lambda{|yr| where(:year=>yr)}
   scope :by_airport, lambda{ |cd| 
     c = (cd.is_a?Airport) ? cd.code : cd 
