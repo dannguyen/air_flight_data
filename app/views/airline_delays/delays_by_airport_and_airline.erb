@@ -1,0 +1,21 @@
+<h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
+
+<table class="table">
+	<thead><tr>
+		<% head_fields = [:year, :month, :arr_flights, :arr_del15, :carrier_ct] %>
+		
+		<% head_fields.each do |hf| %>
+			<th><%= hf %></th>
+		<% end %>
+	</tr></thead>
+	<tbody>
+		<% @ontime_records.each do |record| %>
+		<tr>
+			<% head_fields.each do |hf| %>
+				<td><%= number_with_delimiter record.send(hf) %></td>
+			<% end %>			
+		</tr>
+		<% end %>
+	</tbody>
+<% end %>
+</table>

@@ -2,7 +2,7 @@
 
 <% @airlines.each do |airline| %>
 <tr>
-	<td><%=link_to airline, url_for(:airline_delays, :delays_by_airline, :airline=>airline)%></td>
+	<td><%=link_to airline, url_for(:airline_delays, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
 	
 	<% @all_years.each do |year| %>
 		<% hmr_record = airline.airline_delay_records.where(:year=>year, :month=>@month) %>
@@ -16,6 +16,5 @@
 	<td>
 		<%=number_with_delimiter hmr_record.carrier_ct%>
 	</td>	
-	
-	
+</tr>	
 <% end %>	

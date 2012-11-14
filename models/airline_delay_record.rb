@@ -41,19 +41,6 @@ class AirlineDelayRecord < ActiveRecord::Base
   
   
   
-  
-  
-  
-  
-  
-  def self.all_delayed_arrivals_sum
-    self.sum(:arr_del15)
-  end
-  
-  def self.airline_delayed_arrivals_sum
-    self.sum(:carrier_ct)
-  end
-  
   def self.airports_by_arrivals_sum(opts={})
     # returns [[#Airport, 42], ]
     self.includes(:airports).group(:airport_id).hsh_by_arrivals_sum
@@ -61,8 +48,7 @@ class AirlineDelayRecord < ActiveRecord::Base
   
   
 
- 
-  
+   
 
 
 	private
@@ -76,5 +62,6 @@ class AirlineDelayRecord < ActiveRecord::Base
 		self.airline = Airline.find_by_iata_code(self.airline_code) unless self.airline_code.blank?
 		self.airport = Airport.find_by_code(self.airport_code) unless self.airport_code.blank?
 	end
+
 
 end

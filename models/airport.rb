@@ -9,8 +9,20 @@ class Airport < ActiveRecord::Base
 
    has_many :airline_delay_records
 
+   scope :similar_to, lambda{|rport, num|  where('id != ?', rport.id).limit(num) } # TK
+
 
   def normalize_friendly_id(string)
     super.upcase
   end
+  
+  def similar_airports(num)
+    self.class.similar_to(self, num)
+  end
+
+  
+  
+  private
+	
+	
 end
