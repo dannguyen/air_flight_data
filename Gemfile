@@ -23,6 +23,8 @@ gem 'padrino', '0.10.7'
 gem 'friendly_id'
 gem 'thin', :group=>'development'
 
+gem 'factory_girl', :group=>'test'
+
 # Or Padrino Edge
 # gem 'padrino', :git => 'git://github.com/padrino/padrino-framework.git'
 

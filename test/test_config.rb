@@ -1,5 +1,10 @@
+require 'factory_girl'
+
 PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
 require File.expand_path('../../config/boot', __FILE__)
+
+require_relative 'factories'
+
 
 class MiniTest::Unit::TestCase
   include Rack::Test::Methods

@@ -5,4 +5,9 @@ describe "Airline Model" do
     @airline = Airline.new
     refute_nil @airline
   end
+  
+  it "can build" do 
+    airline = FactoryGirl.build(:airline)
+    airline.wont_be_nil
+  end
 end
