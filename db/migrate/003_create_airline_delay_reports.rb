@@ -1,12 +1,12 @@
-class CreateAirlineDelayReports < ActiveRecord::Migration
+class CreateOntimeReports < ActiveRecord::Migration
   def self.up
-    create_table :airline_delay_reports do |t|
+    create_table :ontime_reports do |t|
       
       t.timestamps
     end
   end
 
   def self.down
-    drop_table :airline_delay_reports
+    drop_table :ontime_reports
   end
 end

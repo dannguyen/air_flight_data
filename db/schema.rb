@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 3) do
 
-  create_table "airline_delay_records", :force => true do |t|
+  create_table "ontime_records", :force => true do |t|
     t.integer  "airline_id"
     t.integer  "airport_id"
     t.string   "airport_full_name"
@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(:version => 3) do
   add_index :airports, :code, unique: true
   add_index :airlines, :slug, unique: true
 
-  add_index :airline_delay_records, :year
-  add_index :airline_delay_records, :airport_id
-  add_index :airline_delay_records, :airline_id
+  add_index :ontime_records, :year
+  add_index :ontime_records, :airport_id
+  add_index :ontime_records, :airline_id
 
 end

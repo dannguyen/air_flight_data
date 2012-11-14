@@ -1,0 +1,22 @@
+
+
+<h1>Airline Delays</h1>
+
+
+
+<h2>By Airline</h2>
+<ul>
+	<% @airlines.each do |airline| %>
+		<li><%=link_to airline.name, url_for( :ontimes, :delays_by_airline, :airline=>airline) %></li>
+	<% end %>
+</ul>
+
+
+<h2>By Airport</h2>
+
+<ul>
+	<% @airports.each do |airport| %>
+		<li><%=link_to airport.name, url_for( :ontimes, :delays_by_airport, :airport=>airport) %></li>
+	<% end %>
+</ul>
+

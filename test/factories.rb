@@ -19,14 +19,14 @@ FactoryGirl.define do
     code { generate(:codes) }
     name {|a| generate(:airport_names)}
     
-    factory :airport_with_delays do
+    factory :airport_with_ontime_records do
          ignore do
-           delays_count 5
+           rec_count 5
          end
 
       
          after(:create) do |airport, evaluator|
-           FactoryGirl.create_list(:airline_delay_record, evaluator.delays_count, airport: airport)
+           FactoryGirl.create_list(:ontime_record, evaluator.rec_count, airport: airport)
          end
     end     
          
@@ -37,19 +37,19 @@ FactoryGirl.define do
     icao_code{ generate(:codes) }
     name {|a| generate(:airline_names)}
     
-    factory :airline_with_delays do
+    factory :airline_with_ontime_records do
          ignore do
-           delays_count 5
+           rec_count 5
          end
 
       
          after(:create) do |airline, evaluator|
-           FactoryGirl.create_list(:airline_delay_record, evaluator.delays_count, airline: airline)
+           FactoryGirl.create_list(:ontime_record, evaluator.rec_count, airline: airline)
          end
     end
   end
 
-  factory :airline_delay_record do |u|
+  factory :ontime_record do |u|
     airport
     airline
     arr_flights{  100 + rand(10000) }

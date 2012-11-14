@@ -7,7 +7,7 @@ class Airport < ActiveRecord::Base
 	validates_uniqueness_of :code
    friendly_id :code, use: :slugged
 
-   has_many :airline_delay_records
+   has_many :ontime_records
 
    scope :similar_to, lambda{|rport, num|  where('id != ?', rport.id).limit(num) } # TK
 

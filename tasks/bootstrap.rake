@@ -46,7 +46,7 @@ namespace :bs do
 			:canonical_list=>true
 		},
 
-		:airline_delay_records => {
+		:ontime_records => {
 			:headers=>{
 				'carrier'=>'airline_code',
 				'airport'=>'airport_code',
@@ -121,7 +121,7 @@ namespace :bs do
 	
 	
 	task :clean_orphans do 
-	  ar = AirlineDelayRecord.where(:airport_id => nil)
+	  ar = OntimeRecord.where(:airport_id => nil)
 	  puts ar.count
 
     ar.delete_all
@@ -138,7 +138,7 @@ namespace :prep do
 		
 		sets = facets.keys.inject({}){|h, key| h[key] = Hash.new(0); h}
 
-		fname = File.join(DATA_DIR, "airline_delay_records.csv")
+		fname = File.join(DATA_DIR, "ontime_records.csv")
 
     # get all airlines and all airports
 		count_field = 'arr_flights'
