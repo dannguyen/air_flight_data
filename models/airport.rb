@@ -1,6 +1,9 @@
 class Airport < ActiveRecord::Base
+	include MyLazyRecordBase
+  
 	extend FriendlyId
 	extend Geocoder::Model::ActiveRecord
+	
   reverse_geocoded_by :latitude, :longitude
   
 	

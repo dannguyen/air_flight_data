@@ -1,5 +1,7 @@
 class Airline < ActiveRecord::Base
 	extend FriendlyId
+	include MyLazyRecordBase
+  
 	validates_uniqueness_of [:iata_code, :icao_code]
 
    friendly_id :name, use: :slugged
