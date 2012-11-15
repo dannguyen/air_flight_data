@@ -1,16 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 
-describe "OntimeRecord Model" do
+describe "OntimeRecord Scopes" do
   before do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean
   end
   
   
-  it 'can construct a new instance' do
-    @ontime_report = OntimeRecord.new
-    refute_nil @ontime_report
-  end
   
   it 'factory' do
     ontime_report = FactoryGirl.build(:ontime_record)
@@ -31,10 +27,6 @@ describe "OntimeRecord Model" do
     
   end
   
-  it "should have year_month attribute" do 
-    @r = FactoryGirl.create(:ontime_record, month: 7, year: 2012)
-    @r.year_month.must_equal "2012-07"
-  end
   
   it "should have by_ytd scope that accepts year-month string" do
     recs = (1..10).map{|i| FactoryGirl.create(:ontime_record, month: i, year: 2012)}
