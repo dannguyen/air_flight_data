@@ -31,14 +31,87 @@ class OntimeRecord < ActiveRecord::Base
   validates_presence_of :airport_id
   validates_presence_of :airline_id
 
+
+  alias_attribute :arrivals_count, :arr_flights 
+  alias_attribute :delayed_arrivals, :arr_del15
+  alias_attribute :carrier_delayed_arrivals, :carrier_ct
+  alias_attribute :nas_delayed_arrivals, :nas_ct
+  alias_attribute :security_delayed_arrivals, :security_ct
+  alias_attribute :late_aircraft_delayed_arrivals, :late_aircraft_ct
+
+
+  def other_causes_delayed_arrivals
+    security_delayed_arrivals + late_aircraft_delayed_arrivals
+  end
+
+
 	def year_month
 	  foo_to_year_month(year, month)
   end
+
+  def delayed_arrivals_rate
+    # this is not part of delayed_arrivals_causes_methods_suite as it is just the general rate
+    delayed_arrivals.to_f/arrivals_count
+  end
+
+  def OntimeRecord.delayed_arrivals_causes_methods_suite
+    DELAYED_METHODS_CAUSES_ARRIVALS
+  end
+
+
+
+=begin	
+
+
+  def carrier_delayed_arrivals_rate
+    carrier_delayed_arrivals.to_f/arrivals_count
+  end
+=end 
 	
-	
-	
-	def self.arrivals_count
-	  self.sum(&:arr_flights)
+=begin 
+  ATTRIBUTE_MAP = {
+    :year=>'Year',
+    :month=>'Month',
+    :arrivals_count=>'Total arrivals',
+    :delayed_arrivals=>'Late arrivals (15+ min.)',
+    :carrier_delayed_arrivals=>'Carrier fault',
+    :weather_delayed_arrivals=>'Extreme weather',
+    :nas_delayed_arrivals=>'NAS fault'
+
+}
+=end
+
+
+end
+
+
+class OntimeRecord < ActiveRecord::Base
+
+## meta methods
+
+ DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /_delayed_arrivals$/}
+
+  # define rate methods
+  DELAYED_METHODS_CAUSES_ARRIVALS.each do |mth|
+    define_method("#{mth}_rate") do 
+      self.send(mth).to_f / arrivals_count
+    end
+  end
+
+
+
+
+end
+
+
+
+
+
+class OntimeRecord < ActiveRecord::Base
+## scope methods
+
+  def self.arrivals_count
+    self.sum(&:arr_flights)
   end
   
   def self.delayed_arrivals_count
@@ -116,17 +189,22 @@ class OntimeRecord < ActiveRecord::Base
   end
 
 
-	private
+  private
+
+
+  
+
+
 # kill
   def self.hsh_by_arrivals_sum
     self.sum(:arr_flights).sort_by{|k,v| v}.reverse.map{|a| [Airport.find(a[0]), a[1]]}
   end
 
 
-	def hook_into_airport_airline
-		self.airline = Airline.find_by_iata_code(self.airline_code) unless self.airline_code.blank?
-		self.airport = Airport.find_by_code(self.airport_code) unless self.airport_code.blank?
-	end
+  def hook_into_airport_airline
+    self.airline = Airline.find_by_iata_code(self.airline_code) unless self.airline_code.blank?
+    self.airport = Airport.find_by_code(self.airport_code) unless self.airport_code.blank?
+  end
 
 
 end
