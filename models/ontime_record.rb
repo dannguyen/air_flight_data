@@ -14,6 +14,11 @@ class OntimeRecord < ActiveRecord::Base
   scope :by_month, lambda{|m| where(:month=>m)}
   scope :by_year_month, lambda{|str| yr,mth = str.split('-'); by_year(yr).by_month(mth)}
 
+  scope :by_ytd, lambda{|str|  
+    yr,mth = str.split('-',3)
+    where(:year=>yr.to_i, :month=>(1..mth.to_i))  
+  }
+
   scope :by_airline, lambda{ |cd| 
     c = (cd.is_a?Airline) ? cd.iata_code : cd 
     includes(:airline).where('airlines.iata_code'=>c)}
@@ -81,22 +86,27 @@ class OntimeRecord < ActiveRecord::Base
     latest_year_month = foo_to_year_month(latest_year, latest_month)
     prev_year_month = foo_to_year_month(latest_year-1, latest_month)
     
-    case hsh[:period_type]
+    scope_name = case hsh[:period_type]    
+      when 'YOY'
+        :by_year_month
+      when 'YTD'
+        :by_ytd
+      end #case statement
     
-    when 'YOY'
       # year-over-year requires a month setting
           
       hsh[:periods] << {
         :name=>prev_year_month,
-        :records=>self.by_year_month(prev_year_month)
+        :records=>self.send(scope_name, prev_year_month)
       }
 
     
       hsh[:periods] << {
         :name=>latest_year_month,
-        :records=>self.by_year_month(latest_year_month)
+        :records=>self.send(scope_name, latest_year_month)
       }
-    end #case statement
+      
+        
     
     return hsh
     

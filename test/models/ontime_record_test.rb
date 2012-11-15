@@ -36,6 +36,18 @@ describe "OntimeRecord Model" do
     @r.year_month.must_equal "2012-07"
   end
   
+  it "should have by_ytd scope that accepts year-month string" do
+    recs = (1..10).map{|i| FactoryGirl.create(:ontime_record, month: i, year: 2012)}
+    (1..3).each{|i| FactoryGirl.create(:ontime_record, month: i, year: 2011)}
+    
+    OntimeRecord.by_ytd('2012-05').arrivals_count.must_equal(
+      OntimeRecord.by_year(2012).where(:month=>1..5).arrivals_count
+    )
+    
+    OntimeRecord.by_ytd('2012-01').first.must_equal recs.first 
+    
+  end
+  
   it ":latest_period should return latest year and month hash as a scope method" do 
     FactoryGirl.create_list(:ontime_record, 10, :month=>rand(12)+1, :year=>2010)
     @record = FactoryGirl.create(:ontime_record, :month=>12, :year=>2015)
@@ -49,6 +61,7 @@ describe "OntimeRecord Model" do
   
   it ":compare_periods should return records in latest period" do
   
+    # these are non-essential
     FactoryGirl.create_list(:ontime_record, 10, :month=>8, :year=>2010)
     
     @airport = FactoryGirl.create(:airport)
@@ -56,16 +69,19 @@ describe "OntimeRecord Model" do
     
     r_2012 = [ 
       FactoryGirl.create(:ontime_record, :month=>1, :year=>2012, :airport=>@airport, :airline=>@airline),
-    FactoryGirl.create(:ontime_record, :month=>2, :year=>2012, :airport=>@airport, :airline=>@airline)
+    FactoryGirl.create(:ontime_record, :month=>2, :year=>2012, :airport=>@airport, :airline=>@airline),
+        FactoryGirl.create(:ontime_record, :month=>3, :year=>2012, :airport=>@airport, :airline=>@airline)
     ]
 
     r_2013 = [
       FactoryGirl.create(:ontime_record, :month=>1, :year=>2013, :airport=>@airport, :airline=>@airline),
-    FactoryGirl.create(:ontime_record, :month=>2, :year=>2013, :airport=>@airport, :airline=>@airline)
+    FactoryGirl.create(:ontime_record, :month=>2, :year=>2013, :airport=>@airport, :airline=>@airline),
+    FactoryGirl.create(:ontime_record, :month=>3, :year=>2013, :airport=>@airport, :airline=>@airline)
+    
     ]
     
     @recs = OntimeRecord.by_airport(@airport).by_airline(@airline)
-    @recs.count.must_equal 4 # sanity check
+    @recs.count.must_equal 6 # sanity check
     
     # no arguments, default is YOY, latest year and month
     periods_hsh = @recs.compare_periods
@@ -75,12 +91,34 @@ describe "OntimeRecord Model" do
     periods.length.must_equal 2
     periods.must_be_kind_of(Array)
     
-    periods[0][:name].must_equal '2012-02'
-    periods[1][:name].must_equal '2013-02'
+    periods[0][:name].must_equal '2012-03'
+    periods[1][:name].must_equal '2013-03'
+    
+    
+    periods[0][:records].to_a.length.must_equal 1
+    periods[1][:records].to_a.length.must_equal 1
     
     periods[0][:records].to_a.last.must_equal r_2012.last # exact elements
     periods[1][:records].to_a.last.must_equal r_2013.last # exact elements
     
+    
+    # yeardefault is YOY, latest year and month
+    p2_hsh = @recs.compare_periods('YTD', :month=>2)
+    
+    p2_hsh[:period_type].must_equal 'YTD'
+    
+    periods = p2_hsh[:periods]
+    
+    periods.first[:name].must_equal '2012-02'
+    periods.last[:name].must_equal '2013-02'
+    
+    periods.first[:records].to_a.length.must_equal 2
+    periods.first[:records].to_a.length.must_equal 2
+    
+    periods.first[:records].arrivals_count.must_equal r_2012[0..1].inject(0){|s,a| s+=a.arr_flights}
+
+    periods.last[:records].arrivals_count.must_equal r_2013[0..1].inject(0){|s,a| s+=a.arr_flights}
+  
     
   end
   
@@ -111,6 +149,12 @@ describe "OntimeRecord Model" do
     
   end
 
+
+
+
+
+
+### aggregations
   
   it ":arrivals_count should sum the number of arrivals" do
     arr =  [100, 500, 600, 700, 200]
