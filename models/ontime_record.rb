@@ -27,7 +27,7 @@ class OntimeRecord < ActiveRecord::Base
   validates_presence_of :airline_id
 
 	def year_month
-	  "#{year}-#{"%02d" % month}"
+	  foo_to_year_month(year, month)
   end
 	
 	
@@ -64,25 +64,39 @@ class OntimeRecord < ActiveRecord::Base
   
   
 
-  def self.compare_periods(opts={})
+  def self.compare_periods(pd_type='YOY', opts={})
     # default is year-over-year, latest period
+    unless ['YOY', 'YTD'].index(pd_type)
+      raise ArgumentError, "first argument must be 'YOY' or 'YTD', not #{pd_type}"
+    end
+        
     hsh = {:periods=>[]}
-    hsh[:period_type] = opts[:period_type] || 'YOY'    
-    _period = self.latest_period
+    hsh[:period_type] = pd_type
     
-    _prev_year_month = "#{_period[:year]-1}-#{"%02d" % _period[:month]}"
+    _late_period = self.latest_period
     
+    latest_year = opts[:year] || _late_period[:year]
+    latest_month = opts[:month] || _late_period[:month]
+    
+    latest_year_month = foo_to_year_month(latest_year, latest_month)
+    prev_year_month = foo_to_year_month(latest_year-1, latest_month)
+    
+    case hsh[:period_type]
+    
+    when 'YOY'
+      # year-over-year requires a month setting
+          
+      hsh[:periods] << {
+        :name=>prev_year_month,
+        :records=>self.by_year_month(prev_year_month)
+      }
 
-    hsh[:periods] << {
-      :name=>_prev_year_month,
-      :records=>self.by_year_month(_prev_year_month)
-    }
-
     
-    hsh[:periods] << {
-      :name=>_period[:year_month],
-      :records=>self.by_year_month(_period[:year_month])
-    }
+      hsh[:periods] << {
+        :name=>latest_year_month,
+        :records=>self.by_year_month(latest_year_month)
+      }
+    end #case statement
     
     return hsh
     

@@ -9,3 +9,14 @@ module MyLazyRecordBase
   end
   
 end
+
+
+module MyFoos
+  
+  def foo_to_year_month(yr,mth)
+    "#{yr}-#{"%02d" % mth}"
+  end
+  
+end
+
+include MyFoos
