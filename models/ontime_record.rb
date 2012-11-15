@@ -30,11 +30,12 @@ class OntimeRecord < ActiveRecord::Base
 
   validates_presence_of :airport_id
   validates_presence_of :airline_id
+  validates_presence_of :arr_flights
 
-
-  alias_attribute :arrivals_count, :arr_flights 
+  alias_attribute :arrivals, :arr_flights 
   alias_attribute :delayed_arrivals, :arr_del15
   alias_attribute :carrier_delayed_arrivals, :carrier_ct
+  alias_attribute :weather_delayed_arrivals, :weather_ct
   alias_attribute :nas_delayed_arrivals, :nas_ct
   alias_attribute :security_delayed_arrivals, :security_ct
   alias_attribute :late_aircraft_delayed_arrivals, :late_aircraft_ct
@@ -51,7 +52,7 @@ class OntimeRecord < ActiveRecord::Base
 
   def delayed_arrivals_rate
     # this is not part of delayed_arrivals_causes_methods_suite as it is just the general rate
-    delayed_arrivals.to_f/arrivals_count
+    delayed_arrivals.to_f/arrivals
   end
 
   def OntimeRecord.delayed_arrivals_causes_methods_suite
@@ -64,7 +65,7 @@ class OntimeRecord < ActiveRecord::Base
 
 
   def carrier_delayed_arrivals_rate
-    carrier_delayed_arrivals.to_f/arrivals_count
+    carrier_delayed_arrivals.to_f/arrivals
   end
 =end 
 	
@@ -72,7 +73,7 @@ class OntimeRecord < ActiveRecord::Base
   ATTRIBUTE_MAP = {
     :year=>'Year',
     :month=>'Month',
-    :arrivals_count=>'Total arrivals',
+    :arrivals=>'Total arrivals',
     :delayed_arrivals=>'Late arrivals (15+ min.)',
     :carrier_delayed_arrivals=>'Carrier fault',
     :weather_delayed_arrivals=>'Extreme weather',
@@ -89,14 +90,34 @@ class OntimeRecord < ActiveRecord::Base
 
 ## meta methods
 
- DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /_delayed_arrivals$/}
+ DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /^[a-z]+\w+_delayed_arrivals$/}
 
-  # define rate methods
   DELAYED_METHODS_CAUSES_ARRIVALS.each do |mth|
-    define_method("#{mth}_rate") do 
-      self.send(mth).to_f / arrivals_count
+    
+   # define class methods
+    define_singleton_method(mth) do 
+      self_re.sum(&mth)
     end
+
+
+   # define rate methods
+   rate_mth = "#{mth}_rate".to_sym
+
+     define_method(rate_mth) do 
+      self.send(mth).to_f / arrivals
+    end
+
+    define_singleton_method(rate_mth) do 
+      self_re.send(mth).to_f / self.arrivals
+    end
+
+
+   
+
   end
+
+
+## meta scope methods
 
 
 
@@ -110,16 +131,16 @@ end
 class OntimeRecord < ActiveRecord::Base
 ## scope methods
 
-  def self.arrivals_count
-    self.sum(&:arr_flights)
+  def self.arrivals
+    self.sum(:arr_flights)
   end
   
-  def self.delayed_arrivals_count
-    self.sum(&:arr_del15)
+  def self.delayed_arrivals
+    self.sum(:arr_del15)
   end
   
   def self.delayed_arrivals_rate
-    self.delayed_arrivals_count.to_f / self.arrivals_count 
+    self.delayed_arrivals.to_f / self.arrivals 
   end
   
   def self.latest_period

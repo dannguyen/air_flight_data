@@ -18,13 +18,13 @@
 
 <table>
 <% @airports_by_arrivals_sum.each do |arr| %>
-	<% airport, arrivals_count = arr%>
+	<% airport, arrivals = arr%>
 
 	<tr>
 		<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport, :airport=>airport)%></td>
-		<td><%=number_with_delimiter arrivals_count%></td>
+		<td><%=number_with_delimiter arrivals%></td>
 		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
-		<td><%#=arrivals_count/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
+		<td><%#=arrivals/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
 	</tr>
 
 

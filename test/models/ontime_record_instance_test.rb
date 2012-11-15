@@ -11,10 +11,10 @@ describe "OntimeRecord Instances" do
     @r.year_month.must_equal "2012-07"
   end
 
-  it "should have arrivals_count as an alias" do 
+  it "should have arrivals as an alias" do 
     a = 200
     @r = FactoryGirl.create(:ontime_record, arr_flights: a)
-    @r.arrivals_count.must_equal a 
+    @r.arrivals.must_equal a 
 
   end
 
@@ -71,9 +71,13 @@ describe "OntimeRecord Instances" do
     OntimeRecord.delayed_arrivals_causes_methods_suite.each do |dmeth|
       dmeth.to_s.must_be :=~, /_delayed_arrivals$/
       @r.must_respond_to dmeth
-      @r.must_respond_to "#{dmeth}_rate".to_sym
+
+      dmeth_rate = "#{dmeth}_rate".to_sym
+      @r.must_respond_to dmeth_rate
     end
 
   end
+
+
 
 end

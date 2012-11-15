@@ -19,7 +19,7 @@ describe "OntimeRecord Scopes" do
     @airport2 = FactoryGirl.create(:airport_with_ontime_records, rec_count: 3)
     
     OntimeRecord.by_airport(@airport1).count.must_equal 7
-    OntimeRecord.by_airport(@airport1).arrivals_count.must_equal @airport1.ontime_records.arrivals_count
+    OntimeRecord.by_airport(@airport1).arrivals.must_equal @airport1.ontime_records.arrivals
     
     # should accept airport code as well
     
@@ -32,8 +32,8 @@ describe "OntimeRecord Scopes" do
     recs = (1..10).map{|i| FactoryGirl.create(:ontime_record, month: i, year: 2012)}
     (1..3).each{|i| FactoryGirl.create(:ontime_record, month: i, year: 2011)}
     
-    OntimeRecord.by_ytd('2012-05').arrivals_count.must_equal(
-      OntimeRecord.by_year(2012).where(:month=>1..5).arrivals_count
+    OntimeRecord.by_ytd('2012-05').arrivals.must_equal(
+      OntimeRecord.by_year(2012).where(:month=>1..5).arrivals
     )
     
     OntimeRecord.by_ytd('2012-01').first.must_equal recs.first 
@@ -107,9 +107,9 @@ describe "OntimeRecord Scopes" do
     periods.first[:records].to_a.length.must_equal 2
     periods.first[:records].to_a.length.must_equal 2
     
-    periods.first[:records].arrivals_count.must_equal r_2012[0..1].inject(0){|s,a| s+=a.arr_flights}
+    periods.first[:records].arrivals.must_equal r_2012[0..1].inject(0){|s,a| s+=a.arr_flights}
 
-    periods.last[:records].arrivals_count.must_equal r_2013[0..1].inject(0){|s,a| s+=a.arr_flights}
+    periods.last[:records].arrivals.must_equal r_2013[0..1].inject(0){|s,a| s+=a.arr_flights}
   
     
   end
@@ -123,7 +123,7 @@ describe "OntimeRecord Scopes" do
     
 
     OntimeRecord.by_airline(@a1).count.must_equal 3
-    OntimeRecord.by_airline(@a1).arrivals_count.must_equal @a1.ontime_records.arrivals_count
+    OntimeRecord.by_airline(@a1).arrivals.must_equal @a1.ontime_records.arrivals
     
     # should accept iata_code  as well
     
@@ -144,24 +144,22 @@ describe "OntimeRecord Scopes" do
 
 
 
-
-
 ### aggregations
   
-  it ":arrivals_count should sum the number of arrivals" do
+  it ":arrivals should sum the number of arrivals" do
     arr =  [100, 500, 600, 700, 200]
 
     arr.each{|val| ontime_report = FactoryGirl.create(:ontime_record, {arr_flights: val}) }    
-    OntimeRecord.arrivals_count.must_equal arr.inject(0){|s,v| s += v}
+    OntimeRecord.arrivals.must_equal arr.inject(0){|s,v| s += v}
 
   end
   
 
-  it ":delayed_arrivals_count should sum the number of arrivals" do    
+  it ":delayed_arrivals should sum the number of arrivals" do    
     arr = [10, 20, 30]
     arr.each{|val| ontime_report = FactoryGirl.create(:ontime_record, {arr_del15: val}) }    
     
-    OntimeRecord.delayed_arrivals_count.must_equal 60
+    OntimeRecord.delayed_arrivals.must_equal 60
   end
   
   it ":delayed_arrivals_rate should average the number of delayed over arrivals" do
@@ -171,5 +169,40 @@ describe "OntimeRecord Scopes" do
     arr.each{|val| ontime_report = FactoryGirl.create(:ontime_record, {arr_flights: val, arr_del15: val*pct }) }    
     OntimeRecord.delayed_arrivals_rate.must_equal pct  
   end
+
+
+
+  it "should singleton respond to delayed_arrivals suite of aliased methods, and have auto-meta-gen 'rates'" do 
+
+    @x = FactoryGirl.create(:ontime_record, :arrivals=>1020, :delayed_arrivals=>600, 
+        :carrier_delayed_arrivals=>100,
+        :weather_delayed_arrivals=>120,
+        :nas_delayed_arrivals=>130,
+        :security_delayed_arrivals=>141,
+        :late_aircraft_delayed_arrivals=>109      
+      )
+
+     @y = FactoryGirl.create(:ontime_record, :arrivals=>1020, :delayed_arrivals=>6000, 
+        :carrier_delayed_arrivals=>1000,
+        :weather_delayed_arrivals=>1200,
+        :nas_delayed_arrivals=>1300,
+        :security_delayed_arrivals=>1410,
+        :late_aircraft_delayed_arrivals=>1090      
+      )
+
+    OntimeRecord.delayed_arrivals_causes_methods_suite.each do |dmeth|
+#      dmeth.to_s.must_be :=~, /_delayed_arrivals$/
+
+      OntimeRecord.must_respond_to dmeth
+      OntimeRecord.send(dmeth).must_equal( @x.send(dmeth) + @y.send(dmeth) )
+
+      dmeth_rate = "#{dmeth}_rate".to_sym
+      OntimeRecord.must_respond_to dmeth_rate
+    end
+  end
+
+
+
+
   
 end

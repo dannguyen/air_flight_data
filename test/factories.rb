@@ -22,13 +22,13 @@ FactoryGirl.define do
     factory :airport_with_ontime_records do
          ignore do
            rec_count 5
-         end
-
-      
+         end      
          after(:create) do |airport, evaluator|
            FactoryGirl.create_list(:ontime_record, evaluator.rec_count, airport: airport)
          end
     end     
+
+
          
   end
 
@@ -54,9 +54,13 @@ FactoryGirl.define do
     airline
     arr_flights{  100 + rand(10000) }
     arr_del15{ arr_flights - rand(arr_flights * 0.2)}
+    
     carrier_ct{  arr_del15 * rand}
     year{ 2005 + rand(7)}
     month{ rand(12) + 1}
+
+
+
   end
 
 
