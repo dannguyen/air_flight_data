@@ -11,6 +11,9 @@ SkiftAir.helpers do
          :carrier_delayed_arrivals_rate=>{title:'% Carrier fault', format:'pct'} ,
          :weather_delayed_arrivals_rate=>{title:'% Weather caused', format:'pct'} ,
          :nas_delayed_arrivals_rate=>{title:'% NAS fault', format:'pct'},
+         :late_aircraft_delayed_arrivals_rate => {title:'% Late Aircraft', format:'pct'},
+         :security_delayed_arrivals_rate => {title:'% Security', format:'pct'},
+
          :other_causes_delayed_arrivals_rate => {title:'% Other', format:'pct'},
          :airport=>{title:'Airport', format:'airport'},
          :airline=>{title:'Airline', format:'airline'}

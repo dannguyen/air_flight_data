@@ -1,4 +1,4 @@
-function test_stack(data_set){
+function test_stack(data_set, div_selector){
 	// data_set is object
 	/*
 		{
@@ -32,11 +32,11 @@ function test_stack(data_set){
 	var d3_data_layers = stack( d3.range(layer_count).map( function(layer_idx) { 
 			// for each layer		
 			//map unto each xpoint
-			console.log("layer_idx: " + layer_idx);
+			//console.log("layer_idx: " + layer_idx);
 			return d3.range(x_points_count).map(function(x_idx){
 								
 				var hsh = {x: x_points[x_idx], y: y_points_arrays[x_idx][layer_idx] };
-				console.log("\tx_idx: " + x_idx + ", (" + hsh.x + ", " + hsh.y +")");
+				//console.log("\tx_idx: " + x_idx + ", (" + hsh.x + ", " + hsh.y +")");
 				return hsh;
 			});
 	}) );
@@ -71,7 +71,7 @@ function test_stack(data_set){
 	    .tickPadding(6)
 	    .orient("bottom");
 
-	var svg = d3.select("#graphic-delay-causes").append("svg")
+	var svg = d3.select(div_selector).append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  .append("g")
@@ -115,17 +115,10 @@ function test_stack(data_set){
 	      .attr("width", x.rangeBand());
 	}
 
-	function whatev(n){
-		var arr = [];
-		for(i = 0; i < n; i++){
-			arr[i] = {x: Math.random() * 100, y: Math.random() * 100}
-		}
-		return arr;
-	}
 
 }
 
-
+/*
 
 var the_data = 	{
 		data: {
@@ -146,4 +139,4 @@ var the_data = 	{
 	
 	test_stack(the_data);
 	
-	
+	*/

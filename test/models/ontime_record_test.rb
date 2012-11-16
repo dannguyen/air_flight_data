@@ -27,6 +27,10 @@ describe "OntimeRecord Scopes" do
     
   end
   
+  it "should have :delayed_arrivals_causes_methods_suite that contains a subset of delay methods as a convenience" do 
+    OntimeRecord.delayed_arrivals_causes_methods_suite.must_equal OntimeRecord.delayed_arrivals_methods_suite - [:delayed_arrivals]
+
+  end
   
   it "should have by_ytd scope that accepts year-month string" do
     recs = (1..10).map{|i| FactoryGirl.create(:ontime_record, month: i, year: 2012)}
@@ -262,7 +266,6 @@ describe "OntimeRecord Scopes" do
     agg.arrivals.must_equal @airline.ontime_records.arrivals
     agg.carrier_delayed_arrivals_rate.must_equal @airline.ontime_records.carrier_delayed_arrivals_rate
 
-
     ###### triple facet by airport
     airport_aggs = OntimeRecord.group_and_sum_by([:airport_id, :year, :month])
     agg = airport_aggs.first
@@ -278,9 +281,18 @@ describe "OntimeRecord Scopes" do
     airport_aggs.select{|r| r.airport_id == airport.id}.inject(0){|s,r| s += r.weather_delayed_arrivals}.must_be_within_delta 1.0, airport.ontime_records.weather_delayed_arrivals
 
 
+    ## test formatters
+    airport_agg_hash = OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(airport_aggs)
+    airport_agg_hash.must_be_kind_of Hash
+    airport_agg_hash[:data].must_be_kind_of Hash
+    airport_agg_hash[:layers].must_be_kind_of Array
+
+    # same number of x points for y arrays of points
+    airport_agg_hash[:data][:x].length.must_equal airport_agg_hash[:data][:y].length
+
+    # there must be as many y points per x as there are layers
+    airport_agg_hash[:data][:y].first.length.must_equal airport_agg_hash[:layers].length
 
   end
-
-
   
 end

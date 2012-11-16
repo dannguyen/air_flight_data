@@ -33,6 +33,15 @@
 
 </section> <!-- container fold-->
 
+<section class="container fold">
+
+
+	
+	<%=partial 'ontime/graphics/test-line', :locals=>{:datapoints=> OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped) } %>
+
+</section>
+
+
 
 <section class="container fold">
 	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records_grouped}%>

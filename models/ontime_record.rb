@@ -49,9 +49,20 @@ class OntimeRecord < ActiveRecord::Base
     alias_attribute b, a
   end
   
-  def arrival_delay_causes_method_suite 
-    ARRIVAL_STAT_COUNT_NAME_MAPPING.values - [:delayed_arrivals]
+  
+  def OntimeRecord.delayed_arrivals_methods_suite
+    ARRIVAL_STAT_COUNT_NAME_MAPPING.values
   end
+
+  def OntimeRecord.delayed_arrivals_causes_methods_suite 
+    # all the methods that compose the attributes that make up :delayed_arrivals
+    self.delayed_arrivals_methods_suite - [:delayed_arrivals]
+  end
+
+  def OntimeRecord.delayed_arrivals_causes_rate_methods_suite
+    self.delayed_arrivals_causes_methods_suite.map{|m| "#{m}_rate".to_sym}
+  end
+
 
   def other_causes_delayed_arrivals
     security_delayed_arrivals + late_aircraft_delayed_arrivals
@@ -63,9 +74,7 @@ class OntimeRecord < ActiveRecord::Base
   end
 
 
-  def OntimeRecord.delayed_arrivals_causes_methods_suite
-    DELAYED_METHODS_CAUSES_ARRIVALS
-  end
+ 
 
 
 
@@ -98,9 +107,8 @@ class OntimeRecord < ActiveRecord::Base
 
 ## meta methods
 
- DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /(?:^[a-z]+\w+_|^)delayed_arrivals$/}
 
-  DELAYED_METHODS_CAUSES_ARRIVALS.each do |mth|
+  OntimeRecord.delayed_arrivals_methods_suite.each do |mth|
     
    # define class methods
     define_singleton_method(mth) do 
@@ -244,6 +252,47 @@ class OntimeRecord < ActiveRecord::Base
      end 
 
   end
+
+
+
+  ## NOT SCOPED METHODS
+  def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
+    # accepts array of struct
+    # expects year, month in each object
+    
+    # returns Hash
+    #  { x: ["2009-09", "2009-10"] ,  y: [[1,2,3,4], [9,8,7,6]], 
+    #    layers: [{:name=>'carrier_cause', :name=>"something"}]
+    #  }
+    #
+    #
+    #
+  
+    xes  = []
+    yes = []
+   
+
+    rec_meths = OntimeRecord.delayed_arrivals_causes_rate_methods_suite
+    
+     layers = rec_meths.map{|m| {:name=>m} }
+
+
+    record_aggs[0..100].each_with_index do |agg, idx|
+      
+      xes <<  idx #foo_to_year_month(agg.year, agg.month).gsub(/[^\d]/, '').to_i
+      yes <<  rec_meths.map{|mth| agg.send(mth)}        
+    end
+
+
+    return {  :data=>{
+                    x: xes,
+                    y: yes
+                  },  
+              :layers=>layers }
+              
+  end
+
+
 
 
   private
