@@ -1,3 +1,4 @@
+
 <section class="container fold">
 	<h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
 
@@ -8,6 +9,21 @@
 
 	</p>
 
+</section>
+
+
+<section class="container fold">
+	<div id="graphic-delay-causes" class="graphic d3">
+		
+	</div>
+	
+	<%=partial 'ontime/graphics/test-line'%>
+</section>
+
+
+
+<section class="container fold">
+<h3>Raw data</h3>
 	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records}%>
 
 </section>

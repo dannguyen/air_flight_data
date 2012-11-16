@@ -1,155 +1,149 @@
-mbostock’s block #3943967
-Stacked-to-Grouped Transition
-November 12, 2012
-Open in a new window.
-Switch between stacked and grouped layouts using sequenced transitions! Animations preserve object constancy and allow the user to follow the data across views. Animation design by Heer and Robertson. Colors and data generation inspired by Byron and Wattenberg.
+function test_stack(data_set){
+	// data_set is object
+	/*
+		{
+			data: {
+				x: [1,2,3,4,5],
+				y: [1,2,3], [1,2,3]
+			},
+			
+			layers: [
+				{name: 'something'},
+				{name: 'something2'}			
+			]
+			
+		}
+	
+	*/
+	
+	
+	var data = data_set.data;
+	var layers = data_set.layers;
+	
+	var stack = d3.layout.stack();
 
-index.html#
 
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+	var x_points = data.x;
+	var y_points_arrays = data.y;
+	
+	var layer_count = layers.length;
+	var x_points_count = x_points.length;
+	
+	var d3_data_layers = stack( d3.range(layer_count).map( function(layer_idx) { 
+			// for each layer		
+			//map unto each xpoint
+			console.log("layer_idx: " + layer_idx);
+			return d3.range(x_points_count).map(function(x_idx){
+								
+				var hsh = {x: x_points[x_idx], y: y_points_arrays[x_idx][layer_idx] };
+				console.log("\tx_idx: " + x_idx + ", (" + hsh.x + ", " + hsh.y +")");
+				return hsh;
+			});
+	}) );
+	
+		
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: auto;
-  position: relative;
-  width: 960px;
+	var yStackMax = d3.max(d3_data_layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+	
+	console.log('yStackMax: ' + yStackMax)
+
+
+	// chart boundaries 
+	var margin = {top: 40, right: 10, bottom: 20, left: 10},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+
+	var x = d3.scale.ordinal()
+	    .domain(d3.range(x_points_count))
+	    .rangeRoundBands([0, width], .08);
+
+	var y = d3.scale.linear()
+	    .domain([0, yStackMax])
+	    .range([height, 0]);
+
+	var color = d3.scale.linear()
+	    .domain([0, layer_count - 1])
+	    .range(["#aad", "#556"]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .tickSize(0)
+	    .tickPadding(6)
+	    .orient("bottom");
+
+	var svg = d3.select("#graphic-delay-causes").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var layer = svg.selectAll(".layer")
+	    .data(d3_data_layers)
+	    .enter().append("g")
+	    .attr("class", "layer")
+	    .style("fill", function(d, i) { return color(i); });
+
+	var rect = layer.selectAll("rect")
+	    .data(function(d) { return d; })
+	  .enter().append("rect")
+	    .attr("x", function(d) { return x(d.x); })
+	    .attr("y", height)
+	    .attr("width", x.rangeBand())
+	    .attr("height", 0);
+
+	rect.transition()
+	    .delay(function(d, i) { return i * 10; })
+	    .attr("y", function(d) { return y(d.y0 + d.y); })
+	    .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
+
+	svg.append("g")
+	    .attr("class", "x axis")
+	    .attr("transform", "translate(0," + height + ")")
+	    .call(xAxis);
+
+
+	function transitionStacked() {
+	  y.domain([0, yStackMax]);
+
+	  rect.transition()
+	      .duration(500)
+	      .delay(function(d, i) { return i * 30; })
+	      .attr("y", function(d) { return y(d.y0 + d.y); })
+	      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+	    .transition()
+	      .attr("x", function(d) { return x(d.x); })
+	      .attr("width", x.rangeBand());
+	}
+
+	function whatev(n){
+		var arr = [];
+		for(i = 0; i < n; i++){
+			arr[i] = {x: Math.random() * 100, y: Math.random() * 100}
+		}
+		return arr;
+	}
+
 }
 
-text {
-  font: 10px sans-serif;
-}
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
 
-form {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
-</style>
-<form>
-  <label><input type="radio" name="mode" value="grouped"> Grouped</label>
-  <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
-</form>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-
-var n = 4, // number of layers
-    m = 58, // number of samples per layer
-    stack = d3.layout.stack(),
-    layers = stack(d3.range(n).map(function() { return bumpLayer(m, .1); })),
-    yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
-    yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
-
-var margin = {top: 40, right: 10, bottom: 20, left: 10},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-var x = d3.scale.ordinal()
-    .domain(d3.range(m))
-    .rangeRoundBands([0, width], .08);
-
-var y = d3.scale.linear()
-    .domain([0, yStackMax])
-    .range([height, 0]);
-
-var color = d3.scale.linear()
-    .domain([0, n - 1])
-    .range(["#aad", "#556"]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .tickSize(0)
-    .tickPadding(6)
-    .orient("bottom");
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var layer = svg.selectAll(".layer")
-    .data(layers)
-  .enter().append("g")
-    .attr("class", "layer")
-    .style("fill", function(d, i) { return color(i); });
-
-var rect = layer.selectAll("rect")
-    .data(function(d) { return d; })
-  .enter().append("rect")
-    .attr("x", function(d) { return x(d.x); })
-    .attr("y", height)
-    .attr("width", x.rangeBand())
-    .attr("height", 0);
-
-rect.transition()
-    .delay(function(d, i) { return i * 10; })
-    .attr("y", function(d) { return y(d.y0 + d.y); })
-    .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-d3.selectAll("input").on("change", function change() {
-  if (this.value === "grouped") transitionGrouped();
-  else transitionStacked();
-});
-
-function transitionGrouped() {
-  y.domain([0, yGroupMax]);
-
-  rect.transition()
-      .duration(500)
-      .delay(function(d, i) { return i * 10; })
-      .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
-      .attr("width", x.rangeBand() / n)
-    .transition()
-      .attr("y", function(d) { return y(d.y); })
-      .attr("height", function(d) { return height - y(d.y); });
-}
-
-function transitionStacked() {
-  y.domain([0, yStackMax]);
-
-  rect.transition()
-      .duration(500)
-      .delay(function(d, i) { return i * 10; })
-      .attr("y", function(d) { return y(d.y0 + d.y); })
-      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-    .transition()
-      .attr("x", function(d) { return x(d.x); })
-      .attr("width", x.rangeBand());
-}
-
-// Inspired by Lee Byron's test data generator.
-function bumpLayer(n, o) {
-
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < n; i++) {
-      var w = (i / n - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
-
-  var a = [], i;
-  for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
-  for (i = 0; i < 5; ++i) bump(a);
-  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-}
-
-</script>
-November 12, 2012mbostock’s block #3943967
+var the_data = 	{
+		data: {
+			x: d3.range(40), // [1,2,3,4,5,6,7,8,9],
+			y: d3.range(40).map(function(){return [Math.random()*10 + 20 ,Math.random()*30,Math.random()*20,Math.random()*20]}) 
+			//[[4,6,20], [3,6,2], [14,6,9], [4,1,2], [1,6,2], [99,4,95],[4,6,20], [3,6,2], [14,6,9], [4,1,2], [1,6,2]]
+		},
+		
+		layers: [
+			{name: 'something'},
+			{name: 'something2'},
+			{name: 'something3'}			
+						
+		]
+		
+	};
+	
+	
+	test_stack(the_data);
+	
+	

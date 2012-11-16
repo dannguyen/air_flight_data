@@ -48,6 +48,10 @@ class OntimeRecord < ActiveRecord::Base
   ARRIVAL_STAT_COUNT_NAME_MAPPING.each_pair do |a,b|
     alias_attribute b, a
   end
+  
+  def arrival_delay_causes_method_suite 
+    ARRIVAL_STAT_COUNT_NAME_MAPPING.values - [:delayed_arrivals]
+  end
 
   def other_causes_delayed_arrivals
     security_delayed_arrivals + late_aircraft_delayed_arrivals
@@ -216,9 +220,6 @@ class OntimeRecord < ActiveRecord::Base
 
   def self.group_and_sum_by(facets)
     # returns an array of ActiveRelation-like openstruct
-
-
-    #tk
     
     facets = Array(facets).map{|f| [:airline, :airport].index(f).nil? ? f : "#{f}_id".to_sym }
 
