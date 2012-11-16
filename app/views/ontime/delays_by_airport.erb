@@ -1,24 +1,39 @@
-<h2><%=@airport.name%></h2>
-<table class="table">
-	<% @airlines.each do |airline| %>
-		<% @all_years.each do |year| %>
-			<% hmr_record = airline.ontime_records.where(:year=>year).first %>
+
+
+<section class="container fold">
+	<h2><%=@airport.name%></h2>
+	<table class="table">
+		<% @airlines.each do |airline| %>
+			<% @all_years.each do |year| %>
+				<% hmr_record = airline.ontime_records.where(:year=>year).first %>
+			
+				<tr>
+					<td><%=link_to airline.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
+
+
+				<td>
+					<%=number_with_delimiter hmr_record.arr_flights%>
+				</td>	
+				<td>
+					<%=number_with_delimiter hmr_record.arr_del15%>
+				</td>	
+				<td>
+					<%=number_with_delimiter hmr_record.carrier_ct%>
+				</td>	
+			</tr>	
+		<% end %>	
+		<% end %>
+	</table>	
 		
-			<tr>
-				<td><%=link_to airline.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airline=>airline, :airport=>@airport)%></td>
 
 
-			<td>
-				<%=number_with_delimiter hmr_record.arr_flights%>
-			</td>	
-			<td>
-				<%=number_with_delimiter hmr_record.arr_del15%>
-			</td>	
-			<td>
-				<%=number_with_delimiter hmr_record.carrier_ct%>
-			</td>	
-		</tr>	
-	<% end %>	
-	<% end %>
-</table>	
-	
+</section>
+
+
+<section class="container fold">
+	<p>TK: group by airport</p>
+	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records, :extra_fields=>[:airline] }%>
+
+
+
+</section>

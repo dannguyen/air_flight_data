@@ -202,6 +202,84 @@ describe "OntimeRecord Scopes" do
   end
 
 
+  it "should do rates with groups" do 
+
+    2.times do 
+      airport = FactoryGirl.create(:airport)
+      airline = FactoryGirl.create(:airline)
+    end
+
+    Airport.all.each do |airport|
+      Airline.all.each do |airline|
+
+        3.times do 
+          FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2009)
+          FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2010)
+          FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2011)
+          FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2012)      
+        end
+       end 
+    end
+
+    aggregation = OntimeRecord.group_and_sum_by(:year)
+    aggregation.length.must_equal 4
+
+    agg = aggregation.first
+    agg.must_be_kind_of OpenStruct
+    yr = agg.year
+
+ 
+    agg.arrivals.must_equal OntimeRecord.by_year(yr).arrivals
+    agg.carrier_delayed_arrivals.must_equal OntimeRecord.by_year(yr).carrier_delayed_arrivals
+
+    agg.weather_delayed_arrivals_rate.must_equal OntimeRecord.by_year(yr).weather_delayed_arrivals_rate
+
+
+    ###### two facets
+    dbl_agg  = OntimeRecord.group_and_sum_by([:year, :month])
+    agg = dbl_agg.last
+
+    yr = agg.year
+    mth = agg.month
+
+    yr.wont_be_nil
+    mth.wont_be_nil
+
+    # the facet by month and year must necessarily be less than the year's entire arrivals
+    agg.arrivals.must_be :<=, OntimeRecord.by_year(yr).arrivals
+    agg.arrivals.must_equal   OntimeRecord.by_year(yr).by_month(mth).arrivals
+
+    agg.delayed_arrivals_rate.must_equal   OntimeRecord.by_year(yr).by_month(mth).delayed_arrivals_rate
+
+
+    ###### facet by airline
+
+    airline_agg = OntimeRecord.group_and_sum_by(:airline_id)
+    airline_agg.length.must_equal Airline.count
+    agg = airline_agg.first
+
+    @airline = Airline.find(agg.airline_id)
+    agg.arrivals.must_equal @airline.ontime_records.arrivals
+    agg.carrier_delayed_arrivals_rate.must_equal @airline.ontime_records.carrier_delayed_arrivals_rate
+
+
+    ###### triple facet by airport
+    airport_aggs = OntimeRecord.group_and_sum_by([:airport_id, :year, :month])
+    agg = airport_aggs.first
+
+    mth = agg.month
+    yr = agg.year
+    airport = Airport.find agg.airport_id
+
+    # specific facet agg should equal equivalent scope of by_year.by_month of an airport's records
+    agg.carrier_delayed_arrivals_rate.must_equal airport.ontime_records.by_year(yr).by_month(mth).carrier_delayed_arrivals_rate
+
+    # try a manual agg
+    airport_aggs.select{|r| r.airport_id == airport.id}.inject(0){|s,r| s += r.weather_delayed_arrivals}.must_be_within_delta 1.0, airport.ontime_records.weather_delayed_arrivals
+
+
+
+  end
 
 
   

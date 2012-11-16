@@ -14,14 +14,14 @@
 
 
 
-<div class="">
+<section class="container fold">
 
 <table>
 <% @airports_by_arrivals_sum.each do |arr| %>
 	<% airport, arrivals = arr%>
 
 	<tr>
-		<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport, :airport=>airport)%></td>
+		<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airport=>airport, :airline=>@airline)%></td>
 		<td><%=number_with_delimiter arrivals%></td>
 		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
 		<td><%#=arrivals/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
@@ -30,3 +30,13 @@
 
 <% end %>
 </table>
+
+</section> <!-- container fold-->
+
+
+<section class="container fold">
+	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records_grouped}%>
+
+
+
+</section>

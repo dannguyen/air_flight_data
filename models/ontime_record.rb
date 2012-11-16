@@ -1,3 +1,4 @@
+require 'ostruct'
 class OntimeRecord < ActiveRecord::Base
 
   include MyLazyRecordBase
@@ -32,14 +33,21 @@ class OntimeRecord < ActiveRecord::Base
   validates_presence_of :airline_id
   validates_presence_of :arr_flights
 
-  alias_attribute :arrivals, :arr_flights 
-  alias_attribute :delayed_arrivals, :arr_del15
-  alias_attribute :carrier_delayed_arrivals, :carrier_ct
-  alias_attribute :weather_delayed_arrivals, :weather_ct
-  alias_attribute :nas_delayed_arrivals, :nas_ct
-  alias_attribute :security_delayed_arrivals, :security_ct
-  alias_attribute :late_aircraft_delayed_arrivals, :late_aircraft_ct
 
+  alias_attribute :arrivals , :arr_flights
+
+  ARRIVAL_STAT_COUNT_NAME_MAPPING = {
+    :arr_del15=>:delayed_arrivals, 
+    :carrier_ct=>:carrier_delayed_arrivals, 
+    :weather_ct=>:weather_delayed_arrivals, 
+    :nas_ct=>:nas_delayed_arrivals, 
+    :security_ct=>:security_delayed_arrivals, 
+    :late_aircraft_ct=>:late_aircraft_delayed_arrivals
+  }
+
+  ARRIVAL_STAT_COUNT_NAME_MAPPING.each_pair do |a,b|
+    alias_attribute b, a
+  end
 
   def other_causes_delayed_arrivals
     security_delayed_arrivals + late_aircraft_delayed_arrivals
@@ -50,10 +58,6 @@ class OntimeRecord < ActiveRecord::Base
 	  foo_to_year_month(year, month)
   end
 
-  def delayed_arrivals_rate
-    # this is not part of delayed_arrivals_causes_methods_suite as it is just the general rate
-    delayed_arrivals.to_f/arrivals
-  end
 
   def OntimeRecord.delayed_arrivals_causes_methods_suite
     DELAYED_METHODS_CAUSES_ARRIVALS
@@ -90,7 +94,7 @@ class OntimeRecord < ActiveRecord::Base
 
 ## meta methods
 
- DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /^[a-z]+\w+_delayed_arrivals$/}
+ DELAYED_METHODS_CAUSES_ARRIVALS = OntimeRecord.public_instance_methods.select{|m| m.to_s =~ /(?:^[a-z]+\w+_|^)delayed_arrivals$/}
 
   DELAYED_METHODS_CAUSES_ARRIVALS.each do |mth|
     
@@ -207,6 +211,37 @@ class OntimeRecord < ActiveRecord::Base
 #    if opts[:year].blank? || opts[:month].blank?
 #    opts[:year] ||= self.latest_period
     
+  end
+
+
+  def self.group_and_sum_by(facets)
+    # returns an array of ActiveRelation-like openstruct
+
+
+    #tk
+    
+    facets = Array(facets).map{|f| [:airline, :airport].index(f).nil? ? f : "#{f}_id".to_sym }
+
+    select_arr = ["SUM(arr_flights) AS arrivals"] + facets
+    ARRIVAL_STAT_COUNT_NAME_MAPPING.each_pair do |k,v|
+      select_arr << "SUM(#{k}) AS `#{v}`"
+    end
+
+
+    results = self_re.group(facets).select(select_arr.join(", "))
+
+    arr = results.map do |result|
+      hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+
+    # set cumulative rate methods
+      ARRIVAL_STAT_COUNT_NAME_MAPPING.each_value do |mth|
+        rate_mth = "#{mth}_rate".to_sym
+        hsh[rate_mth] = hsh[mth].to_f/hsh[:arrivals]
+      end
+    
+      OpenStruct.new(hsh)
+     end 
+
   end
 
 

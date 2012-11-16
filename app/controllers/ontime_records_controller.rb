@@ -28,6 +28,8 @@ SkiftAir.controllers :ontime_records do
 
   get :delays_by_airline, :map=>"/ontime/airline/:airline" do 
     @airline = Airline.find(params[:airline])
+    @ontime_records = @airline.ontime_records.top
+    @ontime_records_grouped = @ontime_records.group_and_sum_by([:airport_id, :year, :month])
     @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
 
     render "ontime/delays_by_airline"

@@ -1,23 +1,16 @@
-<h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
-
 <section class="container fold">
-<table class="table">
-	<thead><tr>
-		<% head_fields = [:year, :month, :arr_flights, :arr_del15, :carrier_ct] %>
-		
-		<% head_fields.each do |hf| %>
-			<th><%= hf %></th>
-		<% end %>
-	</tr></thead>
-	<tbody>
-		<% @ontime_records.each do |record| %>
-		<tr>
-			<% head_fields.each do |hf| %>
-				<td><%= number_with_delimiter record.send(hf) %></td>
-			<% end %>			
-		</tr>
-		<% end %>
-		
-	</tbody>
-</table>
+	<h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
+
+	<p>This is the history of on-time performance for 
+		<%=link_to @airline.name, url_for(:ontime_records, :delays_by_airline, :airline=>@airline) %> 
+		at 
+		<%=link_to @airport.name, url_for(:ontime_records, :delays_by_airport, :airport=>@airport) %> 
+
+	</p>
+
+	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records}%>
+
 </section>
+
+
+

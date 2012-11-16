@@ -69,7 +69,7 @@ describe "OntimeRecord Instances" do
     @r = FactoryGirl.create(:ontime_record)
 
     OntimeRecord.delayed_arrivals_causes_methods_suite.each do |dmeth|
-      dmeth.to_s.must_be :=~, /_delayed_arrivals$/
+      dmeth.to_s.must_be :=~, /delayed_arrivals$/
       @r.must_respond_to dmeth
 
       dmeth_rate = "#{dmeth}_rate".to_sym
