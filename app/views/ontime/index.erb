@@ -9,23 +9,19 @@
    <div class="span6">
 <h2>By Airline</h2>
    <ul class="vert">
-      <% @airlines.each do |airline| %>
+      <%- @airlines.each do |airline| -%>
 
          <li>
-         
-
             <%=link_to airline.name, url_for( :ontime_records, :delays_by_airline, :airline=>airline) %>
+            <br>
 
-            <%= airline.yoy_monthly_group_sums(11).map{|r| r.carrier_delayed_arrivals_rate } %>
-
-
-            <%- end -%>
-
+            <%= airline.ontime_records.yoy_monthly_group_sums(3, :round=>3).map{|r| r.nas_delayed_arrivals_rate }.join(", ") %>
+<br>
+            <%= airline.ontime_records.yoy_monthly_group_sums(7, :round=>3).map{|r| r.nas_delayed_arrivals_rate }.join(", ") %>
 
          </li>
 
-
-      <% end %>
+      <%- end -%>
    </ul>
 
 
@@ -52,9 +48,4 @@
 </div><!--row-->
 
 </section>
-
-
-
-
-
 

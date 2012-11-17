@@ -28,7 +28,7 @@ SkiftAir.controllers :ontime_records do
     @ontime_records_grouped_by_airport = @ontime_records.group_and_sum_by(:airport_id, :round=>2)
 
     @earliest_period = @ontime_records.earliest_period
-    @latest_period = @ontime_records.earliest_period
+    @latest_period = @ontime_records.latest_period
 
     render "ontime/index"
   end
@@ -47,15 +47,15 @@ SkiftAir.controllers :ontime_records do
 
 
 
+
   get :delays_by_airport, :map=>"/ontime/airport/:airport" do 
-    @airport = Airport.find(params[:airport], :include=>{:ontime_records=>:airline})
+    @airport = Airport.find( params[:airport], :include=>{:ontime_records=>:airline} )
 
     @ontime_records = @airport.ontime_records.top
     
     @christmas_ontime_records = @ontime_records.christmas
     
     @all_years = @christmas_ontime_records.map{|c| c.year}.uniq.sort
-    
     @airlines = @christmas_ontime_records.map{|r| r.airline}.uniq
     
   
