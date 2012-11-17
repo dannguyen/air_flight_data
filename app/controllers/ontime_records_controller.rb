@@ -23,6 +23,12 @@ SkiftAir.controllers :ontime_records do
     @airlines = Airline.all
     @airports = Airport.all
 
+    @ontime_records = OntimeRecord.self_re
+    @ontime_records_grouped_by_airline = @ontime_records.group_and_sum_by(:airline_id, :round=>2)
+    @ontime_records_grouped_by_airport = @ontime_records.group_and_sum_by(:airport_id, :round=>2)
+
+
+
     render "ontime/index"
   end
 
@@ -32,7 +38,7 @@ SkiftAir.controllers :ontime_records do
     @ontime_records_grouped = @ontime_records.group_and_sum_by([:airport_id, :year, :month])
 
     # tk fix next:
-    #raise "this is an outdated agg:"
+ #   raise "this is an outdated agg:"
     @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
 
     render "ontime/delays_by_airline"

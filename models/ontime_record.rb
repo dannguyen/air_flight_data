@@ -226,9 +226,11 @@ class OntimeRecord < ActiveRecord::Base
   end
 
 
-  def self.group_and_sum_by(facets)
+  def self.group_and_sum_by(facets, opts={})
     # returns an array of ActiveRelation-like openstruct
     
+    do_rounding = opts[:round]
+
     facets = Array(facets).map{|f| [:airline, :airport].index(f).nil? ? f : "#{f}_id".to_sym }
 
     select_arr = ["SUM(arr_flights) AS arrivals"] + facets
@@ -245,7 +247,8 @@ class OntimeRecord < ActiveRecord::Base
     # set cumulative rate methods
       ARRIVAL_STAT_COUNT_NAME_MAPPING.each_value do |mth|
         rate_mth = "#{mth}_rate".to_sym
-        hsh[rate_mth] = hsh[mth].to_f/hsh[:arrivals]
+        hsh[rate_mth] = hsh[mth].to_f/hsh[:arrivals] 
+        hsh[rate_mth] = hsh[rate_mth].round(do_rounding) unless do_rounding.nil? 
       end
     
       OpenStruct.new(hsh)

@@ -1,22 +1,64 @@
 
 
-<h1>Airline Delays</h1>
+<section class="container">
 
+<h2>Average delays (200x to 200x)</h2>
 
+<div class="row">
 
+   <div class="span6">
 <h2>By Airline</h2>
-<ul>
-	<% @airlines.each do |airline| %>
-		<li><%=link_to airline.name, url_for( :ontime_records, :delays_by_airline, :airline=>airline) %></li>
-	<% end %>
-</ul>
+   <ul class="vert">
+      <% @airlines.each do |airline| %>
+
+         <li>
+         
+
+            <%=link_to airline.name, url_for( :ontime_records, :delays_by_airline, :airline=>airline) %>
+
+            <% 
+               a_record = @ontime_records_grouped_by_airline.select{|a| a.airline_id == airline.id}[0]
+               OntimeRecord.delayed_arrivals_causes_rate_methods_suite.each do |mth| 
+
+            %>
+               <%=a_record.send(mth)%>, 
+
+            <% end %>
+
+
+         </li>
+
+
+      <% end %>
+   </ul>
+
+
+   </div>
+
+
+   <div class="span6">
 
 
 <h2>By Airport</h2>
 
-<ul>
-	<% @airports.each do |airport| %>
-		<li><%=link_to airport.name, url_for( :ontime_records, :delays_by_airport, :airport=>airport) %></li>
-	<% end %>
+<ul class="vert">
+   <% @airports.each do |airport| %>
+      <li><%=link_to airport.name, url_for( :ontime_records, :delays_by_airport, :airport=>airport) %></li>
+   <% end %>
 </ul>
+
+
+
+
+   </div>
+
+
+</div><!--row-->
+
+</section>
+
+
+
+
+
 
