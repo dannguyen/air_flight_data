@@ -2,7 +2,7 @@
 
 <section class="container">
 
-<h2>Average delays (200x to 200x)</h2>
+<h2>Average delays <%=@earliest_period[:year_month]%> to <%=@latest_period[:year_month]%>)</h2>
 
 <div class="row">
 
@@ -16,14 +16,10 @@
 
             <%=link_to airline.name, url_for( :ontime_records, :delays_by_airline, :airline=>airline) %>
 
-            <% 
-               a_record = @ontime_records_grouped_by_airline.select{|a| a.airline_id == airline.id}[0]
-               OntimeRecord.delayed_arrivals_causes_rate_methods_suite.each do |mth| 
+            <%= airline.yoy_monthly_group_sums(11).map{|r| r.carrier_delayed_arrivals_rate } %>
 
-            %>
-               <%=a_record.send(mth)%>, 
 
-            <% end %>
+            <%- end -%>
 
 
          </li>

@@ -43,6 +43,18 @@ describe "OntimeRecord Scopes" do
     OntimeRecord.by_ytd('2012-01').first.must_equal recs.first 
     
   end
+
+  it ":earliest_period should return earliest year and month hash as a scope method" do 
+    FactoryGirl.create_list(:ontime_record, 10, :month=>rand(12)+1, :year=>2015)
+    @record = FactoryGirl.create(:ontime_record, :month=>12, :year=>2010)
+    
+    hsh = OntimeRecord.earliest_period
+    hsh[:year].must_equal 2010
+    hsh[:month].must_equal 12
+    hsh[:year_month].must_equal "2010-12"
+  end
+
+
   
   it ":latest_period should return latest year and month hash as a scope method" do 
     FactoryGirl.create_list(:ontime_record, 10, :month=>rand(12)+1, :year=>2010)
@@ -205,7 +217,6 @@ describe "OntimeRecord Scopes" do
     end
   end
 
-
   it "should do rates with groups" do 
 
     2.times do 
@@ -294,5 +305,38 @@ describe "OntimeRecord Scopes" do
     airport_agg_hash[:data][:y].first.length.must_equal airport_agg_hash[:layers].length
 
   end
+
+  it "should have a convenience method :monthly_group_sums to group-sum by month" do 
+
+    @months = (1..5)
+    @years = 2010..2012
+    @years.each do |yr|
+      @months.each do |mth|
+        FactoryGirl.create(:ontime_record, :month=>mth, :year=>yr)
+      end
+    end
+
+    @month = 3
+    month_agg = OntimeRecord.monthly_group_sums
+    month_agg.length.must_equal @months.count
+    month_agg.find{|m| m.month == @month}.arrivals.must_equal OntimeRecord.by_month(@month).arrivals
+
+    @year = @years.last
+    year_agg = OntimeRecord.yearly_group_sums
+    year_agg.length.must_equal @years.count
+    year_agg.find{|y| y.year == @year}.arrivals.must_equal OntimeRecord.by_year(@year).arrivals
+
+
+    ymth_agg = OntimeRecord.yoy_monthly_group_sums(@month)
+    ymth_agg.length.must_equal @years.count 
+    ymth_agg.find{|y| y.year == @year}.carrier_delayed_arrivals_rate.must_equal OntimeRecord.by_year(@year).by_month(@month).carrier_delayed_arrivals_rate
+
+
+#    month_agg.inject(0){|s,r| s + r.arrivals}.must_equal OntimeRecord.by_month(@month).arrivals
+
+  end
+
+
+
   
 end

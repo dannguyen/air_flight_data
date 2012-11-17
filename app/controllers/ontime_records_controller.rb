@@ -27,7 +27,8 @@ SkiftAir.controllers :ontime_records do
     @ontime_records_grouped_by_airline = @ontime_records.group_and_sum_by(:airline_id, :round=>2)
     @ontime_records_grouped_by_airport = @ontime_records.group_and_sum_by(:airport_id, :round=>2)
 
-
+    @earliest_period = @ontime_records.earliest_period
+    @latest_period = @ontime_records.earliest_period
 
     render "ontime/index"
   end

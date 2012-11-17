@@ -159,6 +159,20 @@ class OntimeRecord < ActiveRecord::Base
     self.delayed_arrivals.to_f / self.arrivals 
   end
   
+
+  def self.earliest_period
+    if a = self_re.min_by{|b| b.year_month}
+      yr, mth = a.year_month.split('-', 3).map{|x| x.to_i}
+      return {
+       :year_month => a.year_month,
+       :year=>yr,
+       :month=>mth
+      }
+    end
+  end
+
+
+
   def self.latest_period
     if a = self_re.max_by{|b| b.year_month}
       yr, mth = a.year_month.split('-', 3).map{|x| x.to_i}
@@ -238,7 +252,6 @@ class OntimeRecord < ActiveRecord::Base
       select_arr << "SUM(#{k}) AS `#{v}`"
     end
 
-
     results = self_re.group(facets).select(select_arr.join(", "))
 
     arr = results.map do |result|
@@ -256,7 +269,18 @@ class OntimeRecord < ActiveRecord::Base
 
   end
 
+  def self.monthly_group_sums(opts={})
+    self.order(:month).group_and_sum_by(:month, opts)
+  end
 
+
+  def self.yearly_group_sums(opts={})
+    self.order(:year).group_and_sum_by(:year, opts)
+  end
+
+  def self.yoy_monthly_group_sums(mnth, opts={})
+    self.by_month(mnth).order(:year).yearly_group_sums(opts)
+  end
 
   ## NOT SCOPED METHODS
   def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
@@ -287,11 +311,7 @@ class OntimeRecord < ActiveRecord::Base
     end
 
 
-    return {  :data=>{
-                    x: xes,
-                    y: yes
-                  },  
-              :layers=>layers }
+    return { :data=> {x: xes, y: yes},  :layers=>layers }
               
   end
 
