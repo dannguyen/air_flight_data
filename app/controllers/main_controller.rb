@@ -19,7 +19,9 @@ SkiftAir.controllers :ontime_records do
   # end
 
   get :index, :map=>"/" do 
-    redirect url(:ontime_records, :index)
+    
+
+    render "main/index"
     
   end
 end

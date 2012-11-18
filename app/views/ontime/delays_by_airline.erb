@@ -3,6 +3,41 @@
 	<h2><%=@airline.name%></h2>
 
 	<div class="row">
+
+		<p>
+			For <strong class="tk"><%=@year%></strong>, through the month of <strong class="tk"><%=@month%></strong>,
+			   <%=@airline.name%> has
+			   <strong class="tk"><%=number_with_delimiter @airline_ytd_records.arrivals %> arrivals</strong> among its largest airportsTK.
+		</p>
+
+		<p>
+			In this time period, <%=@airline.name%> had 
+
+			<%=number_to_percentage_100(@airline_ytd_records.delayed_arrivals_rate) %>
+			of its arrivals were late by <strong>15 minutes or more</strong>. 
+
+			About <strong><%=number_to_percentage_100( @airline_ytd_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
+			factors within <%=@airline.name%>'s control, according to the FAA(TK).
+
+
+		</p>
+
+
+
+	  
+	   
+
+
+
+
+
+
+	</div>
+
+
+
+
+	<div class="row">
 		<div class="span6">
 	
 			<%=partial "ontime/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>		

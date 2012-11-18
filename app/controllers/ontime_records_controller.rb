@@ -35,8 +35,20 @@ SkiftAir.controllers :ontime_records do
 
   get :delays_by_airline, :map=>"/ontime/airline/:airline" do 
     @airline = Airline.find(params[:airline])
-    @ontime_records = @airline.ontime_records.top.order({:year=>'ASC', :month=>'ASC'})
+    @ontime_records = @airline.ontime_records.order({:year=>'ASC', :month=>'ASC'})
+    @latest_period = @ontime_records.latest_period
+
+
+    
+    @year = @latest_period[:year]
+    @month = @latest_period[:month]
+    @airline_ytd_records = @ontime_records.by_month(@month).by_year(@year)
+          
+
+
     @ontime_records_grouped = @ontime_records.group_and_sum_by([:airport_id, :year, :month])
+
+
 
     # tk fix next:
  #   raise "this is an outdated agg:"
