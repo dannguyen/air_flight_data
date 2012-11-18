@@ -17,8 +17,15 @@ class Airline < ActiveRecord::Base
      self.class.similar_to(self, num)
    end
    
-   
-   
+   def top_airports(num) # by arrivals, TK
+    self.ontime_records.group_and_sum(:airport, :find_models=>true, :order=>"arrivals DESC", :limit=>num)
+
+
+   end
+
+
+
+### untested   
    def arrivals_at_airport(c)
      records_at_airport(c).arrivals_sum
    end

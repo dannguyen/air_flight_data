@@ -226,7 +226,6 @@ describe "OntimeRecord Scopes" do
 
     Airport.all.each do |airport|
       Airline.all.each do |airline|
-
         3.times do 
           FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2009)
           FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>airline, :year=>2010)
@@ -273,7 +272,11 @@ describe "OntimeRecord Scopes" do
     airline_agg.length.must_equal Airline.count
     agg = airline_agg.first
 
-    @airline = Airline.find(agg.airline_id)
+    # agg must contain (and eager load by default, but not tested -TK) reference to airline relation
+    agg.airline.must_be_kind_of Airline
+    agg.airline.must_equal Airline.find(agg.airline_id)
+
+    @airline = agg.airline
     agg.arrivals.must_equal @airline.ontime_records.arrivals
     agg.carrier_delayed_arrivals_rate.must_equal @airline.ontime_records.carrier_delayed_arrivals_rate
 
@@ -283,7 +286,7 @@ describe "OntimeRecord Scopes" do
 
     mth = agg.month
     yr = agg.year
-    airport = Airport.find agg.airport_id
+    airport = agg.airport 
 
     # specific facet agg should equal equivalent scope of by_year.by_month of an airport's records
     agg.carrier_delayed_arrivals_rate.must_equal airport.ontime_records.by_year(yr).by_month(mth).carrier_delayed_arrivals_rate
@@ -303,6 +306,54 @@ describe "OntimeRecord Scopes" do
 
     # there must be as many y points per x as there are layers
     airport_agg_hash[:data][:y].first.length.must_equal airport_agg_hash[:layers].length
+
+  end
+
+
+
+
+  it "should accept group_and_sum_by options to eager_load AR models, :limit, and :order" do 
+
+    @airports = 4.times.map do |i| 
+      airport = FactoryGirl.create(:airport)
+      FactoryGirl.create(:ontime_record, :airport=>airport, :arrivals=>100 * (i+1), :delayed_arrivals=>100/(i+1) )
+
+      airport
+    end
+    # first airport has most delayed_arrivals
+    # last airport has most arrivals
+
+
+
+    agg = OntimeRecord.group_and_sum_by(:airport_id, :limit=>2)
+    agg.length.must_equal 2 
+
+    ordered_agg = OntimeRecord.group_and_sum_by(:airport_id, :order=>'arrivals DESC')
+    ordered_agg.map{|a| a.airport_id}.must_equal @airports.sort_by{|a| a.ontime_records.arrivals }.reverse.map{|a| a.id}
+
+    # test limit and order
+    agg = OntimeRecord.group_and_sum_by(:airport_id, :limit=>1, :order=>'delayed_arrivals ASC')
+    agg.length.must_equal 1
+    agg.first.airport_id.must_equal @airports.last.id
+
+
+
+    agg.first.airport.must_be_kind_of Airport
+
+
+
+  end
+
+
+  it "should currently fail to order by rate with :group_and_sum_by" do 
+    # group rates are calculated AFTER the SQL query
+    FactoryGirl.create_list(:ontime_record, 4)
+
+    Proc.new{ 
+      OntimeRecord.group_and_sum_by(:airport_id, :order=>'delayed_arrivals_rate ASC')
+
+    }.must_raise  ActiveRecord::StatementInvalid
+ 
 
   end
 

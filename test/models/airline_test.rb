@@ -28,6 +28,24 @@ describe "Airline Model" do
     skip
     raise "implement something here"
   end
+
+  it "should find top airports" do 
+    skip 
+    @airline = FactoryGirl.create(:airline)
+    @airports = 6.times{ FactoryGirl.create(:airport) }
+
+    @airports.each do |airport|
+      FactoryGirl.create(:ontime_record, :airport=>airport, :airline=>@airline)
+    end  
+
+
+    top_airports = @airline.top_airports(3)
+    top_airports.length.must_equal 3
+    top_airports.to_a.map{|a| a.id}.must_equal @airports.sort_by{|a| a.ontime_records.arrivals }.reverse 
+
+
+
+  end
   
   
 end

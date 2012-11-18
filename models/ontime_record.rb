@@ -242,32 +242,84 @@ class OntimeRecord < ActiveRecord::Base
 
   def self.group_and_sum_by(facets, opts={})
     # returns an array of ActiveRelation-like openstruct
-    
-    do_rounding = opts[:round]
+    facets_for_group_by = Array(facets)
+    the_reflection = self_re
 
-    facets = Array(facets).map{|f| [:airline, :airport].index(f).nil? ? f : "#{f}_id".to_sym }
 
-    select_arr = ["SUM(arr_flights) AS arrivals"] + facets
+    # define options
+    do_rounding = opts.delete :round
+    _eager_loading = (opts.delete(:eager_load) != false) # eager load by default
+    _order = opts.delete(:order)
+    _limit = opts.delete(:limit)
+
+
+    ### define SELECT
+
+    select_arr = ["SUM(arr_flights) AS arrivals"]
+
+    select_arr += facets_for_group_by # standard attributes
+
     ARRIVAL_STAT_COUNT_NAME_MAPPING.each_pair do |k,v|
+      # delayed_arrivals  --> SUM(arr_del15)
       select_arr << "SUM(#{k}) AS `#{v}`"
     end
 
-    results = self_re.group(facets).select(select_arr.join(", "))
 
-    arr = results.map do |result|
-      hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+    group_value_fields = ARRIVAL_STAT_COUNT_NAME_MAPPING.values
 
-    # set cumulative rate methods
-      ARRIVAL_STAT_COUNT_NAME_MAPPING.each_value do |mth|
-        rate_mth = "#{mth}_rate".to_sym
-        hsh[rate_mth] = hsh[mth].to_f/hsh[:arrivals] 
-        hsh[rate_mth] = hsh[rate_mth].round(do_rounding) unless do_rounding.nil? 
-      end
+
+    the_reflection = the_reflection.select(select_arr.join(', ')).group(facets_for_group_by)
+
+    # if relations are active, put them in separate array for differed handling;
+    # e.g. add _id and eager loading
+
+
+    # e.g. airline_id to :airline
+    facets_for_includes = (facets_for_group_by & [:airline_id, :airport_id]).map{|f| f.to_s.sub(/_id$/, '').to_sym }
     
-      OpenStruct.new(hsh)
+    if _eager_loading && !facets_for_includes.empty?
+      the_reflection = the_reflection.includes(facets_for_includes)
+    end
+
+    if _order
+      the_reflection = the_reflection.order(_order)
+    end
+
+    if _limit
+      the_reflection = the_reflection.limit(_limit)
+    end
+
+
+    # do the query
+    results = the_reflection.to_a
+
+
+    results_arr = results.map do |result|
+     
+          hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+
+          if _eager_loading
+            # include airport, airline if exists
+            facets_for_includes.each{ |_f| hsh[_f] = result.send(_f) }
+          end
+
+
+        # set cumulative rate methods
+          group_value_fields.each do |foo|
+            rate_foo = "#{foo}_rate".to_sym
+            hsh[rate_foo] = hsh[foo].to_f/hsh[:arrivals] 
+            hsh[rate_foo] = hsh[rate_foo].round(do_rounding) unless do_rounding.nil? 
+          end
+        
+          OpenStruct.new(hsh)
      end 
 
+     return results_arr
+
+
   end
+
+
 
   def self.monthly_group_sums(opts={})
     self.order(:month).group_and_sum_by(:month, opts)

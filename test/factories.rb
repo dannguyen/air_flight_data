@@ -10,7 +10,7 @@ FactoryGirl.define do
 
   sequence :codes do |i|
     arr = ('A'..'Z').to_a
-    "#{arr[i%26]}#{arr[(i+9)%26]}#{arr[(i+20)%26]}"
+    "#{arr[i%26]}#{arr[(i+9)%26]}#{arr[(i+20)%26]}#{i}"
   end
   
 

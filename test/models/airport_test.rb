@@ -40,4 +40,7 @@ describe "Airport Model" do
     raise "implement something here"
   end
   
+
+
+  
 end

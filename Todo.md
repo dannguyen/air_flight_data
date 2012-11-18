@@ -19,8 +19,15 @@ Front page
 Airline page
 
    Summary:
-      Number of flights for latest month
-      Carrier caused delays for latest month
+      Statbox:
+         YOY
+            Number of flights for latest month
+            Carrier caused delays for latest month
+            Overall delay rate for latest month
+         Top airports
+            3 top airports, number of flights
+               carrier caused rate
+               overall delay rate
 
    2nd fold: Pct. of delay, over time
       D3.vis for time series line chart, carrier-caused-delays
