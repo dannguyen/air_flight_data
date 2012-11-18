@@ -13,6 +13,10 @@ describe "OntimeRecord Scopes" do
     ontime_report.wont_be_nil
   end
   
+  it 'should have hack date_int method' do 
+    ontime_report = FactoryGirl.build(:ontime_record, :month=>5, :year=>2012)
+    ontime_report.date_int.must_equal 20120500
+  end
   
   it "should have named_scope of by_airport" do 
     @airport1 = FactoryGirl.create(:airport_with_ontime_records, rec_count: 7)
@@ -249,6 +253,11 @@ describe "OntimeRecord Scopes" do
     agg.weather_delayed_arrivals_rate.must_equal OntimeRecord.by_year(yr).weather_delayed_arrivals_rate
 
 
+    # ad-hoc feature: date_int
+
+    agg.date_int.must_be_kind_of Integer
+
+
     ###### two facets
     dbl_agg  = OntimeRecord.group_and_sum_by([:year, :month])
     agg = dbl_agg.last
@@ -312,7 +321,7 @@ describe "OntimeRecord Scopes" do
 
 
 
-  it "should accept group_and_sum_by options to eager_load AR models, :limit, and :order" do 
+  it "should accept group_and_sum_by options to use  :limit, and :order" do 
 
     @airports = 4.times.map do |i| 
       airport = FactoryGirl.create(:airport)
@@ -387,6 +396,40 @@ describe "OntimeRecord Scopes" do
 
   end
 
+
+  it "should have :format_group_sum_for_time_series" do 
+
+    @years = 2010..2011
+    @months = 1..3
+
+
+    3.times.map do |i| 
+      airline = FactoryGirl.create(:airline)
+      @years.each do |y|
+        @months.each do |m|
+         FactoryGirl.create(:ontime_record, :airline=>airline, :year=>y, :month=>m)
+       end
+      end
+    end
+
+    @ontime_records = OntimeRecord
+    hsh = OntimeRecord.format_group_sum_for_time_series(@ontime_records, :airline, :carrier_delayed_arrivals_rate)
+
+    hsh[:data_groups].length.must_equal Airline.count 
+    hsh[:data_groups].each{|d| d[:entity].must_be_kind_of Airline}
+
+    dg = hsh[:data_groups].first
+
+    airline = dg[:entity]
+    datum = dg[:data].sort_by{|d| d[:x]}.first #earliest day
+    yr = @years.first 
+    mth = @months.first
+
+    datum[:x].must_equal foo_to_date_int(yr, mth)
+    datum[:y].must_equal airline.ontime_records.by_month(mth).by_year(yr).carrier_delayed_arrivals_rate
+
+
+  end
 
 
   

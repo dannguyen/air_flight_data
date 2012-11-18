@@ -30,6 +30,10 @@ SkiftAir.controllers :ontime_records do
     @earliest_period = @ontime_records.earliest_period
     @latest_period = @ontime_records.latest_period
 
+
+    # for time series
+
+
     render "ontime/index"
   end
 
@@ -46,8 +50,12 @@ SkiftAir.controllers :ontime_records do
           
 
 
+
     @ontime_records_grouped = @ontime_records.group_and_sum_by([:airport_id, :year, :month])
 
+
+    # note ontime_records has to be changed to include outside the scope of ontime_records for @airline TK
+    @carrier_caused_timeseries = OntimeRecord.format_group_sum_for_time_series(@ontime_records)
 
 
     # tk fix next:

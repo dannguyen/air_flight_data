@@ -297,12 +297,15 @@ class OntimeRecord < ActiveRecord::Base
     results_arr = results.map do |result|
      
           hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+     
+
+          hsh[:date_int] = foo_on_record_date_int(result)
+
 
           if _eager_loading
             # include airport, airline if exists
             facets_for_includes.each{ |_f| hsh[_f] = result.send(_f) }
           end
-
 
         # set cumulative rate methods
           group_value_fields.each do |foo|
@@ -322,22 +325,75 @@ class OntimeRecord < ActiveRecord::Base
 
 
   def self.monthly_group_sums(opts={})
-    self.order(:month).group_and_sum_by(:month, opts)
+    self.group_and_sum_by(:month, opts.merge({:order=>'month'}))
   end
 
 
   def self.yearly_group_sums(opts={})
-    self.order(:year).group_and_sum_by(:year, opts)
+    self.group_and_sum_by(:year, opts.merge({:order=>'year'} ))
   end
 
   def self.yoy_monthly_group_sums(mnth, opts={})
-    self.by_month(mnth).order(:year).yearly_group_sums(opts)
+    self.by_month(mnth).yearly_group_sums opts.merge({:order=>'year'})
   end
 
+
+  # convenience method for airlines
+
+  def self.all_airline_group_sums_over_time(opts={})
+    opts = opts.merge({:order=>"year ASC, month ASC"  })
+    self.group_and_sum_by([:month, :year, :airline_id], opts)
+  end
+
+
   ## NOT SCOPED METHODS
+
+  def OntimeRecord.format_group_sum_for_time_series(records, facet_class=:airline, att=:carrier_delayed_arrivals_rate)
+    # this is for the carrier-caused time series
+
+
+    # accepts: OntimeRecord hash
+    # returns: Hash in the form of:
+    
+# {    
+#   data_groups: { 
+#     entity: facet_class,
+#      data: [{x:1, y:2},{x:1, y:2},{x:1, y:2}]
+#   }, 
+#  time_range: [x,y]
+# }
+
+
+    # NOTE: This does the group and sum method, not just formatting
+
+    record_aggs = records.all_airline_group_sums_over_time
+
+    ## get entities
+
+
+
+
+    data_grps = record_aggs.inject( Hash.new{|h,k| h[k] = { :data=>[] }  }   ) do |hsh, agg|
+
+      entity = agg.send(facet_class)
+
+      hsh[entity.id][:data] <<  {x: agg.date_int, y: agg.send(att)}
+      hsh[entity.id][:entity] ||= entity
+      hsh
+
+    end
+
+    time_range = record_aggs.minmax_by{|a| a.date_int}
+
+
+    return {:time_range=>time_range, :data_groups=> data_grps.values} # each value is a hash containing :entity and :data
+  end
+
+
+
   def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
     # accepts array of struct
-    # expects year, month in each object
+    # expects year, month in each object, and for hings to be in order
     
     # returns Hash
     #  { x: ["2009-09", "2009-10"] ,  y: [[1,2,3,4], [9,8,7,6]], 

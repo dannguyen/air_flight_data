@@ -11,7 +11,7 @@ class SkiftAir < Padrino::Application
   
   module Settings
     THIS_YEAR = 2012
-    THIS_MONTH = 6
+    THIS_MONTH = 9
   end
   
   

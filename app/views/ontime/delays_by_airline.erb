@@ -4,47 +4,61 @@
 
 	<div class="row">
 
-		<p>
-			For <strong class="tk"><%=@year%></strong>, through the month of <strong class="tk"><%=@month%></strong>,
-			   <%=@airline.name%> has
-			   <strong class="tk"><%=number_with_delimiter @airline_ytd_records.arrivals %> arrivals</strong> among its largest airportsTK.
-		</p>
+		<div class="span3">
+			<p>
+				For <strong class="tk"><%=@year%></strong>, through the month of <strong class="tk"><%=month_int_to_name @month%></strong>,
+				   <%=@airline.name%> has
+				   <strong class="tk"><%=number_with_delimiter @airline_ytd_records.arrivals %> arrivals</strong> among its largest airportsTK.
+			</p>
 
-		<p>
-			In this time period, <%=@airline.name%> had 
+			<p>
+				In this time period, <%=@airline.name%> had 
 
-			<%=number_to_percentage_100(@airline_ytd_records.delayed_arrivals_rate) %>
-			of its arrivals were late by <strong>15 minutes or more</strong>. 
+				<%=number_to_percentage_100(@airline_ytd_records.delayed_arrivals_rate) %>
+				of its arrivals were late by <strong>15 minutes or more</strong>. 
 
-			About <strong><%=number_to_percentage_100( @airline_ytd_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
-			factors within <%=@airline.name%>'s control, according to the FAA(TK).
+				About <strong><%=number_to_percentage_100( @airline_ytd_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
+				factors within <%=@airline.name%>'s control, according to the FAA(TK).
 
 
-		</p>
-
+			</p>
+		</div> <!-- span3 -->
 
 
 	  
 	   
-
-
-
-
-
-
-	</div>
-
-
-
-
-	<div class="row">
-		<div class="span6">
+	   <div class="span6">
 	
 			<%=partial "ontime/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>		
 		</div>	
-	</div>
+
+
+
+
+
+
+	</div> <!-- row -->
+
+
+
 
 </section> <!-- container fold-->
+
+
+
+
+
+<section class="container fold">
+	<h3>Comparison of Carrier-caused delay rate</h3>
+	<p> This is a time-series of each carrier's delay rate, due to factors within their own control.
+   TK this does not include delays caused by weather or airport conditions.
+	</p>
+
+	<%=partial 'ontime/graphics/carrier-delays-timeseries', 
+		:locals=>{:datapoints=> @carrier_caused_timeseries } 
+	%>
+
+</section>
 
 
 
@@ -68,13 +82,6 @@
 </section> <!-- container fold-->
 
 
-<section class="container fold">
-	<h3>Carrier-caused delay rate</h3>
-	<%=partial 'ontime/graphics/test-line', :locals=>{:datapoints=> OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped) } %>
-
-</section>
-
-
 
 
 
@@ -82,7 +89,7 @@
 	
 
 	<h3>Causes for delay</h3>
-	<%=partial 'ontime/graphics/test-line', :locals=>{:datapoints=> OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped) } %>
+	<%=partial 'ontime/graphics/delay-causes-area-graph', :locals=>{:datapoints=> OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped) } %>
 
 </section>
 

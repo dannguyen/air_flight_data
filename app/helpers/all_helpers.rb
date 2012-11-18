@@ -12,5 +12,9 @@ SkiftAir.helpers do
   end
 
 
+  def month_int_to_name(int, opts={})
+   months = %w(January February March April May June July August September October November December)   
+   mth = months[int+1]
+  end
 
 end

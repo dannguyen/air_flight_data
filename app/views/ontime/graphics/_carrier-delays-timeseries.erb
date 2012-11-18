@@ -1,0 +1,11 @@
+<h4>Data</h4>
+
+
+<% datapoints[:data_groups].each do |hsh| 
+   airline = hsh[:entity]
+   data = hsh[:data]
+%>
+   
+   <strong><%=airline.name%></strong>: <%=data.map{|h| "#{h[:x]}, #{h[:y]}"}.join("; ") %>
+
+<% end  %>
