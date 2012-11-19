@@ -32,10 +32,11 @@ SkiftAir.controllers :ontime_records do
 
 
     # for time series
-
-
     render "ontime/index"
   end
+
+
+
 
   get :delays_by_airline, :map=>"/ontime/airline/:airline" do 
     @airline = Airline.find(params[:airline])
@@ -47,20 +48,21 @@ SkiftAir.controllers :ontime_records do
     @month = @latest_period[:month]
     
     @periods_to_compare = @ontime_records.compare_periods('YOY', :year=>@year, :month=>@month)[:periods]
-    
+
     @airline_this_month_records = @periods_to_compare.last[:records]
           
     @top_airports_with_arrivals_this_month = @airline_this_month_records.group_and_sum_by_airports
     
-    
-     
-    
+    # note ontime_records has to be changed to include outside the scope of ontime_records for @airline TK
+    @all_carriers_delay_records_grouped = OntimeRecord.group_and_sum_by([:year, :month, :airline_id]) # OntimeRecord.all_airline_group_sums_over_time 
+    @carrier_caused_timeseries = OntimeRecord.format_group_sum_for_time_series(@all_carriers_delay_records_grouped)
+
+
+
     
     @ontime_records_grouped = @ontime_records.group_and_sum_by([:year, :month])
     @stacked_chart_dataseries = OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped)
 
-    # note ontime_records has to be changed to include outside the scope of ontime_records for @airline TK
-    @carrier_caused_timeseries = OntimeRecord.format_group_sum_for_time_series(@ontime_records)
 
 
     # tk fix next:

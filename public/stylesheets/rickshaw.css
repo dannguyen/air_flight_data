@@ -21,9 +21,10 @@
 	font-family: Arial,sans-serif;
 	border-radius: 3px;
 	padding: 6px;
-	opacity: .5;
+	opacity: 1.0;
 	border: 1px solid #e0e0e0;
 	font-size: 12px;
+	color: white;
 	position: absolute;
 	background: #fff;
 	white-space: nowrap
@@ -83,14 +84,15 @@
 	top: 0;
 	bottom: 0;
 	width: 0;
-	border-left: 1px dotted rgba(0,0,0,.2);
+	border-left: 1px dotted rgba(0,0,0,.8);
 	pointer-events: none
 }
 .rickshaw_graph .x_tick .title {
 	position: absolute;
 	font-size: 12px;
 	font-family: Arial,sans-serif;
-	opacity: .5;
+	opacity: 1.0;
+	color: white;
 	white-space: nowrap;
 	margin-left: 3px;
 	bottom: 1px

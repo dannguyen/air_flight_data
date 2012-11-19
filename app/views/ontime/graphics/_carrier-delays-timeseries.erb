@@ -1,11 +1,29 @@
-<h4>Data</h4>
+<%= javascript_include_tag "graphics/rickshaw-time-series-line" %>
+
+<%    id_selector = "carriers-time-series-line-graph"  %>
 
 
-<% datapoints[:data_groups].each do |hsh| 
-   airline = hsh[:entity]
-   data = hsh[:data]
-%>
+<div id="<%=id_selector%>"> </div>
+
+
+
+<script>
+
+(function(){
+
+   var palette = new Rickshaw.Color.Palette();
+
+   var this_datajson = <%=data.to_json%>;
+   var data_series = this_datajson['series'];
+ 
+
+   for(var i=0, len=data_series.length; i < len; i++ ){
+      data_series[i].color = palette.color();
+   }
    
-   <strong><%=airline.name%></strong>: <%=data.map{|h| "#{h[:x]}, #{h[:y]}"}.join("; ") %>
+   rickshaw_time_series_line(data_series, "#<%=id_selector%>");
 
-<% end  %>
+})();
+
+
+</script>

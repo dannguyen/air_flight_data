@@ -6,24 +6,24 @@
 %>
 
 <div id="<%=id_selector%>"> </div>
+
+
 <script>
+(function(){
    var palette = new Rickshaw.Color.Palette();
 
    var this_datajson = <%=data.to_json%>;
    var data_series = this_datajson['series'];
-   console.log("data series length: " + data_series.length);
- //  console.log("data series class: ") + data_series.class;
+ 
 
 
    for(var i=0, len=data_series.length; i < len; i++ ){
       data_series[i].color = palette.color();
-      console.log("hey : " + i + " -- " + data_series[i].color);
    }
 
 
-   
 
    rickshaw_area_graph(data_series, "#<%=id_selector%>");
-
+}());
 
 </script>

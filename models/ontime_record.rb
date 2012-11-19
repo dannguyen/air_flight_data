@@ -1,4 +1,7 @@
 require 'ostruct'
+require 'set'
+
+
 class OntimeRecord < ActiveRecord::Base
 
   include MyLazyRecordBase
@@ -352,7 +355,122 @@ class OntimeRecord < ActiveRecord::Base
 
   ## NOT SCOPED METHODS
 
-  def OntimeRecord.format_group_sum_for_time_series(records, facet_class=:airline, att=:carrier_delayed_arrivals_rate)
+
+def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
+    # accepts array of struct
+    # expects year, month in each object, and for hings to be in order
+   
+    raise ArgumentError, "We need an array here" unless record_aggs.class == Array
+
+    rec_foos = OntimeRecord.delayed_arrivals_causes_rate_methods_suite
+    
+    series = rec_foos.map do |foo|
+
+      {
+        :name => foo,
+        :data => record_aggs.map{|r| {x: r.date_epoch_sec, y: r.send(foo) } }
+      }
+    end
+
+    return { :series=>series }
+              
+  end
+
+
+
+
+  def OntimeRecord.format_group_sum_for_time_series(record_aggs, facet_foo=:airline, att_foo=:carrier_delayed_arrivals_rate)
+ 
+      raise ArgumentError, "We need an array here" unless record_aggs.class == Array
+
+      # find all time
+      time_set = Set.new()
+
+
+
+      # get all facets:
+      faceted_aggs = record_aggs.inject( Hash.new{|h,k| h[k] = { :data=>[] }  }   ) do |hsh, agg|
+        facet = agg.send(facet_foo)
+        time_val = agg.date_epoch_sec
+        time_set << time_val
+
+        hsh[facet][:data] << {x: time_val, y: agg.send(att_foo)}
+        hsh[facet][:name] ||= facet.name 
+        hsh 
+      end
+
+      time_arr = time_set.to_a 
+
+      # double N, TK!
+      # adding in missing dates
+
+      # remember that facetd_aggs = {Entity=>{:data, :name}}
+      faceted_aggs.each_value do |agg|
+        data_timemap = agg[:data].map{|a| a[:x]}
+
+        time_arr.each do |tval|
+          agg[:data] << {x:tval, y: 0} unless data_timemap.index(tval)
+        end
+      end
+
+
+
+    
+
+
+
+=begin    data_grps = record_aggs.inject( Hash.new{|h,k| h[k] = { :data=>[] }  }   ) do |hsh, agg|
+     entity = agg.send(facet_class)
+      hsh[entity.id][:data] <<  {x: agg.date_epoch_sec, y: agg.send(att)}
+      hsh[entity.id][:name] = entity.name
+      hsh
+    end
+=end
+
+
+     
+
+    time_range = time_arr.minmax
+
+
+    return {:time_range=>time_range, :series=> faceted_aggs.values} # each value is a hash containing :entity and :data
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  def OntimeRecord.deprecated_format_group_sum_for_time_series(records, facet_class=:airline, att=:carrier_delayed_arrivals_rate)
     # this is for the carrier-caused time series
 
 
@@ -380,7 +498,6 @@ class OntimeRecord < ActiveRecord::Base
     data_grps = record_aggs.inject( Hash.new{|h,k| h[k] = { :data=>[] }  }   ) do |hsh, agg|
 
       entity = agg.send(facet_class)
-
       hsh[entity.id][:data] <<  {x: agg.date_int, y: agg.send(att)}
       hsh[entity.id][:entity] ||= entity
       hsh
@@ -392,36 +509,6 @@ class OntimeRecord < ActiveRecord::Base
 
     return {:time_range=>time_range, :data_groups=> data_grps.values} # each value is a hash containing :entity and :data
   end
-
-
-
-def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
-    # accepts array of struct
-    # expects year, month in each object, and for hings to be in order
-   
-    raise ArgumentError, "We need an array here" unless record_aggs.class == Array
-  
-
-    rec_foos = OntimeRecord.delayed_arrivals_causes_rate_methods_suite
-    
-    series = rec_foos.map do |foo|
-
-      {
-        :name => foo,
-        :data => record_aggs.map{|r| {x: r.date_epoch_sec, y: r.send(foo) } }
-      }
-    end
-
-    return { :series=>series }
-              
-  end
-
-
-
-
-
-
-
 
 
 

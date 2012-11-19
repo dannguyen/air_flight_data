@@ -56,7 +56,11 @@
    TK this does not include delays caused by weather or airport conditions.
 	</p>
 
-	<%=partial 'ontime/graphics/carrier-delays-timeseries', 
+
+		<%=partial 'ontime/graphics/carrier-delays-timeseries', :locals=>{:data=> @carrier_caused_timeseries } %>
+
+
+	<%#=partial 'ontime/graphics/carrier-delays-timeseries', 
 		:locals=>{:datapoints=> @carrier_caused_timeseries } 
 	%>
 
@@ -83,7 +87,7 @@
 
 
 <section class="container fold">
-	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records_grouped}%>
+	<%#=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records_grouped}%>
 
 
 
