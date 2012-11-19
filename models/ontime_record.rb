@@ -195,6 +195,8 @@ class OntimeRecord < ActiveRecord::Base
 
   def self.compare_periods(pd_type='YOY', opts={})
     # default is year-over-year, latest period
+    # returns a hsh, hsh[:periods] is a two-element array
+    
     unless ['YOY', 'YTD'].index(pd_type)
       raise ArgumentError, "first argument must be 'YOY' or 'YTD', not #{pd_type}"
     end
@@ -215,7 +217,7 @@ class OntimeRecord < ActiveRecord::Base
         :by_year_month
       when 'YTD'
         :by_ytd
-      end #case statement
+    end #case statement
     
       # year-over-year requires a month setting
           
@@ -296,8 +298,7 @@ class OntimeRecord < ActiveRecord::Base
 
     results_arr = results.map do |result|
      
-          hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
-     
+          hsh = result.attributes.inject({}){|h,(k,v)| h[k.to_sym] = v; h}     
 
           hsh[:date_int] = foo_on_record_date_int(result)
           hsh[:date_epoch_sec] = foo_on_record_epoch_sec(result) # ugh...
@@ -322,6 +323,9 @@ class OntimeRecord < ActiveRecord::Base
   end
 
 
+  def self.group_and_sum_by_airports(opts={})
+    self.group_and_sum_by(:airport_id, opts.merge({:order=>"arrivals DESC"}))
+  end
 
   def self.monthly_group_sums(opts={})
     self.group_and_sum_by(:month, opts.merge({:order=>'month'}))

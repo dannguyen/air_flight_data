@@ -4,20 +4,20 @@
 
 	<div class="row">
 
-		<div class="span3">
+		<div class="span4">
 			<p>
 				For <strong class="tk"><%=@year%></strong>, through the month of <strong class="tk"><%=month_int_to_name @month%></strong>,
 				   <%=@airline.name%> has
-				   <strong class="tk"><%=number_with_delimiter @airline_ytd_records.arrivals %> arrivals</strong> among its largest airportsTK.
+				   <strong class="tk"><%=number_with_delimiter @airline_this_month_records.arrivals %> arrivals</strong> among its largest airportsTK.
 			</p>
 
 			<p>
 				In this time period, <%=@airline.name%> had 
 
-				<%=number_to_percentage_100(@airline_ytd_records.delayed_arrivals_rate) %>
+				<%=number_to_percentage_100(@airline_this_month_records.delayed_arrivals_rate) %>
 				of its arrivals were late by <strong>15 minutes or more</strong>. 
 
-				About <strong><%=number_to_percentage_100( @airline_ytd_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
+				About <strong><%=number_to_percentage_100( @airline_this_month_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
 				factors within <%=@airline.name%>'s control, according to the FAA(TK).
 
 
@@ -27,9 +27,11 @@
 
 	  
 	   
-	   <div class="span6">
+	   <div class="span8">
 	
+			<div class="row">
 			<%=partial "ontime/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>		
+			</div>
 		</div>	
 
 
@@ -64,20 +66,6 @@
 
 <section class="container fold">
 
-<table>
-<% @airports_by_arrivals_sum.each do |arr| %>
-	<% airport, arrivals = arr%>
-
-	<tr>
-		<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airport=>airport, :airline=>@airline)%></td>
-		<td><%=number_with_delimiter arrivals%></td>
-		<td><%#=number_with_delimiter @airline.delayed_arrivals_at_airport(airport)%></td>
-		<td><%#=arrivals/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
-	</tr>
-
-
-<% end %>
-</table>
 
 </section> <!-- container fold-->
 

@@ -19,10 +19,11 @@ class Airline < ActiveRecord::Base
    
    def top_airports_with_arrivals(opts={}) 
     # returns airports in order of arrivals, with
+    
+      
     opts = opts.merge({:order=>"arrivals DESC"}) 
     self.ontime_records.group_and_sum_by(:airport_id, opts)
    end
-
 
 
 ### untested   
