@@ -323,6 +323,7 @@ class OntimeRecord < ActiveRecord::Base
   end
 
 
+
   def self.group_and_sum_by_airports(opts={})
     self.group_and_sum_by(:airport_id, opts.merge({:order=>"arrivals DESC"}))
   end
