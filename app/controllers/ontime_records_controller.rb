@@ -53,7 +53,7 @@ SkiftAir.controllers :ontime_records do
     @top_airports_with_arrivals_this_month = @airline_this_month_records.group_and_sum_by_airports
     
     
-    
+     
     
     
     @ontime_records_grouped = @ontime_records.group_and_sum_by([:year, :month])
