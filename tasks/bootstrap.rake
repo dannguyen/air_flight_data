@@ -134,7 +134,7 @@ namespace :prep do
 	task :canon_lists do 
 
 
-		facets = {'airports'=>{facet:'airport', count:15}, 'airlines'=>{facet:'carrier', count: 6}}		
+		facets = {'airports'=>{facet:'airport', count:20}, 'airlines'=>{facet:'carrier', count: 8}}		
 		
 		sets = facets.keys.inject({}){|h, key| h[key] = Hash.new(0); h}
 

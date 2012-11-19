@@ -40,23 +40,18 @@ SkiftAir.controllers :ontime_records do
   get :delays_by_airline, :map=>"/ontime/airline/:airline" do 
     @airline = Airline.find(params[:airline])
     @ontime_records = @airline.ontime_records.order({:year=>'ASC', :month=>'ASC'})
-    
-    
     @latest_period = @ontime_records.latest_period
+
+
+    
     @year = @latest_period[:year]
     @month = @latest_period[:month]
-    
-    @periods_to_compare = @ontime_records.compare_periods('YOY', :year=>@year, :month=>@month)[:periods]
-    
-    @airline_this_month_records = @periods_to_compare.last[:records]
+    @airline_ytd_records = @ontime_records.by_month(@month).by_year(@year)
           
-    @top_airports_with_arrivals_this_month = @airline_this_month_records.group_and_sum_by_airports
-    
-    
-    
-    
-    
-    @ontime_records_grouped = @ontime_records.group_and_sum_by([:year, :month])
+
+
+
+    @ontime_records_grouped = @ontime_records.group_and_sum_by([:year, :month], :round=>2)
     @stacked_chart_dataseries = OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped)
 
     # note ontime_records has to be changed to include outside the scope of ontime_records for @airline TK
@@ -65,7 +60,7 @@ SkiftAir.controllers :ontime_records do
 
     # tk fix next:
  #   raise "this is an outdated agg:"
-#    @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
+    @airports_by_arrivals_sum = @airline.airports_by_arrivals_sum
 
     render "ontime/delays_by_airline"
   end
