@@ -300,8 +300,7 @@ class OntimeRecord < ActiveRecord::Base
      
 
           hsh[:date_int] = foo_on_record_date_int(result)
-
-
+          hsh[:date_epoch_sec] = foo_on_record_epoch_sec(result) # ugh...
           if _eager_loading
             # include airport, airline if exists
             facets_for_includes.each{ |_f| hsh[_f] = result.send(_f) }
@@ -391,7 +390,38 @@ class OntimeRecord < ActiveRecord::Base
 
 
 
-  def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
+def OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(record_aggs)
+    # accepts array of struct
+    # expects year, month in each object, and for hings to be in order
+   
+    raise ArgumentError, "We need an array here" unless record_aggs.class == Array
+  
+
+    rec_foos = OntimeRecord.delayed_arrivals_causes_rate_methods_suite
+    
+    series = rec_foos.map do |foo|
+
+      {
+        :name => foo,
+        :data => record_aggs.map{|r| {x: r.date_epoch_sec, y: r.send(foo) } }
+      }
+    end
+
+    return { :series=>series }
+              
+  end
+
+
+
+
+
+
+
+
+
+
+
+  def OntimeRecord.deprecated_format_group_sum_for_delay_causes_stacked_chart(record_aggs)
     # accepts array of struct
     # expects year, month in each object, and for hings to be in order
     

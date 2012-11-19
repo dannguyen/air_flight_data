@@ -14,12 +14,25 @@ module MyLazyRecordBase
    foo_on_record_date_int(self)
   end
   
+#  def date_epoch_sec
+ #  foo_on_record_epoch_sec(self)
+ # end
+
+
+
 end
 
 
 module MyFoos
   
 
+  def foo_get_date_components_arr(ar)
+   return [
+      ar.attribute_present?(:year) ? ar.year : 0,
+      ar.attribute_present?(:month) ? ar.month : 0,
+      ar.attribute_present?(:day) ? ar.day : 0
+    ]
+  end
 
   def foo_to_year_month(yr,mth)
     "#{yr}-#{"%02d" % mth}"
@@ -30,12 +43,21 @@ module MyFoos
   end
 
   def foo_on_record_date_int(ar)
-    y = ar.attribute_present?(:year) ? ar.year : 0
-   m = ar.attribute_present?(:month) ? ar.month : 0
-   d = ar.attribute_present?(:day) ? ar.day : 0
-  
-   foo_to_date_int(y,m,d)
+   arr = foo_get_date_components_arr(ar)  
+   foo_to_date_int(*arr)
   end
+
+  def foo_on_record_epoch_sec(ar)
+   if ar.attribute_present?(:year) && ar.attribute_present?(:month) 
+      yr = ar.year
+      mth = ar.month
+
+      day = ar.attribute_present?(:day) ? ar.day : 1
+
+      return Date.new(yr, mth, day).to_time.to_i
+   end
+  end
+
 
 end
 

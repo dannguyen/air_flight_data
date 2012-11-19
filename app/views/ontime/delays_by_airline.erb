@@ -84,12 +84,11 @@
 
 
 
-
 <section class="container fold">
 	
 
 	<h3>Causes for delay</h3>
-	<%=partial 'ontime/graphics/delay-causes-area-graph', :locals=>{:datapoints=> OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped) } %>
+	<%=partial 'ontime/graphics/delay-causes-area-graph', :locals=>{:data=> @stacked_chart_dataseries } %>
 
 </section>
 

@@ -5,11 +5,15 @@ function rickshaw_area_graph(data_series, id_selector){
    
    var graph = new Rickshaw.Graph( {
         element: document.querySelector(id_selector),
-        width: 550,
-        height: 250,
-        series: data_series
-        
-} );
+        width: 900,
+        height: 500,
+        series: data_series,
+    renderer: 'bar'
+
+    } );
+
+    var axes = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+
 
 
 /*

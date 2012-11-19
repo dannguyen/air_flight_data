@@ -51,8 +51,8 @@ SkiftAir.controllers :ontime_records do
 
 
 
-    @ontime_records_grouped = @ontime_records.group_and_sum_by([:airport_id, :year, :month])
-
+    @ontime_records_grouped = @ontime_records.group_and_sum_by([:year, :month])
+    @stacked_chart_dataseries = OntimeRecord.format_group_sum_for_delay_causes_stacked_chart(@ontime_records_grouped)
 
     # note ontime_records has to be changed to include outside the scope of ontime_records for @airline TK
     @carrier_caused_timeseries = OntimeRecord.format_group_sum_for_time_series(@ontime_records)
