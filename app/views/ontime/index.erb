@@ -1,0 +1,51 @@
+
+
+<section class="container">
+
+<h2>Average delays <%=@earliest_period[:year_month]%> to <%=@latest_period[:year_month]%>)</h2>
+
+<div class="row">
+
+   <div class="span6">
+<h2>By Airline</h2>
+   <ul class="vert">
+      <%- @airlines.each do |airline| -%>
+
+         <li>
+            <%=link_to airline.name, url_for( :ontime_records, :delays_by_airline, :airline=>airline) %>
+            <br>
+
+            <%= airline.ontime_records.yoy_monthly_group_sums(3, :round=>3).map{|r| r.nas_delayed_arrivals_rate }.join(", ") %>
+<br>
+            <%= airline.ontime_records.yoy_monthly_group_sums(7, :round=>3).map{|r| r.nas_delayed_arrivals_rate }.join(", ") %>
+
+         </li>
+
+      <%- end -%>
+   </ul>
+
+
+   </div>
+
+
+   <div class="span6">
+
+
+<h2>By Airport</h2>
+
+<ul class="vert">
+   <% @airports.each do |airport| %>
+      <li><%=link_to airport.name, url_for( :ontime_records, :delays_by_airport, :airport=>airport) %></li>
+   <% end %>
+</ul>
+
+
+
+
+   </div>
+
+
+</div><!--row-->
+
+</section>
+

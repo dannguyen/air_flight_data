@@ -1,0 +1,28 @@
+
+<section class="container fold">
+	<h2><%=@airline.name%> on-time performance at <%=@airport.name%></h2>
+
+	<p>This is the history of on-time performance for 
+		<%=link_to @airline.name, url_for(:ontime_records, :delays_by_airline, :airline=>@airline) %> 
+		at 
+		<%=link_to @airport.name, url_for(:ontime_records, :delays_by_airport, :airport=>@airport) %> 
+
+	</p>
+
+</section>
+
+
+<section class="container fold">
+	
+</section>
+
+
+
+<section class="container fold">
+<h3>Raw data</h3>
+	<%=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records}%>
+
+</section>
+
+
+

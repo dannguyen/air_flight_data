@@ -1,0 +1,775 @@
+airport_code,airport_name,enplanements,year
+ATL,Hartsfield - Jackson Atlanta International,44414121,2011
+ORD,Chicago O'Hare International,31892301,2011
+LAX,Los Angeles International,30528737,2011
+DFW,Dallas/Fort Worth International,27518358,2011
+DEN,Denver International,25667499,2011
+JFK,John F Kennedy International,23664832,2011
+SFO,San Francisco International,20056568,2011
+LAS,McCarran International,19872617,2011
+PHX,Phoenix Sky Harbor International,19750306,2011
+IAH,George Bush Intercontinental/Houston,19306660,2011
+CLT,Charlotte/Douglas International,19022535,2011
+MIA,Miami International,18342158,2011
+MCO,Orlando International,17250415,2011
+EWR,Newark Liberty International,16814092,2011
+SEA,Seattle-Tacoma International,15971676,2011
+MSP,Minneapolis-St Paul International/Wold-Chamberlain,15895653,2011
+DTW,Detroit Metropolitan Wayne County,15716865,2011
+PHL,Philadelphia International,14883180,2011
+BOS,General Edward Lawrence Logan International,14180730,2011
+LGA,La Guardia,11989227,2011
+FLL,Fort Lauderdale/Hollywood International,11332466,2011
+BWI,Baltimore/Washington International Thurgood Marshall,11067319,2011
+IAD,Washington Dulles International,11044383,2011
+SLC,Salt Lake City International,9701756,2011
+MDW,Chicago Midway International,9134576,2011
+DCA,Ronald Reagan Washington National,9053004,2011
+HNL,Honolulu International,8689699,2011
+SAN,San Diego International,8465683,2011
+TPA,Tampa International,8174194,2011
+PDX,Portland International,6808486,2011
+STL,Lambert-St Louis International,6159090,2011
+MCI,Kansas City International,5011000,2011
+HOU,William P Hobby,4753554,2011
+BNA,Nashville International,4673047,2011
+MKE,General Mitchell International,4671976,2011
+OAK,Metropolitan Oakland International,4550526,2011
+RDU,Raleigh-Durham International,4462508,2011
+AUS,Austin-Bergstrom International,4436661,2011
+CLE,Cleveland-Hopkins International,4401033,2011
+SMF,Sacramento International,4370895,2011
+MEM,Memphis International,4344213,2011
+MSY,Louis Armstrong New Orleans International,4255411,2011
+SNA,John Wayne Airport-Orange County,4247802,2011
+SJC,Norman Y. Mineta San Jose International,4108006,2011
+PIT,Pittsburgh International,4070614,2011
+SAT,San Antonio International,3992304,2011
+SJU,Luis Munoz Marin International,3983130,2011
+DAL,Dallas Love Field,3852886,2011
+RSW,Southwest Florida International,3748366,2011
+IND,Indianapolis International,3670396,2011
+CVG,Cincinnati/Northern Kentucky International,3422466,2011
+CMH,Port Columbus International,3134379,2011
+PBI,Palm Beach International,2877158,2011
+BDL,Bradley International,2772315,2011
+ABQ,Albuquerque International Sunport,2768435,2011
+JAX,Jacksonville International,2700514,2011
+OGG,Kahului,2683933,2011
+BUF,Buffalo Niagara International,2582597,2011
+ANC,Ted Stevens Anchorage International,2354987,2011
+ONT,Ontario International,2271458,2011
+BUR,Bob Hope,2144915,2011
+OMA,Eppley Airfield,2047055,2011
+PVD,Theodore Francis Green State,1920699,2011
+RNO,Reno/Tahoe International,1821051,2011
+TUS,Tucson International,1779679,2011
+OKC,Will Rogers World,1738438,2011
+SDF,Louisville International-Standiford Field,1650707,2011
+ORF,Norfolk International,1606695,2011
+RIC,Richmond International,1571155,2011
+LGB,Long Beach /Daugherty Field/,1512212,2011
+GEG,Spokane International,1487913,2011
+ELP,El Paso International,1458965,2011
+BHM,Birmingham-Shuttlesworth International,1429282,2011
+BOI,Boise Air Terminal/Gowen Field,1395554,2011
+GUM,Guam International,1369586,2011
+TUL,Tulsa International,1346122,2011
+MHT,Manchester,1342308,2011
+KOA,Kona International at Keahole,1295389,2011
+CHS,Charleston AFB/International,1247459,2011
+DAY,James M Cox Dayton International,1247333,2011
+ALB,Albany International,1216626,2011
+LIH,Lihue,1203525,2011
+ROC,Greater Rochester International,1190967,2011
+GRR,Gerald R. Ford International,1126552,2011
+LIT,Adams Field,1063673,2011
+SYR,Syracuse Hancock International,982709,2011
+HPN,Westchester County,972385,2011
+DSM,Des Moines International,932828,2011
+GSO,Piedmont Triad International,894290,2011
+GSP,Greenville Spartanburg International,880994,2011
+MYR,Myrtle Beach International,848230,2011
+TYS,McGhee Tyson,841237,2011
+PWM,Portland International Jetport,833005,2011
+COS,City of Colorado Springs Municipal,828516,2011
+CAK,Akron-Canton Regional,814243,2011
+SAV,Savannah/Hilton Head International,785251,2011
+ISP,Long Island MacArthur,781396,2011
+SFB,Orlando Sanford International,768938,2011
+PSP,Palm Springs International,759510,2011
+PNS,Pensacola Gulf Coast Regional,750190,2011
+MSN,Dane County Regional-Truax Field,741365,2011
+ICT,Wichita Mid-Continent,740675,2011
+ACY,Atlantic City International,668930,2011
+SRQ,Sarasota/Bradenton International,657157,2011
+MDT,Harrisburg International,655294,2011
+BTV,Burlington International,636019,2011
+JAN,Jackson-Evers International,615622,2011
+FAT,Fresno Yosemite International,615320,2011
+HSV,Huntsville International-Carl T Jones Field,614601,2011
+ITO,Hilo International,605251,2011
+STT,Cyril E King,596832,2011
+XNA,Northwest Arkansas Regional,538850,2011
+LEX,Blue Grass,533952,2011
+IWA,Phoenix-Mesa Gateway,521437,2011
+PHF,Newport News/Williamsburg International,516789,2011
+BLI,Bellingham International,515402,2011
+LBB,Lubbock Preston Smith International,503580,2011
+CAE,Columbia Metropolitan,487474,2011
+MAF,Midland International,474423,2011
+FNT,Bishop International,473113,2011
+FAI,Fairbanks International,438188,2011
+VPS,Eglin AFB,434455,2011
+CID,The Eastern Iowa,431874,2011
+ABE,Lehigh Valley International,428332,2011
+FSD,Joe Foss Field,423288,2011
+ECP,Northwest Florida Beaches International,417902,2011
+PIE,St Petersburg-Clearwater International,417223,2011
+MLI,Quad City International,412470,2011
+BIL,Billings Logan International,407375,2011
+BZN,Bozeman Yellowstone International,397870,2011
+BTR,"Baton Rouge Metropolitan, Ryan Field",396403,2011
+GPT,Gulfport-Biloxi International,395350,2011
+ILM,Wilmington International,395156,2011
+EUG,Mahlon Sweet Field,393504,2011
+AMA,Rick Husband Amarillo International,392815,2011
+BGR,Bangor International,391597,2011
+GSN,Francisco C. Ada/Saipan International,382386,2011
+SBA,Santa Barbara Municipal,367328,2011
+AVL,Asheville Regional,361617,2011
+HRL,Valley International,359166,2011
+JNU,Juneau International,355499,2011
+GRB,Austin Straubel International,352157,2011
+SGF,Springfield-Branson National,349091,2011
+FAR,Hector International,346459,2011
+EYW,Key West International,335603,2011
+MFE,McAllen Miller International,332706,2011
+GCN,Grand Canyon National Park,331924,2011
+PSC,Tri-Cities,327008,2011
+CRP,Corpus Christi International,322903,2011
+ROA,Roanoke Regional/Woodrum Field,320961,2011
+TLH,Tallahassee Regional,305686,2011
+SBN,South Bend,305386,2011
+CHA,Lovell Field,304399,2011
+MFR,Rogue Valley International - Medford,301742,2011
+MSO,Missoula International,292501,2011
+MOB,Mobile Regional,288461,2011
+BMI,Central IL Regional Airport at Bloomington-Normal,284852,2011
+CRW,Yeager,282704,2011
+JAC,Jackson Hole,279065,2011
+DAB,Daytona Beach International,274166,2011
+FWA,Fort Wayne International,272796,2011
+AGS,Augusta Regional at Bush Field,267631,2011
+SHV,Shreveport Regional,265104,2011
+FAY,Fayetteville Regional/Grannis Field,259445,2011
+RAP,Rapid City Regional,254292,2011
+PIA,General Downing - Peoria International,249898,2011
+ATW,Outagamie County Regional,242346,2011
+BQN,Rafael Hernandez,230556,2011
+RDM,Roberts Field,230395,2011
+AVP,Wilkes-Barre/Scranton International,228367,2011
+LFT,Lafayette Regional,222795,2011
+ASE,Aspen-Pitkin County/Sardy Field,221256,2011
+TRI,Tri-Cities Regional TN/VA,220586,2011
+GRK,Robert Gray AAF,219753,2011
+GJT,Grand Junction Regional,217988,2011
+CHO,Charlottesville-Albemarle,216957,2011
+SWF,Stewart International,209966,2011
+MLB,Melbourne International,207829,2011
+BIS,Bismarck Municipal,197181,2011
+BVU,Boulder City Municipal,190716,2011
+EGE,Eagle County Regional,189276,2011
+AEX,Alexandria International,188286,2011
+MGM,Montgomery Regional (Dannelly Field),188177,2011
+LAN,Capital Region International,186341,2011
+STX,Henry E Rohlsen,184331,2011
+MRY,Monterey Peninsula,181640,2011
+GPI,Glacier Park International,179064,2011
+GNV,Gainesville Regional,177282,2011
+DRO,Durango-La Plata County,175649,2011
+TVC,Cherry Capital,170977,2011
+OAJ,Albert J Ellis,170118,2011
+EVV,Evansville Regional,169426,2011
+ACK,Nantucket Memorial,169352,2011
+GTF,Great Falls International,168158,2011
+ELM,Elmira/Corning Regional,152582,2011
+BET,Bethel,152366,2011
+MOT,Minot International,151424,2011
+IDA,Idaho Falls Regional,149315,2011
+AZO,Kalamazoo/Battle Creek International,148634,2011
+BFL,Meadows Field,148347,2011
+PGD,Punta Gorda,147698,2011
+DLH,Duluth International,146620,2011
+UNV,University Park,144054,2011
+PBG,Plattsburgh International,139698,2011
+MBS,MBS International,136594,2011
+CWA,Central Wisconsin,135965,2011
+LNK,Lincoln,135647,2011
+SBP,San Luis County Regional,132692,2011
+EWN,Coastal Carolina Regional,124085,2011
+ITH,Ithaca Tompkins Regional,121733,2011
+GFK,Grand Forks International,118872,2011
+IFP,Laughlin/Bullhead International,113280,2011
+ERI,Erie International/Tom Ridge Field,112749,2011
+HTS,Tri-State/Milton J. Ferguson Field,112522,2011
+RST,Rochester International,110295,2011
+BGM,Greater Binghamton/Edwin A Link Field,108172,2011
+MLU,Monroe Regional,107290,2011
+HDN,Yampa Valley,106534,2011
+LSE,La Crosse Municipal,102958,2011
+RFD,Chicago/Rockford International,102559,2011
+STS,Charles M. Schulz - Sonoma County,102414,2011
+KTN,Ketchikan International,102086,2011
+LRD,Laredo International,101780,2011
+HLN,Helena Regional,100695,2011
+HYA,Barnstable Municipal-Boardman/Polando Field,100596,2011
+IAG,Niagara Falls International,98982,2011
+PSE,Mercedita,95658,2011
+ENA,Kenai Municipal,90806,2011
+MTJ,Montrose Regional,87228,2011
+BRO,Brownsville/South Padre Island International,85244,2011
+FSM,Fort Smith Regional,84136,2011
+CMI,University of Illinois-Willard,83731,2011
+NYL,Yuma MCAS/Yuma International,82420,2011
+MKK,Molokai,82136,2011
+ADQ,Kodiak,81149,2011
+TOL,Toledo Express,81127,2011
+ABI,Abilene Regional,80434,2011
+CSG,Columbus Metropolitan,78718,2011
+CPR,Casper/Natrona County International,77758,2011
+LYH,Lynchburg Regional/Preston Glenn Field,73821,2011
+TYR,Tyler Pounds Regional,72602,2011
+SBY,Salisbury-Ocean City Wicomico Regional,72568,2011
+SPI,Abraham Lincoln Capital,71862,2011
+CLL,Easterwood Field,71555,2011
+1G4,Grand Canyon West,71316,2011
+ACV,Arcata,70455,2011
+FLO,Florence Regional,68169,2011
+SIT,Sitka Rocky Gutierrez,65193,2011
+LAW,Lawton-Fort Sill Regional,63909,2011
+LWS,Lewiston-Nez Perce County,62845,2011
+OTZ,Ralph Wien Memorial,62738,2011
+PGV,Pitt-Greenville,62071,2011
+LCH,Lake Charles Regional,61325,2011
+ACT,Waco Regional,61164,2011
+HXD,Hilton Head,61006,2011
+FLG,Flagstaff Pulliam,60831,2011
+OME,Nome,58892,2011
+MHK,Manhattan Regional,58672,2011
+SCK,Stockton Metropolitan,56044,2011
+YKM,Yakima Air Terminal/McAllister Field,55902,2011
+VQS,Antonio Rivera Rodriguez,55647,2011
+SJT,San Angelo Regional/Mathis Field,54955,2011
+SAW,Sawyer International,52326,2011
+EAT,Pangborn Memorial,50927,2011
+SUN,Friedman Memorial,50885,2011
+MVY,Marthas Vineyard,49095,2011
+SGU,St George Municipal,48582,2011
+GRI,Central Nebraska Regional,47167,2011
+DHN,Dothan Regional,46388,2011
+CRQ,McClellan-Palomar,45518,2011
+PPG,Pago Pago International,45486,2011
+FNL,Fort Collins-Loveland Municipal,44999,2011
+LNY,Lanai,43596,2011
+SAF,Santa Fe Municipal,43329,2011
+UTA,Tunica Municipal,41670,2011
+SMX,Santa Maria Public/Capt G Allan Hancock Field,41620,2011
+BRW,Wiley Post-Will Rogers Memorial,41083,2011
+COU,Columbia Regional,40990,2011
+AKN,King Salmon,40345,2011
+HVN,Tweed-New Haven,40074,2011
+PUW,Pullman/Moscow Regional,39134,2011
+TWF,Joslin Field - Magic Valley Regional,38533,2011
+RDD,Redding Municipal,38290,2011
+VLD,Valdosta Regional,38066,2011
+SCC,Deadhorse,37711,2011
+ROW,Roswell International Air Center,37262,2011
+SPS,Sheppard AFB/Wichita Falls Municipal,37248,2011
+YNG,Youngstown-Warren Regional,37048,2011
+LBE,Arnold Palmer Regional,36971,2011
+GUC,Gunnison-Crested Butte Regional,36516,2011
+DBQ,Dubuque Regional,36148,2011
+HOM,Homer,35863,2011
+GTR,Golden Triangle Regional,35860,2011
+BFI,Boeing Field/King County International,34434,2011
+ABY,Southwest Georgia Regional,33627,2011
+GCC,Gillette-Campbell County,32846,2011
+ALW,Walla Walla Regional,32139,2011
+BQK,Brunswick Golden Isles,31655,2011
+DLG,Dillingham,30406,2011
+DUT,Unalaska,30048,2011
+TXK,Texarkana Regional-Webb Field,28698,2011
+ISN,Sloulin Field International,28202,2011
+RVR,Jose Aponte De La Torre,28165,2011
+SUX,Sioux Gateway/Col. Bud Day Field,28137,2011
+COD,Yellowstone Regional,28019,2011
+JLN,Joplin Regional,27379,2011
+RHI,Rhinelander-Oneida County,26764,2011
+RKS,Rock Springs-Sweetwater County,26219,2011
+MMH,Mammoth Yosemite,26201,2011
+CYS,Cheyenne Regional/Jerry Olson Field,25112,2011
+BTM,Bert Mooney,24806,2011
+IPT,Williamsport Regional,24508,2011
+ABR,Aberdeen Regional,24503,2011
+PGA,Page Municipal,23938,2011
+BJI,Bemidji Regional,23910,2011
+EKO,Elko Regional,23543,2011
+LHD,Lake Hood,23497,2011
+MRI,Merrill Field,23344,2011
+CMX,Houghton County Memorial,23024,2011
+PLN,Pellston Regional Airport of Emmet County,22708,2011
+PUB,Pueblo Memorial,22470,2011
+ALO,Waterloo Regional,22297,2011
+OTH,Southwest Oregon Regional,22066,2011
+PIH,Pocatello Regional,21566,2011
+GGG,East Texas Regional,21112,2011
+GRO,Rota International,20961,2011
+CIC,Chico Municipal,20881,2011
+SIG,Fernando Luis Ribas Dominicci,20353,2011
+EAU,Chippewa Valley Regional,19097,2011
+DIK,Dickinson - Theodore Roosevelt Regional,19001,2011
+CIU,Chippewa County International,18717,2011
+MOD,Modesto City County-Harry Sham Field,18683,2011
+PSG,Petersburg James A Johnson,18318,2011
+MEI,Key Field,18008,2011
+PAH,Barkley Regional,17978,2011
+CDV,Merle K (Mudhole) Smith,17731,2011
+BRD,Brainerd Lakes Regional,17574,2011
+OWB,Owensboro-Daviess County,17296,2011
+LWB,Greenbrier Valley,17281,2011
+CVX,Charlevoix Municipal,16852,2011
+TNI,Tinian International,16706,2011
+RKD,Knox County Regional,16680,2011
+FMN,Four Corners Regional,16322,2011
+ANI,Aniak,16217,2011
+VDZ,Valdez Pioneer Field,16147,2011
+PIB,Hattiesburg-Laurel Regional,16095,2011
+LMT,Klamath Falls,15856,2011
+INL,Falls International,15157,2011
+CEC,Jack McNamara Field,14887,2011
+PVU,Provo Municipal,14858,2011
+PIR,Pierre Regional,14802,2011
+RIW,Riverton Regional,14299,2011
+PQI,Northern Maine Regional Airport at Presque Isle,14264,2011
+MKG,Muskegon County,14101,2011
+BPT,Jack Brooks Regional,13670,2011
+ESC,Delta County,13478,2011
+SHR,Sheridan County,13324,2011
+TUP,Tupelo Regional,12615,2011
+BHB,Hancock County-Bar Harbor,12510,2011
+KSM,St Mary's,12415,2011
+UNK,Unalakleet,12332,2011
+APN,Alpena County Regional,12320,2011
+HIB,Range Regional,12272,2011
+SHD,Shenandoah Valley Regional,12033,2011
+CKB,North Central West Virginia,12012,2011
+MBA,Manokotak,11828,2011
+GCK,Garden City Regional,11690,2011
+WRG,Wrangell,11674,2011
+MCW,Mason City Municipal,11594,2011
+GST,Gustavus,11537,2011
+HYS,Hays Regional,11397,2011
+IMT,Ford,11324,2011
+FHR,Friday Harbor,11283,2011
+MBL,Manistee County-Blacker,11220,2011
+EWB,New Bedford Regional,11152,2011
+EAR,Kearney Regional,11019,2011
+TEX,Telluride Regional,11017,2011
+PVC,Provincetown Municipal,10967,2011
+LBF,North Platte Regional Airport Lee Bird Field,10962,2011
+BED,Laurence G Hanscom Field,10893,2011
+FOD,Fort Dodge Regional,10866,2011
+GAL,Edward G. Pitka Sr,10862,2011
+HNH,Hoonah,10815,2011
+MGW,Morgantown Municipal-Walter L. Bill Hart Field,10674,2011
+MWA,Williamson County Regional,10558,2011
+YAK,Yakutat,10517,2011
+BID,Block Island State,10164,2011
+ATL,Hartsfield - Jackson Atlanta International,43130585,2010
+ORD,Chicago O'Hare International,32171831,2010
+LAX,Los Angeles International,28857755,2010
+DFW,Dallas/Fort Worth International,27100656,2010
+DEN,Denver International,25241962,2010
+JFK,John F Kennedy International,22934047,2010
+SFO,San Francisco International,19359003,2010
+LAS,McCarran International,18996738,2010
+PHX,Phoenix Sky Harbor International,18907171,2010
+IAH,George Bush Intercontinental/Houston,19528631,2010
+CLT,Charlotte/Douglas International,18629181,2010
+MIA,Miami International,17017654,2010
+MCO,Orlando International,17017491,2010
+EWR,Newark Liberty International,16571754,2010
+SEA,Seattle-Tacoma International,15406243,2010
+MSP,Minneapolis-St Paul International/Wold-Chamberlain,15512487,2010
+DTW,Detroit Metropolitan Wayne County,15643890,2010
+PHL,Philadelphia International,14951254,2010
+BOS,General Edward Lawrence Logan International,13561814,2010
+LGA,La Guardia,12001501,2010
+FLL,Fort Lauderdale/Hollywood International,10829810,2010
+BWI,Baltimore/Washington International Thurgood Marshall,10848633,2010
+IAD,Washington Dulles International,11276481,2010
+SLC,Salt Lake City International,9910493,2010
+MDW,Chicago Midway International,8518957,2010
+DCA,Ronald Reagan Washington National,8736804,2010
+HNL,Honolulu International,8740077,2010
+SAN,San Diego International,8430509,2010
+TPA,Tampa International,8137222,2010
+PDX,Portland International,6582227,2010
+STL,Lambert-St Louis International,6044760,2010
+MCI,Kansas City International,4946173,2010
+HOU,William P Hobby,4357835,2010
+BNA,Nashville International,4432527,2010
+MKE,General Mitchell International,4760170,2010
+OAK,Metropolitan Oakland International,4673417,2010
+RDU,Raleigh-Durham International,4465736,2010
+AUS,Austin-Bergstrom International,4201136,2010
+CLE,Cleveland-Hopkins International,4591097,2010
+SMF,Sacramento International,4424279,2010
+MEM,Memphis International,4930935,2010
+MSY,Louis Armstrong New Orleans International,4088889,2010
+SNA,John Wayne Airport-Orange County,4278623,2010
+SJC,Norman Y. Mineta San Jose International,4056167,2010
+PIT,Pittsburgh International,3996656,2010
+SAT,San Antonio International,3916320,2010
+SJU,Luis Munoz Marin International,4243475,2010
+DAL,Dallas Love Field,3783407,2010
+RSW,Southwest Florida International,3714157,2010
+IND,Indianapolis International,3728698,2010
+CVG,Cincinnati/Northern Kentucky International,3906826,2010
+CMH,Port Columbus International,3145962,2010
+PBI,Palm Beach International,2958416,2010
+BDL,Bradley International,2640155,2010
+ABQ,Albuquerque International Sunport,2828420,2010
+JAX,Jacksonville International,2755719,2010
+OGG,Kahului,2587214,2010
+BUF,Buffalo Niagara International,2602968,2010
+ANC,Ted Stevens Anchorage International,2342310,2010
+ONT,Ontario International,2380881,2010
+BUR,Bob Hope,2239804,2010
+OMA,Eppley Airfield,2097958,2010
+PVD,Theodore Francis Green State,1951566,2010
+RNO,Reno/Tahoe International,1857488,2010
+TUS,Tucson International,1844228,2010
+OKC,Will Rogers World,1710993,2010
+SDF,Louisville International-Standiford Field,1651037,2010
+ORF,Norfolk International,1663294,2010
+RIC,Richmond International,1651131,2010
+LGB,Long Beach /Daugherty Field/,1451404,2010
+GEG,Spokane International,1545115,2010
+ELP,El Paso International,1509093,2010
+BHM,Birmingham-Shuttlesworth International,1443215,2010
+BOI,Boise Air Terminal/Gowen Field,1406750,2010
+GUM,Guam International,1411024,2010
+TUL,Tulsa International,1382895,2010
+MHT,Manchester,1391797,2010
+KOA,Kona International at Keahole,1276343,2010
+CHS,Charleston AFB/International,1013418,2010
+DAY,James M Cox Dayton International,1248787,2010
+ALB,Albany International,1250282,2010
+LIH,Lihue,1175203,2010
+ROC,Greater Rochester International,1263965,2010
+GRR,Gerald R. Ford International,1089002,2010
+LIT,Adams Field,1097403,2010
+SYR,Syracuse Hancock International,1024505,2010
+HPN,Westchester County,999831,2010
+DSM,Des Moines International,898840,2010
+GSO,Piedmont Triad International,855073,2010
+GSP,Greenville Spartanburg International,642512,2010
+MYR,Myrtle Beach International,782737,2010
+TYS,McGhee Tyson,804917,2010
+PWM,Portland International Jetport,851566,2010
+COS,City of Colorado Springs Municipal,877367,2010
+CAK,Akron-Canton Regional,771107,2010
+SAV,Savannah/Hilton Head International,798194,2010
+ISP,Long Island MacArthur,858741,2010
+SFB,Orlando Sanford International,553892,2010
+PSP,Palm Springs International,751068,2010
+PNS,Pensacola Gulf Coast Regional,729748,2010
+MSN,Dane County Regional-Truax Field,766953,2010
+ICT,Wichita Mid-Continent,751601,2010
+ACY,Atlantic City International,669470,2010
+SRQ,Sarasota/Bradenton International,670992,2010
+MDT,Harrisburg International,664968,2010
+BTV,Burlington International,640790,2010
+JAN,Jackson-Evers International,618373,2010
+FAT,Fresno Yosemite International,569879,2010
+HSV,Huntsville International-Carl T Jones Field,606127,2010
+ITO,Hilo International,611782,2010
+STT,Cyril E King,606137,2010
+XNA,Northwest Arkansas Regional,549195,2010
+LEX,Blue Grass,539492,2010
+IWA,Phoenix-Mesa Gateway,417862,2010
+PHF,Newport News/Williamsburg International,519906,2010
+BLI,Bellingham International,398368,2010
+LBB,Lubbock Preston Smith International,508858,2010
+CAE,Columbia Metropolitan,486879,2010
+MAF,Midland International,445043,2010
+FNT,Bishop International,497649,2010
+FAI,Fairbanks International,435392,2010
+VPS,Eglin AFB,348979,2010
+CID,The Eastern Iowa,462670,2010
+ABE,Lehigh Valley International,414427,2010
+FSD,Joe Foss Field,355939,2010
+ECP,Northwest Florida Beaches International,312114,2010
+PIE,St Petersburg-Clearwater International,384394,2010
+MLI,Quad City International,477086,2010
+BIL,Billings Logan International,388329,2010
+BZN,Bozeman Yellowstone International,364521,2010
+BTR,"Baton Rouge Metropolitan, Ryan Field",382687,2010
+GPT,Gulfport-Biloxi International,461072,2010
+ILM,Wilmington International,408058,2010
+EUG,Mahlon Sweet Field,369397,2010
+AMA,Rick Husband Amarillo International,394593,2010
+BGR,Bangor International,416328,2010
+GSN,Francisco C. Ada/Saipan International,433577,2010
+SBA,Santa Barbara Municipal,382894,2010
+AVL,Asheville Regional,371226,2010
+HRL,Valley International,373438,2010
+JNU,Juneau International,344057,2010
+GRB,Austin Straubel International,349733,2010
+SGF,Springfield-Branson National,381172,2010
+FAR,Hector International,365963,2010
+EYW,Key West International,287359,2010
+MFE,McAllen Miller International,344302,2010
+GCN,Grand Canyon National Park,318622,2010
+PSC,Tri-Cities,312915,2010
+CRP,Corpus Christi International,339193,2010
+ROA,Roanoke Regional/Woodrum Field,316478,2010
+TLH,Tallahassee Regional,325097,2010
+SBN,South Bend,317096,2010
+CHA,Lovell Field,292830,2010
+MFR,Rogue Valley International - Medford,310824,2010
+MSO,Missoula International,289875,2010
+MOB,Mobile Regional,277232,2010
+BMI,Central IL Regional Airport at Bloomington-Normal,274677,2010
+CRW,Yeager,264818,2010
+JAC,Jackson Hole,288325,2010
+DAB,Daytona Beach International,246627,2010
+FWA,Fort Wayne International,273056,2010
+AGS,Augusta Regional at Bush Field,246587,2010
+SHV,Shreveport Regional,237945,2010
+FAY,Fayetteville Regional/Grannis Field,258986,2010
+RAP,Rapid City Regional,284126,2010
+PIA,General Downing - Peoria International,249595,2010
+ATW,Outagamie County Regional,272471,2010
+BQN,Rafael Hernandez,241976,2010
+RDM,Roberts Field,226400,2010
+AVP,Wilkes-Barre/Scranton International,213422,2010
+LFT,Lafayette Regional,220211,2010
+ASE,Aspen-Pitkin County/Sardy Field,222755,2010
+TRI,Tri-Cities Regional TN/VA,202114,2010
+GRK,Robert Gray AAF,243861,2010
+GJT,Grand Junction Regional,219358,2010
+CHO,Charlottesville-Albemarle,197776,2010
+SWF,Stewart International,201684,2010
+MLB,Melbourne International,180441,2010
+BIS,Bismarck Municipal,196285,2010
+BVU,Boulder City Municipal,169923,2010
+EGE,Eagle County Regional,201010,2010
+AEX,Alexandria International,179129,2010
+MGM,Montgomery Regional (Dannelly Field),194540,2010
+LAN,Capital Region International,136548,2010
+STX,Henry E Rohlsen,187211,2010
+MRY,Monterey Peninsula,190527,2010
+GPI,Glacier Park International,175222,2010
+GNV,Gainesville Regional,159499,2010
+DRO,Durango-La Plata County,163611,2010
+TVC,Cherry Capital,167488,2010
+OAJ,Albert J Ellis,154307,2010
+EVV,Evansville Regional,169967,2010
+ACK,Nantucket Memorial,201390,2010
+GTF,Great Falls International,155204,2010
+ELM,Elmira/Corning Regional,131358,2010
+BET,Bethel,144353,2010
+MOT,Minot International,91120,2010
+IDA,Idaho Falls Regional,144365,2010
+AZO,Kalamazoo/Battle Creek International,135555,2010
+BFL,Meadows Field,111699,2010
+PGD,Punta Gorda,87041,2010
+DLH,Duluth International,150556,2010
+UNV,University Park,143531,2010
+PBG,Plattsburgh International,94808,2010
+MBS,MBS International,146870,2010
+CWA,Central Wisconsin,156251,2010
+LNK,Lincoln,143230,2010
+SBP,San Luis County Regional,129220,2010
+EWN,Coastal Carolina Regional,126800,2010
+ITH,Ithaca Tompkins Regional,121390,2010
+GFK,Grand Forks International,117980,2010
+IFP,Laughlin/Bullhead International,121468,2010
+ERI,Erie International/Tom Ridge Field,127184,2010
+HTS,Tri-State/Milton J. Ferguson Field,115263,2010
+RST,Rochester International,120063,2010
+BGM,Greater Binghamton/Edwin A Link Field,108988,2010
+MLU,Monroe Regional,100419,2010
+HDN,Yampa Valley,110044,2010
+LSE,La Crosse Municipal,109962,2010
+RFD,Chicago/Rockford International,96974,2010
+STS,Charles M. Schulz - Sonoma County,92778,2010
+KTN,Ketchikan International,100138,2010
+LRD,Laredo International,112520,2010
+HLN,Helena Regional,98193,2010
+HYA,Barnstable Municipal-Boardman/Polando Field,124560,2010
+IAG,Niagara Falls International,23849,2010
+PSE,Mercedita,97660,2010
+ENA,Kenai Municipal,86857,2010
+MTJ,Montrose Regional,96601,2010
+BRO,Brownsville/South Padre Island International,84401,2010
+FSM,Fort Smith Regional,83902,2010
+CMI,University of Illinois-Willard,85715,2010
+NYL,Yuma MCAS/Yuma International,82163,2010
+MKK,Molokai,88688,2010
+ADQ,Kodiak,80303,2010
+TOL,Toledo Express,88578,2010
+ABI,Abilene Regional,73605,2010
+CSG,Columbus Metropolitan,63726,2010
+CPR,Casper/Natrona County International,83342,2010
+LYH,Lynchburg Regional/Preston Glenn Field,93772,2010
+TYR,Tyler Pounds Regional,74357,2010
+SBY,Salisbury-Ocean City Wicomico Regional,65489,2010
+SPI,Abraham Lincoln Capital,61413,2010
+CLL,Easterwood Field,72188,2010
+1G4,Grand Canyon West,60682,2010
+ACV,Arcata,93402,2010
+FLO,Florence Regional,82961,2010
+SIT,Sitka Rocky Gutierrez,64536,2010
+LAW,Lawton-Fort Sill Regional,68054,2010
+LWS,Lewiston-Nez Perce County,61737,2010
+OTZ,Ralph Wien Memorial,62177,2010
+PGV,Pitt-Greenville,61899,2010
+LCH,Lake Charles Regional,65340,2010
+ACT,Waco Regional,61401,2010
+HXD,Hilton Head,73776,2010
+FLG,Flagstaff Pulliam,62109,2010
+OME,Nome,56658,2010
+MHK,Manhattan Regional,44603,2010
+SCK,Stockton Metropolitan,50632,2010
+YKM,Yakima Air Terminal/McAllister Field,53832,2010
+VQS,Antonio Rivera Rodriguez,46267,2010
+SJT,San Angelo Regional/Mathis Field,56021,2010
+SAW,Sawyer International,57371,2010
+EAT,Pangborn Memorial,46837,2010
+SUN,Friedman Memorial,52755,2010
+MVY,Marthas Vineyard,43904,2010
+SGU,St George Municipal,37596,2010
+GRI,Central Nebraska Regional,37101,2010
+DHN,Dothan Regional,41453,2010
+CRQ,McClellan-Palomar,28355,2010
+PPG,Pago Pago International,45206,2010
+FNL,Fort Collins-Loveland Municipal,35671,2010
+LNY,Lanai,43922,2010
+SAF,Santa Fe Municipal,43807,2010
+UTA,Tunica Municipal,65907,2010
+SMX,Santa Maria Public/Capt G Allan Hancock Field,47741,2010
+BRW,Wiley Post-Will Rogers Memorial,40141,2010
+COU,Columbia Regional,38293,2010
+AKN,King Salmon,41514,2010
+HVN,Tweed-New Haven,35854,2010
+PUW,Pullman/Moscow Regional,35248,2010
+TWF,Joslin Field - Magic Valley Regional,35576,2010
+RDD,Redding Municipal,54420,2010
+VLD,Valdosta Regional,42537,2010
+SCC,Deadhorse,37319,2010
+ROW,Roswell International Air Center,38850,2010
+SPS,Sheppard AFB/Wichita Falls Municipal,44296,2010
+YNG,Youngstown-Warren Regional,27717,2010
+LBE,Arnold Palmer Regional,6978,2010
+GUC,Gunnison-Crested Butte Regional,37316,2010
+DBQ,Dubuque Regional,33861,2010
+HOM,Homer,38407,2010
+GTR,Golden Triangle Regional,36329,2010
+BFI,Boeing Field/King County International,33656,2010
+ABY,Southwest Georgia Regional,35494,2010
+GCC,Gillette-Campbell County,29230,2010
+ALW,Walla Walla Regional,29064,2010
+BQK,Brunswick Golden Isles,30059,2010
+DLG,Dillingham,42927,2010
+DUT,Unalaska,26711,2010
+TXK,Texarkana Regional-Webb Field,26690,2010
+ISN,Sloulin Field International,16473,2010
+RVR,Jose Aponte De La Torre,11308,2010
+SUX,Sioux Gateway/Col. Bud Day Field,24701,2010
+COD,Yellowstone Regional,28454,2010
+JLN,Joplin Regional,4078,2010
+RHI,Rhinelander-Oneida County,25137,2010
+RKS,Rock Springs-Sweetwater County,20993,2010
+MMH,Mammoth Yosemite,19814,2010
+CYS,Cheyenne Regional/Jerry Olson Field,19507,2010
+BTM,Bert Mooney,25433,2010
+IPT,Williamsport Regional,22519,2010
+ABR,Aberdeen Regional,20089,2010
+PGA,Page Municipal,20264,2010
+BJI,Bemidji Regional,21498,2010
+EKO,Elko Regional,21863,2010
+LHD,Lake Hood,19789,2010
+MRI,Merrill Field,14972,2010
+CMX,Houghton County Memorial,21186,2010
+PLN,Pellston Regional Airport of Emmet County,23324,2010
+PUB,Pueblo Memorial,11641,2010
+ALO,Waterloo Regional,23206,2010
+OTH,Southwest Oregon Regional,23124,2010
+PIH,Pocatello Regional,20825,2010
+GGG,East Texas Regional,21830,2010
+GRO,Rota International,21964,2010
+CIC,Chico Municipal,23272,2010
+SIG,Fernando Luis Ribas Dominicci,38363,2010
+EAU,Chippewa Valley Regional,18369,2010
+DIK,Dickinson - Theodore Roosevelt Regional,10383,2010
+CIU,Chippewa County International,14349,2010
+MOD,Modesto City County-Harry Sham Field,23487,2010
+PSG,Petersburg James A Johnson,18468,2010
+MEI,Key Field,16871,2010
+PAH,Barkley Regional,19903,2010
+CDV,Merle K (Mudhole) Smith,17856,2010
+BRD,Brainerd Lakes Regional,16404,2010
+OWB,Owensboro-Daviess County,16193,2010
+LWB,Greenbrier Valley,12293,2010
+CVX,Charlevoix Municipal,14966,2010
+TNI,Tinian International,19520,2010
+RKD,Knox County Regional,17657,2010
+FMN,Four Corners Regional,13389,2010
+ANI,Aniak,16394,2010
+VDZ,Valdez Pioneer Field,15739,2010
+PIB,Hattiesburg-Laurel Regional,13766,2010
+LMT,Klamath Falls,21353,2010
+INL,Falls International,14051,2010
+CEC,Jack McNamara Field,14341,2010
+PVU,Provo Municipal,1124,2010
+PIR,Pierre Regional,14686,2010
+RIW,Riverton Regional,14361,2010
+PQI,Northern Maine Regional Airport at Presque Isle,15052,2010
+MKG,Muskegon County,13088,2010
+BPT,Jack Brooks Regional,17394,2010
+ESC,Delta County,9246,2010
+SHR,Sheridan County,14146,2010
+TUP,Tupelo Regional,12749,2010
+BHB,Hancock County-Bar Harbor,11109,2010
+KSM,St Mary's,9891,2010
+UNK,Unalakleet,12693,2010
+APN,Alpena County Regional,8737,2010
+HIB,Range Regional,11227,2010
+SHD,Shenandoah Valley Regional,10408,2010
+CKB,North Central West Virginia,10694,2010
+MBA,Manokotak,12409,2010
+GCK,Garden City Regional,10155,2010
+WRG,Wrangell,10882,2010
+MCW,Mason City Municipal,13852,2010
+GST,Gustavus,9996,2010
+HYS,Hays Regional,9026,2010
+IMT,Ford,6943,2010
+FHR,Friday Harbor,12381,2010
+MBL,Manistee County-Blacker,3413,2010
+EWB,New Bedford Regional,12363,2010
+EAR,Kearney Regional,9530,2010
+TEX,Telluride Regional,9677,2010
+PVC,Provincetown Municipal,11450,2010
+LBF,North Platte Regional Airport Lee Bird Field,8391,2010
+BED,Laurence G Hanscom Field,7952,2010
+FOD,Fort Dodge Regional,8207,2010
+GAL,Edward G. Pitka Sr,12421,2010
+HNH,Hoonah,10759,2010
+MGW,Morgantown Municipal-Walter L. Bill Hart Field,11249,2010
+MWA,Williamson County Regional,8047,2010
+YAK,Yakutat,10035,2010
+BID,Block Island State,9821,2010

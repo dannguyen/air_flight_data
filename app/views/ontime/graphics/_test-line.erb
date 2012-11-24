@@ -1,0 +1,39 @@
+<style>
+
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+</style>
+
+
+
+<div id="graphic-delay-causes" class="graphic d3">
+   
+</div>
+
+
+<%=javascript_include_tag "graphics/test-line"%>
+
+
+<script>
+
+
+var the_data = <%=datapoints.to_json%>;
+test_stack(the_data, "#graphic-delay-causes" );
+
+</script>

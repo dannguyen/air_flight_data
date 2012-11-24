@@ -1,0 +1,209 @@
+/** override style.css **/
+.row {
+  margin-left: -20px; }
+
+select {
+  max-width: 99%; }
+
+/***/
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0; }
+
+h2 {
+  font: normal 40px/30px "AlternateGothicFSNo1", "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif; }
+
+h5 {
+  margin-bottom: 0; }
+
+.tk {
+  color: #800 !important; }
+
+.boiler {
+  background: #EDEBE5;
+  padding: 10px; }
+
+.box {
+  padding: 10px; }
+
+.box.hover {
+  background: #333;
+  color: white !important; }
+  .box.hover a:link, .box.hover a:visited, .box.hover a:hover {
+    color: #bbf !important; }
+  .box.hover .stats {
+    color: white !important; }
+
+.box.entity {
+  height: 50px; }
+  .box.entity .info {
+    float: right;
+    width: 140px;
+    margin-left: 10px; }
+  .box.entity .icon img {
+    width: 40px; }
+
+.show.entity .icon img {
+  width: 40px; }
+
+.box.nugget {
+  margin-bottom: 1.0em;
+  border: thin solid #999; }
+  .box.nugget .title {
+    font: normal 25px/24px "AlternateGothicFSNo1", "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif;
+    margin: 6px 0px; }
+  .box.nugget .text {
+    font-size: 13px; }
+  .box.nugget iframe {
+    width: 100%;
+    height: 200px; }
+  .box.nugget .stats {
+    border-top: thin solid #ccc;
+    color: #557;
+    margin-top: 6px;
+    padding-top: 3px;
+    text-align: right; }
+
+.fLeft {
+  margin: 0 6px 6px 0px;
+  float: left; }
+
+.fRight {
+  margin: 0 0 6px 6px;
+  float: right; }
+
+ul.horz li {
+  display: inline; }
+
+.lbl {
+  font-weight: bold; }
+
+div.social-facet {
+  margin-bottom: 1.0em; }
+  div.social-facet h5 {
+    margin-bottom: 0; }
+  div.social-facet .icon {
+    float: left;
+    margin-right: 5px;
+    width: 30px; }
+    div.social-facet .icon img {
+      width: 20px; }
+  div.social-facet .lbl {
+    font-weight: bold; }
+
+.stat-dashboard {
+  margin-bottom: 2.0em; }
+  .stat-dashboard .time-periods {
+    margin-bottom: 1.0em;
+    text-align: left; }
+    .stat-dashboard .time-periods li {
+      color: #bbb;
+      margin-right: 6px; }
+    .stat-dashboard .time-periods li.active {
+      font-weight: bold;
+      color: #222; }
+  .stat-dashboard .stat {
+    margin-bottom: 1.0em; }
+    .stat-dashboard .stat .bigsym {
+      font-size: 52px;
+      line-height: 1.1em;
+      text-align: right;
+      float: left;
+      width: 12px;
+      margin-right: 10px; }
+    .stat-dashboard .stat .num {
+      font-weight: bold; }
+    .stat-dashboard .stat .minis {
+      text-align: left; }
+    .stat-dashboard .stat .uber {
+      font-size: 18px;
+      line-height: 1.5em;
+      text-align: center; }
+      .stat-dashboard .stat .uber .num {
+        font-size: 38px;
+        font-weight: bold; }
+
+.span6 .box.nugget iframe, .span6 .box.nugget .imgwrap, .span5 .box.nugget iframe, .span5 .box.nugget .imgwrap {
+  height: 300px; }
+
+.span4 .box.nugget iframe, .span4 .box.nugget .imgwrap {
+  height: 220px; }
+
+.span3 .box.nugget iframe, .span3 .box.nugget .imgwrap {
+  height: 180px; }
+
+.fold {
+  margin-bottom: 2.0em; }
+
+.icon img {
+  width: 40px; }
+
+.icon.sm img {
+  width: 25px; }
+
+.imgwrap img {
+  width: 100%; }
+
+.isoitem {
+  margin-bottom: 1.0em; }
+
+.shaded {
+  -webkit-box-shadow: 2px 2px 3px #BAA;
+  box-shadow: 2px 2px 3px #BAA; }
+
+.sidebar section {
+  margin-bottom: 1.0em;
+  padding-bottom: 1.0em;
+  border-bottom: thin solid #777; }
+.sidebar section:last-child {
+  border-bottom: 0; }
+
+table.data {
+  width: 100%; }
+  table.data th {
+    text-align: center; }
+
+table.data.featured th, table.data.featured td {
+  font-size: 16px; }
+
+th.sort-header {
+  cursor: pointer; }
+
+th.sort-header::-moz-selection,
+th.sort-header::selection {
+  background: transparent; }
+
+table th.sort-header:after {
+  content: '';
+  float: right;
+  margin-top: 7px;
+  border-width: 0 4px 4px;
+  border-style: solid;
+  border-color: #404040 transparent;
+  visibility: hidden; }
+
+table th.sort-header:hover:after {
+  visibility: visible; }
+
+table th.sort-up:after,
+table th.sort-down:after,
+table th.sort-down:hover:after {
+  visibility: visible;
+  opacity: 0.4; }
+
+table th.sort-up:after {
+  border-bottom: none;
+  border-width: 4px 4px 0; }
+
+td.stat {
+  text-align: right; }
+
+ul.vert, ol.vert {
+  margin-left: 0; }
+
+ul.vert, ul.horz {
+  margin: 0;
+  padding: 0; }
+  ul.vert li, ul.horz li {
+    list-style: none;
+    margin: 0;
+    padding: 0; }

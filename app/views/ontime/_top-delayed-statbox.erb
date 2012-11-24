@@ -1,0 +1,63 @@
+
+
+<style type="text/css" media="screen">
+	.delayed-statbox th, .delayed-statbox td{
+		text-align: center;
+	}
+	
+</style>
+
+
+<div class="span4">
+
+	<table class="table delayed-statbox">
+		<tr>
+			<th colspan="2"><%=month%></th>				
+		</tr>
+		
+		<tr>
+			<th><%=years[0]%></th>
+			<th><%=years[1]%></th>
+		</tr>
+		<tbody>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+			<tr>
+				<%years.each do |year|%>
+					<td><%=rand(1000)%></td>
+				<%end%>
+			</tr>
+		</tbody>
+	</table>
+</div>	
+
+<div class="span4">
+	
+	<table>
+		<thead>
+			<tr><th>Airport</th><th>Arrivals</th> <th>% Delayed</th></tr>
+		</thead>
+		<tbody>	
+	<% @top_airports_with_arrivals_this_month.each do |record| %>
+		<% airport = record.airport %>
+
+		<tr>
+			<td><%=link_to airport.name, url_for(:ontime_records, :delays_by_airport_and_airline, :airport=>airport, :airline=>@airline)%></td>
+			<td><%=number_with_delimiter record.arrivals%></td>
+			<td><%=number_to_percentage_100(record.delayed_arrivals_rate)%>
+			<td><%#=arrivals/@airline.delayed_arrivals_at_airport(airport).to_f%></td>
+		</tr>
+	<% end %>
+		</tbody>
+	</table>
+	
+</div>
+	

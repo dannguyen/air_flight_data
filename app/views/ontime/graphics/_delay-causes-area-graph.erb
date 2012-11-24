@@ -1,0 +1,29 @@
+<%= javascript_include_tag "graphics/rickshaw-area-graph" %>
+
+<% 
+   id_selector = "delay-causes-area-graph" 
+
+%>
+
+<div id="<%=id_selector%>"> </div>
+
+
+<script>
+(function(){
+   var palette = new Rickshaw.Color.Palette();
+
+   var this_datajson = <%=data.to_json%>;
+   var data_series = this_datajson['series'];
+ 
+
+
+   for(var i=0, len=data_series.length; i < len; i++ ){
+      data_series[i].color = palette.color();
+   }
+
+
+
+   rickshaw_area_graph(data_series, "#<%=id_selector%>");
+}());
+
+</script>

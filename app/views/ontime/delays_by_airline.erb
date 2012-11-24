@@ -1,0 +1,94 @@
+<section class="container fold">
+
+	<h2><%=@airline.name%></h2>
+
+	<div class="row">
+
+		<div class="span4">
+			<p>
+				For <strong class="tk"><%=@year%></strong>, through the month of <strong class="tk"><%=month_int_to_name @month%></strong>,
+				   <%=@airline.name%> has
+				   <strong class="tk"><%=number_with_delimiter @airline_this_month_records.arrivals %> arrivals</strong> among its largest airportsTK.
+			</p>
+
+			<p>
+				In this time period, <%=@airline.name%> had 
+
+				<%=number_to_percentage_100(@airline_this_month_records.delayed_arrivals_rate) %>
+				of its arrivals were late by <strong>15 minutes or more</strong>. 
+
+				About <strong><%=number_to_percentage_100( @airline_this_month_records.carrier_delayed_arrivals_rate) %></strong> of the arrivals were late due to
+				factors within <%=@airline.name%>'s control, according to the FAA(TK).
+
+
+			</p>
+		</div> <!-- span3 -->
+
+
+	  
+	   
+	   <div class="span8">
+	
+			<div class="row">
+			<%=partial "ontime/top-delayed-statbox", :locals=>{:years=>[SkiftAir::Settings::THIS_YEAR, SkiftAir::Settings::THIS_YEAR-1], :month=>SkiftAir::Settings::THIS_MONTH}%>		
+			</div>
+		</div>	
+
+
+
+
+
+
+	</div> <!-- row -->
+
+
+
+
+</section> <!-- container fold-->
+
+
+
+
+
+<section class="container fold">
+	<h3>Comparison of Carrier-caused delay rate</h3>
+	<p> This is a time-series of each carrier's delay rate, due to factors within their own control.
+   TK this does not include delays caused by weather or airport conditions.
+	</p>
+
+
+		<%=partial 'ontime/graphics/carrier-delays-timeseries', :locals=>{:data=> @carrier_caused_timeseries } %>
+
+
+	<%#=partial 'ontime/graphics/carrier-delays-timeseries', 
+		:locals=>{:datapoints=> @carrier_caused_timeseries } 
+	%>
+
+</section>
+
+
+
+<section class="container fold">
+
+
+</section> <!-- container fold-->
+
+
+
+
+<section class="container fold">
+	
+
+	<h3>Causes for delay</h3>
+	<%=partial 'ontime/graphics/delay-causes-area-graph', :locals=>{:data=> @stacked_chart_dataseries } %>
+
+</section>
+
+
+
+<section class="container fold">
+	<%#=partial "ontime/raw-tabular-data", :locals=>{:records=>@ontime_records_grouped}%>
+
+
+
+</section>
