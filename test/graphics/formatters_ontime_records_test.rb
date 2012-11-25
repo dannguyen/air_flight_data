@@ -47,14 +47,11 @@ describe "OntimeRecord data generators" do
    ## this is not supported
    Proc.new{ OntimeRecord.get_uniq(:year=>:month, :month=>:airline_id) }.must_raise ArgumentError
     
-    
-    
-    
   end
   
 
   it "should have :format_group_sum_for_time_series" do 
-
+skip
     @years = 2010..2011
     @months = 1..3
     

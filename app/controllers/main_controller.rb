@@ -29,7 +29,13 @@ SkiftAir.controllers :ontime_records do
     
     
     ## airline December performance
-    @airlines_december_records = OntimeRecord.by_month(12).group_and_sum_by([:airline_id, :year], :round=>3)
+    @airlines_december_records = OntimeRecord.by_month(12)
+    
+    @airlines_december_agg_records =  @airlines_december_records.group_and_sum_by([:airline_id, :year], :round=>3)
+    
+
+    
+    
     
     ## airline recent Year over Year records
     @airlines_yoy_ontime_records = OntimeRecord.order({:year=>'ASC', :month=>'ASC'})
@@ -39,7 +45,11 @@ SkiftAir.controllers :ontime_records do
     @month = @latest_period[:month]
     
     @periods_to_compare = @airlines_yoy_ontime_records.compare_periods('YOY', :year=>@year, :month=>@month)[:periods]
-    
+
+
+
+
+## redundant
     @this_period = @periods_to_compare[1]
     @this_period_name = @this_period[:name]
     @this_period_records = @this_period[:records].group_and_sum_by(:airline_id)
@@ -47,7 +57,6 @@ SkiftAir.controllers :ontime_records do
     @last_period = @periods_to_compare[0]
     @last_period_name = @last_period[:name]
     @last_period_records = @last_period[:records].group_and_sum_by(:airline_id)
-    
     
     
     

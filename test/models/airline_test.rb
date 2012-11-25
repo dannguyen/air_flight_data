@@ -13,6 +13,12 @@ describe "Airline Model" do
     airline.wont_be_nil
   end
   
+  it "should have :shortname" do 
+    @airline = FactoryGirl.create(:airline, :name=>"United Airlines")
+    @airline.shortname.must_equal('United')
+    
+    
+  end
   it "should find similar airlines" do 
     
     regions = ['a', 'b', 'c', 'd']

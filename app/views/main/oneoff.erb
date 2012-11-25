@@ -1,7 +1,7 @@
 
 <div class="container">
 	
-	
+<%=partial 'external/google-viz-calls'%>	
 	
 	
 <h1>The lateness of airlines</h1>
@@ -12,60 +12,24 @@
 
 <h2>Historical December Performance</h2>
 
-<div>TK: CHART</div>
+<%= partial "ontime/graphics/gchart-december-performance", :locals=>{:records=>@airlines_december_records, :agg_records=>@airlines_december_agg_records}%>
+
+<p>TK dblcheck numbers<p>
 
 
-<%@airlines.each do |airline|%>
-<div>
-	<% airline_dec_records = @airlines_december_records.select{|r| r.airline == airline}%>
 
-	<%=airline.name%>
-	<%=airline_dec_records.map{|d| number_to_percentage_100 d.delayed_arrivals_rate}.join(", ")%>
-</div>
-
-<%end%>
 
 <!--  ##########################-->
 
 
 <h2>Latest performance</h2>
 
-<div>TK: CHART</div>
-
-<table>
-	<tr>
-		<th>Airline</th>
-
-		<th><%=@this_period_name%><br>Overall delays</th>
-
-		<th><%=@this_period_name%><br>Carrier fault</th>
-
-		<th><%=@last_period_name%><br>Overall delays</th>
-
-		<th><%=@last_period_name%><br>Carrier fault</th>
-		
-	</tr>
-	
-	<%@airlines.each do |airline|%>
-		<%- 
-			airline_this_period = @this_period_records.find{|r| r.airline == airline}
-			airline_last_period = @last_period_records.find{|r| r.airline == airline}
-		-%>
-	
-		<tr>
-			<td><%=airline.name%></td>
-			<td><%=number_to_percentage_100 airline_this_period.delayed_arrivals_rate%></td>
-			<td><%=number_to_percentage_100 airline_this_period.carrier_delayed_arrivals_rate%></td>
-
-			<td><%=number_to_percentage_100 airline_last_period.delayed_arrivals_rate%></td>
-			<td><%=number_to_percentage_100 airline_last_period.carrier_delayed_arrivals_rate%></td>
-
-		</tr>
-	<%end%>	
+<%= partial "ontime/graphics/gchart-latest-yoy", :locals=>{:periods=>@periods_to_compare }%>
 
 
-</table>
+<h2>Causes for delay</h2>
 
+<%= partial "ontime/graphics/gchart-latest-causes-breakdown", :locals=>{:periods=>@periods_to_compare }%>
 
 
 

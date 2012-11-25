@@ -1,0 +1,26 @@
+<% if !(defined?(selector_name)) %>
+	<% selector_name = "div_#{rand(1000)})#{rand(5000)}" %>
+	<div id="<%=selector_name%>" style="height: 440px;"></div>
+<%end%>
+
+<% options ||= {}%>
+
+<script type="text/javascript" charset="utf-8">
+(function(){
+	
+	google.setOnLoadCallback(drawChart);
+  function drawChart() {
+	var data_table = <%=data_table.to_json%>;
+	var data =  google.visualization.arrayToDataTable(data_table);
+
+    var options = <%=options.to_json%>;
+
+    var chart = new google.visualization.<%=google_chart_type%>(document.getElementById('<%=selector_name%>'));
+    chart.draw(data, options);
+  }
+
+
+})();
+
+
+</script>

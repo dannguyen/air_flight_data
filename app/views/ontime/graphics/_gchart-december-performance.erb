@@ -1,0 +1,53 @@
+<% 
+# build array:
+#		 ['Year', 'Delta', 'United'],
+#          ['2004',  6.4,      4.5],
+#          ['2005',  6.2,      6.7],
+#          ['2006',  5.4,       8.2],
+#          ['2007',  6.2,      10.3]	
+	
+	d_recs = records.get_uniq([:year, :airline_id])
+	d_years = d_recs[:year].sort
+	d_airlines = d_recs[:airline_id].sort.map{|d| Airline.find(d)}
+	
+	data_table_arr = [] 
+	data_table_arr << ['Year'] + d_airlines.map{|a| a.shortname}
+	
+	d_years.each do |yr|
+		recs = agg_records.select{|r| r.year == yr}
+		data_table_arr << [yr.to_s] + d_airlines.map{|a| 
+			(recs.find{|_r| _r.airline == a }.delayed_arrivals_rate * 1000).to_i / 10.0 
+		}
+		
+	end
+
+	
+%>
+
+<%=partial 'external/google-viz-draws', 
+:locals=>{
+	:data_table=>data_table_arr,
+	
+	google_chart_type: 'LineChart',
+	:options=>{
+		focusTarget: 'category',
+		:title=>'Percentage of delayed arrivals in the month of December',
+		:backgroundColor=>'none',
+		:hAxis=>{
+			gridlines: {color: '#999', count: 10}
+		},
+		:theme=>'maximized',
+		:vAxis=>{
+			gridlines: {count: 5, color: '#999'},
+			viewWindowMode: 'explicit',
+			viewWindow: {
+				min: 0,
+				max: 50
+			}
+		}
+
+	}
+}%>	
+
+
+<%#= data_table_arr %>

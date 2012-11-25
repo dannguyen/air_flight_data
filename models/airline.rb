@@ -11,6 +11,9 @@ class Airline < ActiveRecord::Base
    
    scope :similar_to, lambda{|r, num|  where('id != ?', r.id).limit(num) } # TK
 
+   def shortname
+     name.sub(/ *Airlines?/, '')
+   end
 
 
    def similar_airlines(num)

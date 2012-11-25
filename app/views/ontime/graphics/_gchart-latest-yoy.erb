@@ -1,0 +1,84 @@
+<% 
+	# periods is a YOY array:
+	#
+	# [
+	#	{name:'2002-12', records: [etc, etc]},
+	#	{name:'2002-12', records: [etc, etc]}
+	# ]
+	#
+	#
+	# converts to:
+	# [
+	# ['Airline', 'Year1', 'Year2'],
+	# ['Delta', '19.1', '12.2']
+    # ]
+	
+	latest_period = periods[1]
+	latest_period_name = latest_period[:name]
+	latest_period_aggs = latest_period[:records].group_and_sum_by(:airline_id)
+
+	prev_period = periods[0]
+	prev_period_name = prev_period[:name]
+	prev_period_aggs = prev_period[:records].group_and_sum_by(:airline_id)
+	
+	airlines = latest_period[:records].get_uniq(:airline_id).map{|a_id| Airline.find(a_id)}.sort
+	
+	
+	data_table_arr = [['Airline', prev_period_name, latest_period_name]]
+	
+	airlines.each do |airline|
+		prev_agg = prev_period_aggs.find{|r| r.airline == airline}
+		latest_agg = latest_period_aggs.find{|r| r.airline == airline}
+		
+		prev_d_rate = prev_agg.nil? ? 0 : (prev_agg.delayed_arrivals_rate * 100).round(1)
+		latest_d_rate = latest_agg.nil? ? 0 : (latest_agg.delayed_arrivals_rate * 100).round(1)
+		
+		data_table_arr << [
+			airline.shortname,
+			prev_d_rate,
+			latest_d_rate
+		]
+	end
+	
+	
+%>
+
+<%=partial 'external/google-viz-draws', 
+:locals=>{
+	:data_table=>data_table_arr,
+	
+	google_chart_type: 'BarChart',
+	:options=>{
+		focusTarget: 'category',
+		title: 'Latest delayed arrivals rate',
+		backgroundColor: 'none',
+		hAxis: {
+			gridlines: {count: 5, color: '#999'},
+			viewWindowMode: 'explicit',
+			viewWindow: {
+				min: 0,
+				max: 50
+			}
+		}
+		
+	}
+}%>	
+
+
+<%#= data_table_arr 
+=begin
+:hAxis=>{
+	gridlines: {color: '#999', count: 10}
+},
+:theme=>'maximized',
+:vAxis=>{
+	gridlines: {count: 5, color: '#999'},
+	viewWindowMode: 'explicit',
+	viewWindow: {
+		min: 0,
+		max: 50
+	}
+}
+=end 
+
+%>
