@@ -224,12 +224,13 @@ class OntimeRecord < ActiveRecord::Base
     
       # year-over-year requires a month setting
           
+      ## previous period, i.e. 2011-05    
       hsh[:periods] << {
         :name=>prev_year_month,
         :records=>self.send(scope_name, prev_year_month)
       }
 
-    
+      ## latter period, i.e. 2012-05    
       hsh[:periods] << {
         :name=>latest_year_month,
         :records=>self.send(scope_name, latest_year_month)

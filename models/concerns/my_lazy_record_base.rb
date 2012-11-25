@@ -6,6 +6,41 @@ module MyLazyRecordBase
        self.scoped
 #      return self.kind_of?(ActiveRecord::Relation) ? self : self.scoped
     end
+    
+    def self.get_uniq(args)
+      facets = Array(args).flatten
+      
+      uniq_val_records = self_re.select(facets).uniq
+      
+      if facets.length == 1
+          foo = facets.first
+          collection = uniq_val_records.map{|k| k.send(foo)} # Array
+      elsif args.is_a?(Array)
+        collection = facets.inject({}) do |hsh, foo|
+          hsh[foo] = uniq_val_records.map{|v| v.send(foo)}.uniq
+          hsh
+        end  
+      
+      elsif args.is_a?(Hash) && facets.length == 2
+          # for now, only dealing with things like {:year=>:month}
+          
+          key_foo, val_foo = facets
+          keys = uniq_val_records.map{|k| k.send(key_foo)}.uniq
+          # e.g. [2010, 2011]
+          
+          # result: {2010=>{1,2,3,4,5}, 2011=>{1,2,3}}
+          collection = keys.inject({}) do |hsh, key|
+            hsh[key] = uniq_val_records.select{|u| u.send(key_foo) == key}.map{|u| u.send(val_foo) }.uniq
+            hsh
+          end
+      else
+        raise ArgumentError          
+      end
+      
+      return collection
+      
+      
+    end
   end
 
 
@@ -13,6 +48,9 @@ module MyLazyRecordBase
   def date_int
    foo_on_record_date_int(self)
   end
+  
+  
+  
   
 #  def date_epoch_sec
  #  foo_on_record_epoch_sec(self)

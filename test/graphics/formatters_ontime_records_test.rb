@@ -7,12 +7,57 @@ describe "OntimeRecord data generators" do
     DatabaseCleaner.clean
   end
 
+  it "should find unique facets in an ActiveRecord array" do 
+    ## this is test of my lazy record base
+    
+    @years = [2010,2011]
+    @months = [1,2,3]
+    
+    3.times.map do |i| 
+      airline = FactoryGirl.create(:airline)
+      @years.each do |y|
+        @months.each do |m|
+         FactoryGirl.create(:ontime_record, :airline=>airline, :year=>y, :month=>m)
+       end
+      end
+    end
+    
+   airline_ids = OntimeRecord.get_uniq(:airline_id)
+   airline_ids.must_be_kind_of Array
+   (airline_ids - Airline.all.map{|a| a.id}).must_be_empty
+   
+   # passing in an array of facets
+   ymths = OntimeRecord.get_uniq([:month, :year])
+   ymths.must_be_kind_of Hash
+   (ymths[:year] - @years).must_be_empty
+   (ymths[:month] - @months).must_be_empty
+    
+   # passing in nest
+   ny, nm = [2012, 6]
+   FactoryGirl.create(:ontime_record, :year=>ny, :month=>nm)
+   
+   ymths_nested = OntimeRecord.get_uniq(:year=>:month)
+   ymths_nested.must_be_kind_of Hash
+   (ymths_nested[2010] - @months).must_be_empty
+   (ymths_nested[2011] - @months).must_be_empty
+   (ymths_nested[ny] - [nm]).must_be_empty
+   
+   
+   
+   ## this is not supported
+   Proc.new{ OntimeRecord.get_uniq(:year=>:month, :month=>:airline_id) }.must_raise ArgumentError
+    
+    
+    
+    
+  end
+  
+
   it "should have :format_group_sum_for_time_series" do 
 
     @years = 2010..2011
     @months = 1..3
-
-
+    
     3.times.map do |i| 
       airline = FactoryGirl.create(:airline)
       @years.each do |y|
@@ -43,6 +88,18 @@ describe "OntimeRecord data generators" do
 
 
 
+  it "should have formatter for stacked bar causes chart" do 
+    
+  end
+=begin
+var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+=end
 
   it "should have formatter for stacked area chart" do
 
