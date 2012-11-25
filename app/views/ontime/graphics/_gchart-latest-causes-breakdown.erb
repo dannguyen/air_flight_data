@@ -1,0 +1,63 @@
+<% 
+	# aggs is an array of OpenStructs:
+	#
+	# [
+	#	{:airline=>Airline, :delayed_arrivals=>12, :delayed_arrivals_rate=>4.3
+	#	}
+	# ]
+	#
+	#
+	# converts to:
+	# [
+	# ['Airline', 'Cause1', 'Cause2'],
+	# ['Delta', '19.1', '12.2']
+    # ]
+
+    airlines = aggs.map{|a| a.airline}.uniq.sort_by{|a| a.name}
+	
+	rec_foos = OntimeRecord.delayed_arrivals_causes_rate_methods_suite
+    	
+	rec_foo_names = OntimeRecord.delayed_arrivals_causes_names
+	
+	data_table_arr = [['Airline'] + rec_foo_names]
+	
+	airlines.each do |airline|
+		airline_aggs = aggs.find{|a| a.airline == airline}
+		data_table_arr << [airline.shortname] + rec_foos.map{|foo| (airline_aggs.send(foo) * 100).round(1)}		
+	end
+	
+
+	
+	
+%>
+
+<% 
+	default_options = {
+		isStacked: true,
+		focusTarget: 'category',
+		title: "Cause of delays, #{@year}-#{@month}",
+		backgroundColor: 'none',
+		theme: 'maximized',
+		hAxis: {
+			gridlines: {count: 5, color: '#999'},
+			viewWindowMode: 'explicit',
+			viewWindow: {
+				min: 0,
+				max: 50
+			}
+		}
+	}
+
+	options ||= {} 
+	options = default_options.merge(options)
+
+%>
+
+<%=partial 'external/google-viz-draws', 
+:locals=>{
+	:data_table=>data_table_arr,	
+	google_chart_type: 'BarChart',
+	:options=> options
+		
+	}
+%>	

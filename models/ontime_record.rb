@@ -42,10 +42,10 @@ class OntimeRecord < ActiveRecord::Base
   ARRIVAL_STAT_COUNT_NAME_MAPPING = {
     :arr_del15=>:delayed_arrivals, 
     :carrier_ct=>:carrier_delayed_arrivals, 
-    :weather_ct=>:weather_delayed_arrivals, 
     :nas_ct=>:nas_delayed_arrivals, 
-    :security_ct=>:security_delayed_arrivals, 
-    :late_aircraft_ct=>:late_aircraft_delayed_arrivals
+    :late_aircraft_ct=>:late_aircraft_delayed_arrivals,
+    :weather_ct=>:weather_delayed_arrivals, 
+    :security_ct=>:security_delayed_arrivals
   }
 
   ARRIVAL_STAT_COUNT_NAME_MAPPING.each_pair do |a,b|
@@ -129,12 +129,29 @@ class OntimeRecord < ActiveRecord::Base
     define_singleton_method(rate_mth) do 
       self_re.send(mth).to_f / self.arrivals
     end
-
-
-   
-
   end
 
+  CAUSE_NAME_ATT_MAP = {
+    'nas'=>'National Aviation System',
+    'weather'=>'Extreme weather',
+    'security'=>'Security',
+    'late_aircraft'=>'Late aircraft',
+    'carrier'=>'Carrier'    
+  }
+
+  def OntimeRecord.delayed_arrivals_causes_names
+    
+    delayed_arrivals_causes_methods_suite.map do |fooname|
+      OntimeRecord.map_cause_method_to_name(fooname)
+    end 
+  end
+
+
+  def OntimeRecord.map_cause_method_to_name(fooname)
+    _f = fooname.to_s.match(/^\w+?(?=_delayed)/)[0]
+    CAUSE_NAME_ATT_MAP[_f]
+  end
+  
 
 ## meta scope methods
 

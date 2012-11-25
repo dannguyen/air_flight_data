@@ -43,14 +43,11 @@
 	
 %>
 
-<%=partial 'external/google-viz-draws', 
-:locals=>{
-	:data_table=>data_table_arr,
-	
-	google_chart_type: 'BarChart',
-	:options=>{
+<% 
+	default_options = {
 		focusTarget: 'category',
 		title: 'Latest delayed arrivals rate',
+		theme: 'maximized',
 		backgroundColor: 'none',
 		hAxis: {
 			gridlines: {count: 5, color: '#999'},
@@ -62,7 +59,20 @@
 		}
 		
 	}
-}%>	
+
+	options ||= {} 
+	options = default_options.merge(options)
+
+%>
+
+<%=partial 'external/google-viz-draws', 
+:locals=>{
+	:data_table=>data_table_arr,	
+	google_chart_type: 'BarChart',
+	:options=> options
+	
+	}
+%>	
 
 
 <%#= data_table_arr 

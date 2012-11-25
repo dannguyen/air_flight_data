@@ -46,6 +46,10 @@ SkiftAir.controllers :ontime_records do
     
     @periods_to_compare = @airlines_yoy_ontime_records.compare_periods('YOY', :year=>@year, :month=>@month)[:periods]
 
+    @latest_month_aggs = OntimeRecord.by_year(@year).by_month(@month).group_and_sum_by([:airline_id])
+    
+    
+
 
 
 

@@ -24,12 +24,9 @@
 	
 %>
 
-<%=partial 'external/google-viz-draws', 
-:locals=>{
-	:data_table=>data_table_arr,
-	
-	google_chart_type: 'LineChart',
-	:options=>{
+
+<% 
+	default_options = {
 		focusTarget: 'category',
 		:title=>'Percentage of delayed arrivals in the month of December',
 		:backgroundColor=>'none',
@@ -47,7 +44,20 @@
 		}
 
 	}
-}%>	
+
+	options ||= {} 
+	options = default_options.merge(options)
+
+%>
+
+<%=partial 'external/google-viz-draws', 
+:locals=>{
+	:data_table=>data_table_arr,
+	google_chart_type: 'LineChart',
+	:options=>options
+}
+
+%>	
 
 
 <%#= data_table_arr %>
