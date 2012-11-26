@@ -281,7 +281,7 @@ describe "OntimeRecord Scopes" do
 
     ###### facet by airline
 
-    airline_agg = OntimeRecord.group_and_sum_by(:airline_id)
+    airline_agg = OntimeRecord.self_re.group_and_sum_by(:airline_id)
     airline_agg.length.must_equal Airline.count
     agg = airline_agg.first
 

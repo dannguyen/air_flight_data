@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 3) do
   add_index :airports, :slug, unique: true
   add_index :airports, :code, unique: true
   add_index :airlines, :slug, unique: true
+  add_index :airlines, :iata_code
 
   add_index :ontime_records, :year
   add_index :ontime_records, :month

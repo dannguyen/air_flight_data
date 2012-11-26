@@ -1,7 +1,8 @@
 class Airline < ActiveRecord::Base
 	extend FriendlyId
 	include MyLazyRecordBase
-  
+#  CANONICAL_CODES = %w(AA MQ FL OH DL F9 B6 NW WN UA US)
+ CANONICAL_CODES = %w(AA)
 	validates_uniqueness_of [:iata_code, :icao_code]
 
    friendly_id :name, use: :slugged
@@ -11,6 +12,13 @@ class Airline < ActiveRecord::Base
    
    scope :similar_to, lambda{|r, num|  where('id != ?', r.id).limit(num) } # TK
 
+   scope :canonical, where(:iata_code=>CANONICAL_CODES)
+   
+   def Airline.canonical_ids
+     self.canonical.map{|a| a.id}
+   end
+   
+   
    def shortname
      name.sub(/ *Airlines?/, '')
    end

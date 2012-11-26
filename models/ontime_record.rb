@@ -17,6 +17,8 @@ class OntimeRecord < ActiveRecord::Base
   scope :by_year, lambda{|yr| where(:year=>yr)}
   scope :by_month, lambda{|m| where(:month=>m)}
   scope :by_year_month, lambda{|str| yr,mth = str.split('-'); by_year(yr).by_month(mth)}
+  
+  scope :canonical_airlines, where(:airline_id=>Airline.canonical_ids)
 
   scope :by_ytd, lambda{|str|  
     yr,mth = str.split('-',3)
@@ -291,7 +293,7 @@ class OntimeRecord < ActiveRecord::Base
     group_value_fields = ARRIVAL_STAT_COUNT_NAME_MAPPING.values
 
 
-    the_reflection = the_reflection.select(select_arr.join(', ')).group(facets_for_group_by)
+    the_reflection = the_reflection.select(select_arr.join(', ')).group(facets_for_group_by.map{|f| "ontime_records.#{f}".to_sym})
 
     # if relations are active, put them in separate array for differed handling;
     # e.g. add _id and eager loading
@@ -329,10 +331,18 @@ class OntimeRecord < ActiveRecord::Base
           end
 
         # set cumulative rate methods
+        
+         arrivals_count =  hsh[:arrivals].to_i
+        
+          
           group_value_fields.each do |foo|
             rate_foo = "#{foo}_rate".to_sym
-            hsh[rate_foo] = hsh[foo].to_f/hsh[:arrivals] 
-            hsh[rate_foo] = hsh[rate_foo].round(do_rounding) unless do_rounding.nil? 
+            if arrivals_count > 0
+              hsh[rate_foo] = hsh[foo].to_f/arrivals_count
+              hsh[rate_foo] = hsh[rate_foo].round(do_rounding) unless do_rounding.nil?
+            else
+              hsh[rate_foo] = 0 
+            end
           end
         
           OpenStruct.new(hsh)

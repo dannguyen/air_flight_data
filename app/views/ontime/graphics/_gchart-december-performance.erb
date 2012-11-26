@@ -16,7 +16,8 @@
 	d_years.each do |yr|
 		recs = agg_records.select{|r| r.year == yr}
 		data_table_arr << [yr.to_s] + d_airlines.map{|a| 
-			(recs.find{|_r| _r.airline == a }.delayed_arrivals_rate * 1000).to_i / 10.0 
+				rec = recs.find{|_r| _r.airline == a }
+				rec.nil? ? 0 : (rec.delayed_arrivals_rate * 1000).to_i / 10.0 
 		}
 		
 	end
