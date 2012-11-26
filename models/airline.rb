@@ -2,7 +2,7 @@ class Airline < ActiveRecord::Base
 	extend FriendlyId
 	include MyLazyRecordBase
 #  CANONICAL_CODES = %w(AA MQ FL OH DL F9 B6 NW WN UA US)
- CANONICAL_CODES = %w(AA)
+   CANONICAL_CODES = %w(AA DL MQ NW WN B6 UA US)
 	validates_uniqueness_of [:iata_code, :icao_code]
 
    friendly_id :name, use: :slugged

@@ -70,7 +70,17 @@ namespace :bs do
 			end
 	end
 
-
+  task :trim_entities => :environment do
+    
+    (Airline.all.to_a - Airline.canonical.to_a).each do |a|
+      puts a.shortname
+      a.ontime_records.delete_all
+      a.delete
+    end
+  
+    
+  end
+  
 	task :entities => :environment do 
 		Rake::Task['ar:schema:load'].invoke
 		Dir.chdir(DATA_DIR)

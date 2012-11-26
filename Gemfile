@@ -13,6 +13,7 @@ gem 'sass'
 gem 'erubis', "~> 2.7.0"
 gem 'activerecord', :require => "active_record"
 gem 'sqlite3'
+gem 'mysql2', :group=>'development'
 
 # Test requirements
 gem 'minitest', "~>2.6.0", :require => "minitest/autorun", :group => "test"

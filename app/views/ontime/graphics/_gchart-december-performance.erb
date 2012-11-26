@@ -1,4 +1,4 @@
-<% 
+<%-
 # build array:
 #		 ['Year', 'Delta', 'United'],
 #          ['2004',  6.4,      4.5],
@@ -20,22 +20,30 @@
 				rec.nil? ? 0 : (rec.delayed_arrivals_rate * 1000).to_i / 10.0 
 		}
 		
-	end
-
-	
-%>
+	end	
+-%>
 
 
 <% 
 	default_options = {
 		focusTarget: 'category',
-		:title=>'Percentage of delayed arrivals in the month of December',
 		:backgroundColor=>'none',
+		chartArea: {width: '100%'},
+		
 		:hAxis=>{
-			gridlines: {color: '#999', count: 10}
+			gridlines: {color: '#999', count: 10 },
+			textPosition: 'in'
 		},
-		:theme=>'maximized',
+		
+		:legend=>{
+			position: 'in',
+			textStyle:{
+				fontSize: "12px"
+			}
+		},
+		
 		:vAxis=>{
+			textPosition:'in',
 			gridlines: {count: 5, color: '#999'},
 			viewWindowMode: 'explicit',
 			viewWindow: {
@@ -51,11 +59,19 @@
 
 %>
 
+<% if !(defined?(selector_name)) %>
+	<% selector_name = "div_#{rand(1000)}_#{rand(5000)}" %>
+	<div id="<%=selector_name%>" style="height: 500px;"></div>
+<%end%>
+
+
+
 <%=partial 'external/google-viz-draws', 
 :locals=>{
 	:data_table=>data_table_arr,
 	google_chart_type: 'LineChart',
-	:options=>options
+	:options=>options,
+	:selector_name=>selector_name		
 }
 
 %>	

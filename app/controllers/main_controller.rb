@@ -25,7 +25,7 @@ SkiftAir.controllers :ontime_records do
   end
   
   get :oneoff, :map=>"/oneoff" do 
-    @ontime_records = OntimeRecord.canonical_airlines
+    @ontime_records = OntimeRecord.self_re
     
     ## airline December performance
     @airlines_december_records = @ontime_records.by_month(12)

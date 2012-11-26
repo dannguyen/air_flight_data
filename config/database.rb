@@ -1,23 +1,25 @@
 ##
 # You can use other adapters like:
 #
-#   ActiveRecord::Base.configurations[:development] = {
-#     :adapter   => 'mysql',
-#     :encoding  => 'utf8',
-#     :reconnect => true,
-#     :database  => 'your_database',
-#     :pool      => 5,
-#     :username  => 'root',
-#     :password  => '',
-#     :host      => 'localhost',
-#     :socket    => '/tmp/mysql.sock'
-#   }
-#
-ActiveRecord::Base.configurations[:development] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'skift_air_development.db')
 
-}
+ActiveRecord::Base.configurations[:development] = {
+     :adapter   => 'mysql2',
+     :encoding  => 'utf8',
+     :reconnect => true,
+     :database  => 'skiftair_dev',
+     :pool      => 5,
+     :username  => 'root',
+     :password  => '',
+     :host      => 'localhost',
+     :socket    => '/tmp/mysql.sock'
+   }
+
+
+#ActiveRecord::Base.configurations[:development] = {
+#  :adapter => 'sqlite3',
+#  :database => Padrino.root('db', 'skift_air_development.db')
+
+#}
 
 ActiveRecord::Base.configurations[:production] = {
   :adapter => 'sqlite3',

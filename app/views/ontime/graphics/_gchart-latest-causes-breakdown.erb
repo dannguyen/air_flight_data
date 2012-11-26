@@ -23,7 +23,7 @@
 	
 	airlines.each do |airline|
 		airline_aggs = aggs.find{|a| a.airline == airline}
-		data_table_arr << [airline.shortname] + rec_foos.map{|foo| (airline_aggs.send(foo) * 100).round(1)}		
+		data_table_arr << [airline.shortname] + rec_foos.map{|foo| (airline_aggs.send(foo) * 100).round(2)}		
 	end
 	
 
@@ -32,10 +32,10 @@
 %>
 
 <% 
+	
 	default_options = {
 		isStacked: true,
 		focusTarget: 'category',
-		title: "Cause of delays, #{@year}-#{@month}",
 		backgroundColor: 'none',
 		hAxis: {
 			gridlines: {count: 5, color: '#999'},
@@ -52,10 +52,18 @@
 
 %>
 
+<% if !(defined?(selector_name)) %>
+	<% selector_name = "div_#{rand(1000)}_#{rand(5000)}" %>
+	<div id="<%=selector_name%>" style="height: 500px;"></div>
+<%end%>
+
+
+
 <%=partial 'external/google-viz-draws', 
 :locals=>{
 	:data_table=>data_table_arr,	
 	:google_chart_type => 'BarChart',
-	:options=> options	
+	:options=> options,
+	:selector_name=>selector_name	
 	}
 %>	

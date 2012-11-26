@@ -3,20 +3,16 @@
 	
 <div class="row">
 	<div class="span7">	
-<%=partial 'external/google-viz-calls'%>	
+		
 	
-	
-<h1>The lateness of airlines</h1>
+	<p>How late will you be home for the holidays this year? Despite the perpetual worry and pessimism around holiday travel, airlines have generally been doing a better job with making their schedule, according to <a href="http://www.bts.gov/xml/ontimesummarystatistics/src/index.xml">historical data from the Bureau of Transportation Statistics</a>.</p>
 
 
+<h3>Historical December Performance</h3>
+<p>The graph below shows the percentage of <strong>December</strong> flight arrivals that were delayed 15-minutes or more:</p>
+<div id="dec_performance" style="height:550px"></div>
 
-
-
-<h2>Historical December Performance</h2>
-
-<%= partial "ontime/graphics/gchart-december-performance", :locals=>{:records=>@airlines_december_records, :agg_records=>@airlines_december_agg_records}%>
-
-<p>TK dblcheck numbers<p>
+<p><strong>Note</strong>: the data does not include the small percentage of flights that were diverted or canceled.</p>
 
 
 
@@ -24,18 +20,53 @@
 <!--  ##########################-->
 
 
-<h2>Latest performance</h2>
-
-<%= partial "ontime/graphics/gchart-latest-yoy", :locals=>{:periods=>@periods_to_compare }%>
-
-
-<h2>Causes for delay</h2>
-
-<%= partial "ontime/graphics/gchart-latest-causes-breakdown", :locals=>{:aggs=>@latest_month_aggs }%>
+<h3>Latest performance</h3>
+<p>The most recent on-time data available is for <strong>September 2012</strong>. The impact of labor disputes <a href="http://skift.com/2012/11/09/american-airlines-had-the-worst-on-time-performance-this-september/">took its toll on American Airlines</a>, which recorded the highest year-over-year increase in the percentage of flights delayed 15-minutes or more.</p>
 
 
+<div id="latest_yoy" style="height:550px"></div>
+
+<h3>Causes for delay</h3>
+
+<p>Airlines are required to report the causes of delayed flights into five broad categories: </p>
+<div id="latest_breakdown" style="height:550px"></div>
 
 
+<p>One of the most drastic differences between airlines is American Airlines's proportion of delayed flights due to factors within the carrier's control. This may not be a surprise, considering that American accused pilots of <a href="http://skift.com/2012/10/01/these-numerous-delays-on-american-airlines-aren/">intentionally delaying flights</a> during the labor dispute this year.</p>
+
+
+<p>But the majority of factors behind a flight's delay are only vaguely known. The U.S. Government Accountability Office <a href="http://www.gao.gov/new.items/d10542.pdf"> criticized the delay reporting system "because the categories are too broad to provide meaningful information on the root causes of delays"</a></p>
+	
+	<p>For example, late-arriving aircraft is one of the largest factors behind why another given flight will be late. But airlines don't report <em>why</em> the previously-arriving aircraft was late. Another large factor, problems with the National Aviation System, can include anything from traffic congestion to non-extreme weather conditions. As a result, BTS estimates that weather, both extreme and non-extreme, <a href="http://www.bts.gov/help/aviation/html/understanding.html#q6">is actually behind 40 to 50 percent of all delays</a>.
+	
+	</p>
+	
+
+
+<p><strong>Explanation of causes:</strong></p>
+<ul>
+	<li><strong>Carrier </strong> &ndash; The cause of the cancellation or delay was due to circumstances within the airline's control (e.g. maintenance or crew problems, aircraft cleaning, baggage loading, fueling, etc.). </li>
+	<li><strong>National Aviation System </strong> &ndash; Delays and cancellations attributable to the national aviation system that refer to a broad set of conditions, such as non-extreme weather conditions, airport operations, heavy traffic volume, and air traffic control.</li>
+	<li><strong>Late aircraft </strong> &ndash; A previous flight with same aircraft arrived late, causing the present flight to depart late.</li>
+	<li><strong>Extreme weather </strong> &ndash; Significant meteorological conditions (actual or forecasted) that, in the judgment of the carrier, delays or prevents the operation of a flight such as tornado, blizzard or hurricane.</li>
+	<li><strong>Security </strong> &ndash; Delays or cancellations caused by evacuation of a terminal or concourse, re-boarding of aircraft because of security breach, inoperative screening equipment and/or long lines in excess of 29 minutes at screening areas.</li>
+</ul>
+
+<p><em>Source: <a href="http://www.bts.gov/help/aviation/html/understanding.html#q4">Bureau of Transportation Statistics</a></em></p>
+
+
+<%=partial 'external/google-viz-calls'%>	
+
+<%= partial "ontime/graphics/gchart-latest-yoy", :locals=>{:periods=>@periods_to_compare, :selector_name=>'latest_yoy',
+:options=>{	title: 'Delayed arrivals rate for Sept. 2012'}	
+ }%>
+
+<%= partial "ontime/graphics/gchart-latest-causes-breakdown", :locals=>{:aggs=>@latest_month_aggs, :selector_name=>'latest_breakdown',
+:options=>{	title: 'Delayed arrivals by cause for Sept. 2012'}		
+}%>
+<%= partial "ontime/graphics/gchart-december-performance", :locals=>{:records=>@airlines_december_records, :selector_name=>'dec_performance', :agg_records=>@airlines_december_agg_records, 
+:options=>{title: 'Percentage of delayed arrivals in the month of December'}		
+}%>
 
 
 

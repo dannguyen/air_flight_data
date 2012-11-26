@@ -46,7 +46,6 @@
 <% 
 	default_options = {
 		focusTarget: 'category',
-		title: 'Latest delayed arrivals rate',
 		backgroundColor: 'none',
 
 		hAxis: {
@@ -65,11 +64,19 @@
 
 %>
 
+<% if !(defined?(selector_name)) %>
+	<% selector_name = "div_#{rand(1000)}_#{rand(5000)}" %>
+	<div id="<%=selector_name%>" style="height: 500px;"></div>
+<%end%>
+
+
 <%=partial 'external/google-viz-draws', 
 :locals=>{
 	:data_table=>data_table_arr,	
 	google_chart_type: 'BarChart',
-	:options=> options
+	:options=> options,
+	:selector_name=>selector_name	
+	
 	
 	}
 %>	

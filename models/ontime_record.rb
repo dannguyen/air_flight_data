@@ -18,7 +18,7 @@ class OntimeRecord < ActiveRecord::Base
   scope :by_month, lambda{|m| where(:month=>m)}
   scope :by_year_month, lambda{|str| yr,mth = str.split('-'); by_year(yr).by_month(mth)}
   
-  scope :canonical_airlines, where(:airline_id=>Airline.canonical_ids)
+#  scope :canonical_airlines, where(:airline_id=>Airline.canonical_ids)
 
   scope :by_ytd, lambda{|str|  
     yr,mth = str.split('-',3)
