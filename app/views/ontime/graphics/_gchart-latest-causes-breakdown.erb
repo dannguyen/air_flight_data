@@ -37,7 +37,6 @@
 		focusTarget: 'category',
 		title: "Cause of delays, #{@year}-#{@month}",
 		backgroundColor: 'none',
-		theme: 'maximized',
 		hAxis: {
 			gridlines: {count: 5, color: '#999'},
 			viewWindowMode: 'explicit',
@@ -56,8 +55,7 @@
 <%=partial 'external/google-viz-draws', 
 :locals=>{
 	:data_table=>data_table_arr,	
-	google_chart_type: 'BarChart',
-	:options=> options
-		
+	:google_chart_type => 'BarChart',
+	:options=> options	
 	}
 %>	
